@@ -1,0 +1,197 @@
+body {
+    margin: 2%;
+    height: 96vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+    background: #272727;
+}
+
+.greeting-side {
+    /* その他のスタイリングを保持 */
+    background-size: cover; /* 背景画像がコンテナを覆うように設定 */
+    background-position: center; /* 背景画像が中央に来るように設定 */
+}
+
+.new-year-card-container {
+    width: 96%;
+    height: 96%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.new-year-card {
+    width: calc(67vh - 5%);
+    height: calc(100vh - 5%);
+    border: 2px solid black;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+}
+
+.card-side {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.address-side {
+    background-color: white;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+}
+
+.greeting-side {
+    background-color: white;
+    transform: rotateY(180deg);
+}
+
+.postal-code {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    color: red;
+    padding: 1%;
+    writing-mode: horizontal-tb;
+    font-size: 4vw;
+}
+
+.stamp {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    width: 10vw;
+    height: auto;
+}
+
+.address {
+    font-size: 4vw;
+    margin: auto;
+}
+
+.sender {
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    font-size: 3vw;
+}
+
+.new-year-card.flipped {
+    transform: rotateY(180deg);
+}
+
+.greeting-side {
+    background-color: white;
+    background-image: url('background-pattern.jpg'); /* 背景画像を設定 */
+    transform: rotateY(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.greeting-side h1 {
+    font-family: 'Brush Script MT', cursive; /* 装飾的なフォント */
+    color: #d2691e;
+    text-shadow: 2px 2px 4px #000000; /* テキストの影 */
+    margin-bottom: 20px;
+}
+
+.greeting-side img {
+    margin-bottom: 20px;
+}
+
+.greeting-side p {
+    font-size: 1.5em;
+    color: #333;
+    text-shadow: 1px 1px 2px #666666;
+}
+
+.kingasinnen {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    max-width: 100px; /* Adjust size as needed */
+    max-height: 100px; /* Adjust size as needed */
+}
+
+/* アニメーションを追加 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.greeting-side h1, .greeting-side img, .greeting-side p {
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.greeting-side {
+    /* Other styles remain unchanged */
+    position: relative;
+    background-image: url('background.jpg'); /* Updated background image */
+    background-size: cover; /* Ensures the image covers the greeting-side */
+    background-position: center; /* Centers the background image */
+}
+.new-year-image {
+    /* 必要に応じてスタイルを調整 */
+    width: 100%; /* 画像がコンテナにフィットするように調整 */
+    height: auto;
+    max-width: 1065px; /* 実際の画像のサイズに合わせて調整 */
+    max-height: 1630px;
+    margin-bottom: 20px; /* 画像の下の余白 */
+}
+
+/* 新しい画像のスタイルを追加 */
+.kingasinnen {
+    position: absolute;
+    bottom: 2%; /* 下からの位置を微調整 */
+    right: 2%; /* 右からの位置を微調整 */
+    max-width: 100px; /* 画像の最大幅を設定 */
+    max-height: 100px; /* 画像の最大高さを設定 */
+}
+
+/* 枠線を取り除きます */
+.new-year-card {
+    /* その他のスタイリングを保持 */
+    border: none; /* 枠線を削除 */
+}
+
+/* レスポンシブ対応のコード */
+@media (orientation: portrait) {
+    .new-year-card {
+        width: 67vw; /* 縦横比を維持 */
+        height: 100vw; /* 縦横比を維持 */
+    }
+
+    .postal-code, .stamp, .address, .sender {
+        font-size: 2vh; /* 画面の高さに基づいたフォントサイズ */
+    }
+
+    .stamp {
+        width: 30%; /* 切手のサイズを調整 */
+    }
+}
+
+@media (orientation: landscape) {
+    .new-year-card {
+        width: calc(100vh * (100 / 148)); /* 縦横比を維持 */
+        height: 100vh;
+    }
+
+    .postal-code, .stamp, .address, .sender {
+        font-size: 2vw; /* 画面の幅に基づいたフォントサイズ */
+    }
+
+    .stamp {
+        width: 10vw; /* 切手のサイズを調整 */
+    }
+}
