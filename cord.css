@@ -183,18 +183,14 @@
 /* name-en: グラデ + 透明塗り + HD で大きく（最大 42px） */
 #cord .idblock .name-en{
   margin:0; font-weight:950; letter-spacing:.02em;
-  line-height:1.1;
+  line-height:1.15;
 
-  /* フォールバック（まず普通に見える） */
   color: var(--fg);
-
-  /* グラデーション適用（成功すれば透明化して切り抜き） */
   background-image: linear-gradient(90deg, var(--brand), var(--brand2));
   -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent; /* Safari用 */
+  -webkit-text-fill-color: transparent;
 
-  /* フォントサイズ（カード幅に応じて積極に可変） */
-  font-size: clamp(24px, 6.2cqw, 72px);
+  font-size: clamp(18px, 4.4cqw, 42px);
 }
 
 /* 概要（facts） */
