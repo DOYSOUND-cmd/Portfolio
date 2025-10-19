@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Koki-Doi</title>
+  <meta name="description" content="無限ループ・自動再生・中央強調の作品カルーセル" />
+  <link rel="stylesheet" href="global.css" />
+  <link rel="stylesheet" href="welcome.css" />
+  <link rel="stylesheet" href="productions.css" />
+  <link rel="stylesheet" href="cord.css" />
+</head>
+<body>
+
+<!-- Welcome Overlay -->
+<div id="welcome" aria-hidden="true">
+  <canvas id="welcome-canvas" class="w-canvas" aria-hidden="true"></canvas>
+  <div class="w-overlay" aria-hidden="true"></div>
+  <div class="w-inner">
+    <h1 class="w-title" data-text="WELCOME">WELCOME</h1>
+    <p class="w-sub">Loading portfolio...</p>
+  </div>
+</div>
+
+<main id="main">
+  <!-- AboutMe（名刺寄り） -->
+  <section id="cord" class="section" aria-label="About Me / 自己紹介カード">
+    <div class="container">
+      <div class="card card--biz" tabindex="0" aria-label="クリック/Enter/Spaceで表裏が反転します。マウス/タッチ操作でカードが反応します">
+        <div class="card-inner">
+          <div class="front" aria-hidden="false">
+            <div class="bg" aria-hidden="true"></div>
+            <div class="content">
+              <div class="text">
+                <table class="facts">
+                  <tr>
+                    <td>生年月日</td>
+                    <td>2002年5月8日 <span id="age-jp" class="age-badge"></span></td>
+                  </tr>
+                  <tr>
+                    <td>現職</td>
+                    <td>CAE解析エンジニア</td>
+                  </tr>
+                </table>
+                <header class="idblock">
+                  <h1 class="name-ja">DOYSOUND</h1>
+                </header>
+                <p class="intro">
+                  大阪府出身のエンジニアです。<br>
+                  本業は CFD（数値流体解析）を担当しています。<br>
+                  趣味で楽器制作と Web フロントの個人開発に取り組んでいます。
+                </p>
+                <h3 class="skills-title">Skills</h3>
+                <ul class="skills" id="skills-front" aria-label="スキル一覧"></ul>
+              </div>
+              <div class="media">
+                <img src="./assets/face_photo.jpg" alt="顔写真" class="face-photo" width="420" height="560" />
+              </div>
+            </div>
+          </div>
+
+          <div class="back" aria-hidden="true">
+            <div class="bg" aria-hidden="true"></div>
+            <div class="content">
+              <div class="text">
+                <table class="facts">
+                  <tr>
+                    <td>Date of Birth</td>
+                    <td>May 8, 2002 <span id="age-en" class="age-badge"></span></td>
+                  </tr>
+                  <tr>
+                    <td>Role</td>
+                    <td>CAE Analysis Engineer</td>
+                  </tr>
+                </table>
+                <header class="idblock">
+                  <h1 class="name-en">DOYSOUND</h1>
+                </header>
+                <p class="intro">
+                  I am an engineer from Osaka Prefecture.<br>
+                  My primary role is in CFD (computational fluid dynamics).<br>
+                  In my free time, I work on personal projects in instrument making and web front-end development.
+                </p>
+                <h3 class="skills-title">Skills</h3>
+                <ul class="skills" id="skills-back" aria-label="Skills List"></ul>
+              </div>
+              <div class="media">
+                <img src="./assets/face_photo.jpg" alt="顔写真" class="face-photo" width="420" height="560" />
+              </div>
+            </div>
+          </div>
+        </div><!-- /.card-inner -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Productions -->
+  <header class="page-head">
+    <div class="container">
+      <h1 class="title">Productions</h1>
+      <p class="lede">製作物一覧</p>
+    </div>
+  </header>
+
+  <section id="Productions" class="section">
+    <div class="container">
+      <div class="carousel" data-carousel aria-label="制作物カルーセル">
+        <button class="car-btn prev" data-prev aria-controls="track" aria-label="前へ">‹</button>
+        <div class="car-viewport" tabindex="0" role="region" aria-roledescription="スライダー" aria-label="作品">
+          <ul class="car-track" role="listbox" id="track"></ul>
+          <div class="sr-live" aria-live="polite" aria-atomic="true"></div>
+        </div>
+        <button class="car-btn next" data-next aria-controls="track" aria-label="次へ">›</button>
+        <div class="car-dots" data-dots role="tablist" aria-label="ページャ"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications（★追加：Productionsの後） -->
+  <section id="qualifications" class="section" aria-labelledby="quals-title">
+    <div class="container">
+      <h2 id="quals-title" class="section-title">Certifications</h2>
+
+      <ul class="quals" role="list">
+        <!-- 各項目：ボタンで開閉（キーボード・スクリーンリーダ対応） -->
+        <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            基本情報技術者試験
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              情報処理技術者試験の一つで、ITエンジニアとして必要な基礎的知識と技能を持つことを証明する国家資格です。プログラミング、アルゴリズム、データベース、ネットワーク、セキュリティなど幅広い分野の知識が求められます。
+            </p>
+          </div>
+        </li>
+
+        <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            情報セキュリティマネジメント
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              組織における情報セキュリティの管理・運用を担当する人材を対象とした国家資格です。情報セキュリティの基本原則やリスク管理、法令・規制に関する知識が評価されます。
+            </p>
+          </div>
+        </li>
+
+        <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            第二種電気工事士
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              一般住宅や小規模な店舗などの電気設備工事を行うための国家資格です。電気回路の設計・施工、配線作業、安全管理などの技能が求められます。
+            </p>
+          </div>
+        </li>
+
+        <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            危険物取扱者乙種4類
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              ガソリンや灯油などの引火性液体を取り扱うための国家資格です。危険物の性質、法令、安全な取扱方法についての知識が必要です。
+            </p>
+          </div>
+        </li>
+
+        <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            情報技術検定 2級
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              情報処理やプログラミングに関する中級レベルの知識を評価する資格です。アルゴリズムの理解、プログラム設計、データ構造などが対象となります。
+            </p>
+          </div>
+        </li>
+
+        <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            基礎製図検定
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              機械製図の基礎的な知識と技能を評価する資格です。図面の読み書き、製図規格の理解、正確な作図能力が求められます。
+            </p>
+          </div>
+        </li>
+
+        <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            計算技術検定 3級
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              工業数学の基礎的な計算能力を評価する資格です。四則演算、代数計算、関数、方程式などの理解が必要です。
+            </p>
+          </div>
+        </li>
+
+        <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            普通自動車免許
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              エンジン排気量660ccを超える普通自動車を運転するための免許です。道路交通法の理解や安全運転の技能が求められます。
+            </p>
+          </div>
+        </li>
+
+        <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            CS50x
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              ハーバード大学が提供するコンピュータサイエンスのオンライン入門コースです。C言語やPythonを用いたプログラミング、アルゴリズム、データ構造、Web開発など幅広い内容を学習します。<br>
+              <a href="https://certificates.cs50.io/d28305b0-a54e-438a-b15d-e1700e970806.pdf?size=letter" target="_blank" rel="noopener">CS50修了証</a>
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<script src="global.js" type="module"></script>
+<script src="welcome.js" type="module"></script>
+<script src="productions.js" type="module"></script>
+<script src="cord.js" type="module"></script>
+</body>
+</html>

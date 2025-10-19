@@ -1,0 +1,162 @@
+/* =========================================================
+   Product Detail 共通スタイル
+   - ヒーロー
+   - セクション
+   - バッジ（アイコン付）
+   - スクリーンショット（切り抜かずに全体表示）
+   - PDF埋め込み
+   ========================================================= */
+
+/* ベース */
+:root{
+  --panel:#121826;
+  --line:#1e2633;
+  --text:#e6edf3;
+  --muted:#9fb0c3;
+  --brand:#6be7ff;
+  --brand2:#9a7bff;
+
+  --radius:14px;
+  --shadow-1:0 10px 24px rgba(0,0,0,.24);
+  --shadow-2:0 20px 48px rgba(0,0,0,.32);
+}
+
+/* ---------------- Hero ---------------- */
+.pd-hero{
+  background: linear-gradient(180deg,#ffffff08,#0000);
+  border-bottom: 1px solid #ffffff12;
+}
+.pd-hero .container{
+  padding-block: clamp(28px,5vw,48px);
+}
+.pd-hero__eyebrow{
+  color: var(--muted);
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.pd-hero__title{
+  font-weight: 900;
+  font-size: clamp(28px,4.5vw,44px);
+  letter-spacing: .01em;
+  margin: 0 0 10px;
+  background: linear-gradient(90deg,var(--brand),var(--brand2));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.pd-hero__lede{
+  color: var(--text);
+  opacity: .92;
+  font-weight: 700;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* バッジ（アイコン付） */
+.pd-badges{
+  display: flex; flex-wrap: wrap; gap: 8px 10px;
+  margin-top: 14px;
+}
+.pd-badges .badge{
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-radius: 999px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg,#ffffff12,#ffffff06);
+  color: var(--text); font-weight: 800; font-size: 14px;
+}
+.pd-badges--icons .badge__icon{
+  width: 18px; height: 18px; object-fit: contain;
+  border-radius: 4px; background: #0f141d;
+}
+
+/* CTA */
+.pd-cta{ margin-top: 16px; }
+
+/* ---------------- Section ---------------- */
+.pd-section{ padding-block: clamp(28px,5vw,48px); }
+.pd-section__title{
+  font-weight: 900;
+  font-size: clamp(20px,3.2vw,28px);
+  margin: 0 0 16px;
+}
+
+/* ---------------- Screenshots ----------------
+   画像を「必ず全体が見える」ようにする（切り抜かない）
+------------------------------------------------ */
+.pd-shots{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 840px){
+  .pd-shots{ grid-template-columns: 1fr 1fr; }
+}
+
+/* ★ 画像が1枚のとき左右中央に配置（.pd-shots--single を付ける） */
+.pd-shots.pd-shots--single{
+  grid-template-columns: 1fr;   /* 常に1列（大画面でも） */
+  justify-items: center;        /* 横中央寄せ */
+}
+.pd-shots.pd-shots--single .pd-shot{
+  max-width: min(900px, 100%);  /* 大きすぎ防止 */
+  width: 100%;
+}
+
+.pd-shot{
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #0f141d;
+  box-shadow: var(--shadow-1);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pd-shot img{
+  /* ここがポイント：切り抜かずに収める */
+  width: 100%;
+  height: auto;
+  max-height: min(62vh, 720px); /* 画面高に応じて高さ制限 */
+  object-fit: contain;          /* 画像の全体を見せる */
+  background: #0b0f16;          /* 余白の背景 */
+  border-radius: 8px;
+  border: 1px solid #00000055;
+}
+
+.pd-shot figcaption{
+  margin-top: 8px;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* ---------------- Summary ---------------- */
+.pd-summary p{
+  margin: 0;
+  color: var(--text);
+  opacity: .95;
+  line-height: 1.9;
+  font-weight: 700;
+}
+
+/* ---------------- PDF ---------------- */
+.pd-pdf{
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+  background: #0f141d;
+}
+.pd-pdf__frame{
+  display: block;
+  width: 100%;
+  height: min(78vh, 900px); /* 画面高に合わせて可変 */
+  border: 0;
+  background: #1b2230;
+}
+
+/* Links */
+.pd-links{ display: flex; flex-wrap: wrap; gap: 10px; }
+.pd-links--inline{ margin-top: 10px; }

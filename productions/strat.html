@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stratocaster Type Guitar — Product Detail</title>
+  <meta name="description" content="桐材を使用したストラトキャスタータイプギターの製作記。3Dモデリング、CNC加工、配線、試奏、スペクトル解析、Three.js ビューアまで。">
+  <!-- 共通スタイル -->
+  <link rel="stylesheet" href="../global.css" />
+  <!-- プロダクト詳細 共通スタイル -->
+  <link rel="stylesheet" href="./product.css" />
+  <style>
+    /* 3Dビューア用の軽いスタイル（product.cssに干渉しない） */
+    .pd-3d { display: grid; gap: clamp(12px, 2vw, 16px); }
+    .pd-3d__stage {
+      position: relative; width: 100%; aspect-ratio: 16 / 9;
+      background: #0f141d; border: 1px solid #00000055; border-radius: 10px; overflow: hidden;
+    }
+    .pd-3d__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; border: 0; }
+    .pd-3d__hint { color: var(--muted); font-size: .95rem; }
+    .pd-3d__toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  </style>
+</head>
+<body>
+
+  <!-- Product Hero -->
+  <header class="pd-hero">
+    <div class="container">
+      <div class="pd-hero__eyebrow">Product Detail</div>
+      <h1 class="pd-hero__title">ストラトキャスタータイプギター</h1>
+      <p class="pd-hero__lede">
+        桐材ボディのストラトキャスタータイプ。3DモデリングからCNC加工、配線まで一貫して製作。<br>
+        スイッチポッド採用で演奏時の誤操作を抑え、明瞭なトーンを狙った設計です。
+      </p>
+
+      <!-- アイコン付きタグ -->
+      <ul class="pd-badges pd-badges--icons" aria-label="使用技術">
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/CAD.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>CAD</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/electronic_circuit.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>electronic circuit</span>
+        </li>
+      </ul>
+
+      <div class="pd-cta">
+        <a class="btn" href="../index.html">Topへ戻る</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Main（Overview / Screenshots / CAD / 3D Viewer / CNC / Wiring / Video / Spectrum / Back） ===== -->
+  <main id="main">
+
+    <!-- 概要（1つに統一） -->
+    <section class="pd-section" aria-labelledby="about-title">
+      <div class="container">
+        <h2 id="about-title" class="pd-section__title">概要</h2>
+        <div class="pd-summary">
+          <p>
+            桐材を用いた軽量ボディを採用し、演奏時の扱いやすさと明瞭なトーンを狙ったストラトキャスタータイプの自作ギターです。<br>
+            CAD の 3D モデルを基に CNC で削り出し、配線はスイッチポッド構成でボリューム誤操作の影響を最小化。<br>
+            製作工程全体をデジタルとアナログの両面から設計・検証しました。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screenshots（1枚なので中央寄せにしたい：クラスを付与） -->
+    <section class="pd-section" aria-labelledby="shots-title">
+      <div class="container">
+        <h2 id="shots-title" class="pd-section__title">外観</h2>
+        <div class="pd-shots pd-shots--single" data-gallery>
+          <figure class="pd-shot">
+            <img src="../assets/MyST_verticality.jpg" alt="完成品：ストラトキャスタータイプギター" width="1080" height="1440" loading="lazy" decoding="async">
+            <figcaption>完成：桐材ボディのストラトタイプ</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAD（画像 + 説明） -->
+    <section class="pd-section" aria-labelledby="cad-title">
+      <div class="container">
+        <h2 id="cad-title" class="pd-section__title">CAD（3Dモデリング）</h2>
+        <div class="pd-summary">
+          <p>
+            ボディ形状・ネックポケット・配線ルート・ピックアップキャビティなどをパラメトリックに設計し、弦高・弦間ピッチ・スケール長の整合を確認。<br>
+            設計値はCNC加工用データへ直接エクスポートできる構成にしています。
+          </p>
+        </div>
+
+        <div class="pd-shots" data-gallery>
+          <!-- 画像が1枚だけになる運用の場合は、コンテナに pd-shots--single を付けて中央寄せにできます -->
+          <figure class="pd-shot">
+            <img src="../assets/MyST_model1.png" alt="CAD：ボディ外形とキャビティ設計" width="1280" height="720" loading="lazy" decoding="async">
+            <figcaption>ボディ設計</figcaption>
+          </figure>
+          <figure class="pd-shot">
+            <img src="../assets/MyST_model2.png" alt="CAD：ネックポケット・ブリッジ周りの検討" width="1280" height="720" loading="lazy" decoding="async">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3D Viewer（Three.js / STL） -->
+    <section class="pd-section" aria-labelledby="viewer-title">
+      <div class="container">
+        <h2 id="viewer-title" class="pd-section__title">3D Model Viewer</h2>
+        <div class="pd-3d">
+          <div class="pd-3d__stage" id="stl-stage">
+            <canvas id="stl-canvas" class="pd-3d__canvas"></canvas>
+          </div>
+          <div class="pd-3d__toolbar">
+            <button class="btn" id="btn-rotate">再生/停止</button>
+            <button class="btn" id="btn-reset">リセット</button>
+            <span class="pd-3d__hint">ドラッグで回転・ホイールで拡大縮小（OrbitControls対応）</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CNC加工 -->
+    <section class="pd-section" aria-labelledby="cnc-title">
+      <div class="container">
+        <h2 id="cnc-title" class="pd-section__title">CNC加工</h2>
+        <div class="pd-shots pd-shots--single">
+          <figure class="pd-shot">
+            <img src="../assets/CNC.png" alt="CNC加工中の様子" width="1280" height="720" loading="lazy" decoding="async">
+            <figcaption>CNC：削り出し工程(イメージ)</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 配線 -->
+    <section class="pd-section" aria-labelledby="wire-title">
+      <div class="container">
+        <h2 id="wire-title" class="pd-section__title">配線</h2>
+        <div class="pd-shots pd-shots--single">
+          <figure class="pd-shot">
+            <img src="../assets/MyST_wire.jpg" alt="配線の様子（スイッチポッド採用）" width="1280" height="720" loading="lazy" decoding="async">
+            <figcaption>配線：スイッチポッド採用でボリューム誤操作対策</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 試奏動画 -->
+    <section class="pd-section" aria-labelledby="video-title">
+      <div class="container">
+        <h2 id="video-title" class="pd-section__title">試奏動画</h2>
+        <div class="pd-shots pd-shots--single">
+          <figure class="pd-shot">
+            <div style="position:relative; width:100%; aspect-ratio:16/9; background:#0f141d; border-radius:8px; overflow:hidden; border:1px solid #00000055;">
+              <iframe
+                src="https://www.youtube.com/embed/KMCmw2r_lvs?si=ueDBH7VRwpxddjgA"
+                title="YouTube試奏動画"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                style="position:absolute; inset:0; width:100%; height:100%; border:0;"
+              ></iframe>
+            </div>
+            <figcaption>演奏時のニュアンス・ノイズ感・サスティン確認</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- スペクトル解析 -->
+    <section class="pd-section" aria-labelledby="spectrum-title">
+      <div class="container">
+        <h2 id="spectrum-title" class="pd-section__title">スペクトル解析</h2>
+        <div class="pd-shots">
+          <figure class="pd-shot">
+            <img src="../assets/FJ.png" alt="比較用：Fender Japan ストラトのスペクトル" width="1280" height="720" loading="lazy" decoding="async">
+            <figcaption>比較：Fender Japan（リファレンス）</figcaption>
+          </figure>
+          <figure class="pd-shot">
+            <img src="../assets/MySt.png" alt="本ギターのスペクトル" width="1280" height="720" loading="lazy" decoding="async">
+            <figcaption>本機：低域が控えめで明るい傾向</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 共通の詳細ページ用スクリプト -->
+  <script src="../product.js" type="module"></script>
+
+  <!-- Three.js（同一バージョンで揃える） -->
+  <script src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/STLLoader.js"></script>
+
+  <!-- このページ専用：STLビューア初期化 -->
+<script src="./product-3d.js" type="module"></script>
+</body>
+</html>

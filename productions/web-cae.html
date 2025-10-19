@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Web CAE App — Product Detail</title>
+  <meta name="description" content="NASAオープンデータを用いた素材評価の可視化デモ。Three.jsで熱・変位などをブラウザ上で視覚化するWeb CAEアプリの紹介。" />
+  <!-- 共通スタイル -->
+  <link rel="stylesheet" href="../global.css" />
+  <!-- プロダクト詳細 共通スタイル -->
+  <link rel="stylesheet" href="./product.css" />
+</head>
+<body>
+
+  <!-- Product Hero -->
+  <header class="pd-hero">
+    <div class="container">
+      <div class="pd-hero__eyebrow">Product Detail</div>
+      <h1 class="pd-hero__title">Web CAEアプリ</h1>
+      <p class="pd-hero__lede">
+        NASAの公開データに基づく熱/変位の挙動を素材ごとに可視化。Three.jsベースのUIで、<br>結果と3Dモデルをブラウザだけで確認できます。<br>
+        本ツールは <strong>NASA Space Apps Challenge 2025</strong>提出作品として作成しました。
+      </p>
+
+      <!-- アイコン付きタグ -->
+      <ul class="pd-badges pd-badges--icons" aria-label="使用技術">
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/HTML.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>HTML</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/CSS.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>CSS</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/JS.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>JavaScript</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/Threejs.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>Three.js</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/CAE.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>CAE</span>
+        </li>
+      </ul>
+
+      <div class="pd-cta">
+        <a class="btn" href="../index.html">Topへ戻る</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Main（Screenshots / Slides / 概要 / リンク） ===== -->
+  <main id="main">
+
+
+        <!-- 概要 -->
+    <section class="pd-section" aria-labelledby="about-title">
+      <div class="container">
+        <h2 id="about-title" class="pd-section__title">概要</h2>
+        <div class="pd-summary">
+          <p>
+            <strong>NASA Space Apps Challenge</strong> は、NASA が提供するオープンデータを活用して社会的課題や宇宙分野のテーマに挑む、世界規模のハッカソンです。<br>
+            本プロジェクトでは、<strong>低軌道（LEO）</strong>環境における <strong>CubeSat 外壁（パネル）</strong> のふるまいに着目し、放射・アルベド・地球IRなどの境界条件と、<br>
+            材料物性（吸収率・放射率・熱伝導率・比熱・ヤング率 ほか）を組み合わせて、<strong>温度分布・温度差（ΔT）・質量・変位の目安</strong>を<br>
+            ブラウザ上で直感的に比較できるようにしました。教育・研究・試作前のスクリーニング用途を想定した、軽量な Web CAE デモです。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screenshots -->
+        <section class="pd-section" aria-labelledby="shots-title">
+      <div class="container">
+        <h2 id="shots-title" class="pd-section__title">外観</h2>
+        <div class="pd-shots pd-shots--single" data-gallery>
+          <figure class="pd-shot">
+            <img src="../assets/work_web_cae.png" alt="Web CAEアプリ：3D結果の可視化UI（温度分布・指標パネル）" width="1080" height="1440" loading="lazy" decoding="async">
+            <figcaption>3D可視化：温度分布・指標パネル・パラメータサイドバー</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slides（PDF埋め込み） -->
+    <section class="pd-section" aria-labelledby="slides-title">
+      <div class="container">
+        <h2 id="slides-title" class="pd-section__title">Slides</h2>
+
+        <div class="pd-pdf">
+          <iframe
+            class="pd-pdf__frame"
+            src="../assets/slide.pdf#view=FitH&pagemode=none"
+            title="Web CAEアプリ 発表スライド（PDF）"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Link -->
+    <section class="pd-section" aria-labelledby="link-title">
+      <div class="container">
+        <h2 id="link-title" class="pd-section__title">リンク</h2>
+        <div class="pd-links">
+          <a class="btn btn--primary" href="https://doysound-cmd.github.io/NASA_Space_App_Challeng2025-/" target="_blank" rel="noopener">デモを見る</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 共通の詳細ページ用スクリプト -->
+  <script src="../product.js" type="module"></script>
+</body>
+</html>
