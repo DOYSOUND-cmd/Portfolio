@@ -346,8 +346,8 @@ html.is-ios #cord .skills :where(p, .text, .desc){
    ========================================================= */
 @container (max-width: 580px){
   #cord .facts td{ font-size: 0.35rem; }
-  #cord .idblock .name-ja{ font-size: 0.8rem; }
-  #cord .idblock .name-en{ font-size: 0.35rem; }
+  #cord .idblock .name-ja{ font-size: 0.6rem; }
+  #cord .idblock .name-en{ font-size: 0.6rem; }
   #cord .intro{ font-size: 0.3rem; }
   /* skills はベースから自動連動。必要なら chip をさらに一段だけ絞る */
   #cord .skills-title{ font-size: 0.3rem; }
