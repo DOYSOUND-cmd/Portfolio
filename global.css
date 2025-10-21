@@ -1,10 +1,11 @@
 /* =========================================================
-   Global Styles (site-wide)
+   Global Styles (site-wide) — iOS/Safari robust
    - ベース/カラー/タイポ
    - コンテナ/セクション/見出し/ボタン
    - 便利ユーティリティ
    - 「Productions 見出し⇄カルーセル」の境界線除去
    - Certifications（資格）… 行ごとに見栄えを統一（色も固定）
+   - ★要望対応：セクションの背景色分け/区切り線を全面オフ
    ========================================================= */
 
 /* ----- Reset（最小限） ----- */
@@ -20,8 +21,8 @@ img, svg, video { display: block; max-width: 100%; }
 :root{
   --bg: #0b0f16;
   --panel: #121826;
-  --text: #e6edf3;          /* 読みやすい明るめテキスト */
-  --muted: #b7c6d6;         /* 少し明るくして可読性UP */
+  --text: #e6edf3;
+  --muted: #b7c6d6;
   --line: #1e2633;
   --brand: #6be7ff;
   --brand-2: #9a7bff;
@@ -31,10 +32,18 @@ img, svg, video { display: block; max-width: 100%; }
   --shadow-2: 0 20px 48px rgba(0,0,0,.32);
 
   --radius: 14px;
+
+  /* iOS の動的ツールバー対策（svh 非対応環境フォールバック用） */
+  --vh-62: 62vh;
+  --vh-58: 58vh;
+  --vh-54: 54vh;
 }
 
 /* ----- Base ----- */
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%; /* iOS 文字拡大で改行崩れを防ぐ */
+}
 body{
   background: radial-gradient(1200px 800px at 50% -20%, #122031, transparent 60%), var(--bg);
   color: var(--text);
@@ -69,6 +78,8 @@ body{
   letter-spacing: .01em;
   background: linear-gradient(90deg, var(--brand), var(--brand-2));
   -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent; /* Safari 安定化 */
   color: transparent;
 }
 .page-head .lede{
@@ -89,6 +100,7 @@ a:hover{ text-decoration: underline; }
   color: var(--text); font-weight: 800;
   box-shadow: var(--shadow-1);
   transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
+  min-width: 0; /* iOS の text-overflow 回避 */
 }
 .btn:hover{ transform: translateY(-1px); box-shadow: var(--shadow-2); text-decoration: none; }
 .btn:active{ transform: translateY(0); }
@@ -97,9 +109,15 @@ a:hover{ text-decoration: underline; }
 
 /* ----- Focus ring ----- */
 :where(a, button, [tabindex]):focus-visible{
-  outline: 2px solid color-mix(in oklab, var(--brand) 70%, white);
+  /* color-mix が無い環境でも明るい水色にフォールバック */
+  outline: 2px solid #7fe8ff;
   outline-offset: 2px;
   border-radius: 10px;
+}
+@supports (outline-color: color-mix(in oklab, white, black)) {
+  :where(a, button, [tabindex]):focus-visible{
+    outline-color: color-mix(in oklab, var(--brand) 70%, white);
+  }
 }
 
 /* ----- Utils ----- */
@@ -110,7 +128,7 @@ a:hover{ text-decoration: underline; }
 }
 .center { display:grid; place-items:center; }
 
-/* アンカー遷移時の余白 */
+/* アンカー遷移時の余白（未設定/単位付でもOKな JS とペア） */
 [id]{ scroll-margin-top: clamp(60px, 8vw, 80px); }
 
 /* 小さなフェード */
@@ -140,6 +158,8 @@ a:hover{ text-decoration: underline; }
   letter-spacing: .01em;
   background: linear-gradient(90deg, var(--brand), var(--brand-2));
   -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
   margin-bottom: clamp(16px, 3vw, 24px);
 }
@@ -154,8 +174,7 @@ a:hover{ text-decoration: underline; }
 
 #qualifications .qualification-item{
   display: flex; flex-direction: column;
-  /* ★ 行ごと min-height を JS が設定 */
-  min-height: auto;
+  min-height: auto; /* JS で設定 */
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: linear-gradient(180deg,#ffffff12,#ffffff06);
@@ -178,9 +197,15 @@ a:hover{ text-decoration: underline; }
 }
 #qualifications .q-head:hover{ background: #ffffff10; }
 #qualifications .q-head:focus-visible{
-  outline: 2px solid color-mix(in oklab,var(--brand) 70%, #fff);
+  outline: 2px solid #7fe8ff;
   outline-offset: -2px;
 }
+@supports (outline-color: color-mix(in oklab, white, black)) {
+  #qualifications .q-head:focus-visible{
+    outline-color: color-mix(in oklab,var(--brand) 70%, #fff);
+  }
+}
+
 #qualifications .q-index{
   display:inline-grid; place-items:center;
   width: 26px; height: 26px; border-radius: 999px;
@@ -206,6 +231,40 @@ a:hover{ text-decoration: underline; }
   color: var(--brand); text-decoration: underline;
 }
 
-
 /* iOS: remove tap highlight */
 :where(a,button,[role='button'],.btn){ -webkit-tap-highlight-color: transparent; }
+
+/* =========================================================
+   ★ Section background / divider 全面オフ（要望対応の上書き）
+   - セクションごとの背景色/区切り線/影を無効化
+   - コンテンツ側の板面（例: .pd-3d__stage）は維持
+   ========================================================= */
+.section,
+.pd-section,
+.page-head,
+.page-head .container {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.section .container,
+.pd-section .container {
+  background: transparent !important;
+}
+.section:nth-of-type(odd),
+.section:nth-of-type(even),
+.pd-section:nth-of-type(odd),
+.pd-section:nth-of-type(even) {
+  background: transparent !important;
+}
+.section::before, .section::after,
+.pd-section::before, .pd-section::after,
+.page-head::before, .page-head::after {
+  content: none !important;
+}
+#Productions .container,
+#Productions .carousel {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}

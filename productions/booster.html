@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tube Clean Booster — Product Detail</title>
-  <meta name="description" content="9V駆動でボードに載せやすい真空管クリーンブースター。回路設計・ケース加工・配線と、3Dモデルビューア、試奏/スペクトル解析まで。">
+  <meta name="description" content="9V駆動でボードに載せやすい真空管クリーンブースターの紹介。">
   <!-- 共通スタイル -->
   <link rel="stylesheet" href="../global.css" />
   <!-- プロダクト詳細 共通スタイル -->
   <link rel="stylesheet" href="./product.css" />
   <style>
-    /* 3Dビューア用の軽いスタイル（product.cssに干渉しない） */
+    /* 3Dビューア用（product.cssに干渉しない軽い補助） */
     .pd-3d { display: grid; gap: clamp(12px, 2vw, 16px); }
     .pd-3d__stage {
       position: relative; width: 100%; aspect-ratio: 16/9;
@@ -30,9 +30,6 @@
 
     gtag('config', 'G-Y39NSDYY9J');
   </script>
-
-</head>
-<body>
 
   <!-- Product Hero -->
   <header class="pd-hero">
@@ -65,7 +62,7 @@
   <!-- ===== Main ===== -->
   <main id="main">
 
-        <!-- 概要 -->
+    <!-- 概要 -->
     <section class="pd-section" aria-labelledby="about-title">
       <div class="container">
         <h2 id="about-title" class="pd-section__title">概要</h2>
@@ -78,7 +75,7 @@
       </div>
     </section>
 
-    <!-- 外観（1枚は中央寄せ：pd-shots--single） -->
+    <!-- 外観（1枚は中央寄せ） -->
     <section class="pd-section" aria-labelledby="ex-title">
       <div class="container">
         <h2 id="ex-title" class="pd-section__title">外観</h2>
@@ -91,37 +88,74 @@
       </div>
     </section>
 
-    <!-- 3D Viewer（glTF） -->
+    <!-- 3D Model Viewer（筐体 GLB） -->
     <section class="pd-section" aria-labelledby="viewer-title">
       <div class="container">
         <h2 id="viewer-title" class="pd-section__title">3D Model Viewer</h2>
         <div class="pd-3d">
           <div class="pd-3d__stage" id="glb-stage">
-            <canvas id="glb-canvas" class="pd-3d__canvas" aria-label="3Dモデルビューア"></canvas>
+            <canvas
+              id="glb-canvas"
+              class="pd-3d__canvas"
+              data-type="glb"
+              data-src="../assets/Effector/Effector.glb"
+              data-autoRotate="true"
+              data-rotationSpeed="0.35"
+              data-exposure="1.75"
+              data-yaw="30"
+              data-pitch="20"
+              aria-label="3Dモデルビューア（筐体GLB）"
+            ></canvas>
           </div>
           <div class="pd-3d__toolbar">
-            <button class="btn" id="btn-rotate">再生/停止</button>
-            <button class="btn" id="btn-reset">リセット</button>
-            <span class="pd-3d__hint">ドラッグで回転・ホイールで拡大縮小（OrbitControls対応）</span>
+            <button class="btn" data-role="toggle-rotate" data-target="#glb-canvas">再生/停止</button>
+            <button class="btn" data-role="reset-view"  data-target="#glb-canvas">リセット</button>
+            <span class="pd-3d__hint">ドラッグで回転・ホイールで拡大縮小</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 回路設計（1枚中央） -->
+    <!-- 回路設計（画像 + ★ GLBビュワー：assets/tube_effector.glb） -->
     <section class="pd-section" aria-labelledby="circuit-title">
       <div class="container">
         <h2 id="circuit-title" class="pd-section__title">回路設計</h2>
+
+        <!-- 回路図（画像） -->
         <div class="pd-shots pd-shots--single">
           <figure class="pd-shot">
             <img src="../assets/TubeEffector_circuit.png" alt="回路図（KiCad）" width="1280" height="720" loading="lazy" decoding="async">
             <figcaption>KiCadで回路図作成</figcaption>
           </figure>
         </div>
+
+        <!-- ★ 回路GLBビューア（指定のGLBに更新） -->
+        <div class="pd-3d" style="margin-top:14px">
+          <div class="pd-3d__stage" id="circuit-stage">
+            <canvas
+              id="circuit-canvas"
+              class="pd-3d__canvas"
+              data-type="glb"
+              data-src="../assets/tube_effector.glb"
+              data-autoRotate="true"
+              data-rotationSpeed="0.35"
+              data-exposure="1.75"
+              data-yaw="30"
+              data-pitch="20"
+              aria-label="3Dモデルビューア（回路GLB）"
+            ></canvas>
+          </div>
+          <div class="pd-3d__toolbar">
+            <button class="btn" data-role="toggle-rotate" data-target="#circuit-canvas">再生/停止</button>
+            <button class="btn" data-role="reset-view"  data-target="#circuit-canvas">リセット</button>
+            <span class="pd-3d__hint">ドラッグで回転・ホイールで拡大縮小</span>
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <!-- ケース製作（2枚） -->
+    <!-- ケース製作 -->
     <section class="pd-section" aria-labelledby="case-title">
       <div class="container">
         <h2 id="case-title" class="pd-section__title">ケース製作</h2>
@@ -137,7 +171,7 @@
       </div>
     </section>
 
-    <!-- 配線（2枚） -->
+    <!-- 配線 -->
     <section class="pd-section" aria-labelledby="wiring-title">
       <div class="container">
         <h2 id="wiring-title" class="pd-section__title">配線</h2>
@@ -175,7 +209,7 @@
       </div>
     </section>
 
-    <!-- スペクトル解析（2枚） -->
+    <!-- スペクトル解析 -->
     <section class="pd-section" aria-labelledby="spectrum-title">
       <div class="container">
         <h2 id="spectrum-title" class="pd-section__title">スペクトル解析</h2>
@@ -194,15 +228,15 @@
 
   </main>
 
-  <!-- 共通の詳細ページ用スクリプト -->
-  <script src="../product.js" type="module"></script>
+  <!-- 詳細ページ用スクリプト -->
+  <script src="./product.js" type="module"></script>
 
-  <!-- Three.js（同一バージョンで揃える） -->
+  <!-- Three.js（同一バージョン） -->
   <script src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
   <script src="https://unpkg.com/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
   <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>
 
-  <!-- このページ専用：glTF ビューア初期化 -->
-<script src="./product-3d.js" type="module"></script>
+  <!-- 共通 3D 初期化 -->
+  <script src="./product-3d.js" type="module"></script>
 </body>
 </html>

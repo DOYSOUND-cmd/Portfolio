@@ -1,10 +1,11 @@
 /* =========================================================
-   Product Detail 共通スタイル
+   Product Detail 共通スタイル（iPhone 13/Safari 安定版）
    - ヒーロー
    - セクション
    - バッジ（アイコン付）
    - スクリーンショット（切り抜かずに全体表示）
    - PDF埋め込み
+   - 3Dローダ/アスペクト比フォールバック
    ========================================================= */
 
 /* ベース */
@@ -19,7 +20,15 @@
   --radius:14px;
   --shadow-1:0 10px 24px rgba(0,0,0,.24);
   --shadow-2:0 20px 48px rgba(0,0,0,.32);
+
+  /* iOS Safari の動的ツールバー対策: dvh/svh が使えない場合のフォールバック */
+  --vh-62: 62vh;
+  --vh-58: 58vh;
+  --vh-54: 54vh;
 }
+
+/* Safari のフォント自動拡大で改行がズレないように */
+html { -webkit-text-size-adjust: 100%; }
 
 /* ---------------- Hero ---------------- */
 .pd-hero{
@@ -36,6 +45,8 @@
   text-transform: uppercase;
   margin-bottom: 6px;
 }
+
+/* グラデ文字は Safari で -webkit-text-fill-color が必要 */
 .pd-hero__title{
   font-weight: 900;
   font-size: clamp(28px,4.5vw,44px);
@@ -43,8 +54,17 @@
   margin: 0 0 10px;
   background: linear-gradient(90deg,var(--brand),var(--brand2));
   -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
+  line-height: 1.15; /* モバイルで詰まりすぎ防止 */
 }
+/* 見出しの強制改行（HTML側で <span class="mob-line"> を使う） */
+.pd-hero__title .mob-line { display: inline; }
+@media (max-width: 768px) {
+  .pd-hero__title .mob-line { display: block; }
+}
+
 .pd-hero__lede{
   color: var(--text);
   opacity: .92;
@@ -64,6 +84,7 @@
   border: 1px solid var(--line);
   background: linear-gradient(180deg,#ffffff12,#ffffff06);
   color: var(--text); font-weight: 800; font-size: 14px;
+  min-width: 0; /* Safari の flex はみ出し防止 */
 }
 .pd-badges--icons .badge__icon{
   width: 18px; height: 18px; object-fit: contain;
@@ -115,14 +136,18 @@
 }
 
 .pd-shot img{
-  /* ここがポイント：切り抜かずに収める */
+  /* 切り抜かずに収める */
   width: 100%;
   height: auto;
-  max-height: min(62vh, 720px); /* 画面高に応じて高さ制限 */
-  object-fit: contain;          /* 画像の全体を見せる */
-  background: #0b0f16;          /* 余白の背景 */
+  max-height: min(62svh, 720px); /* svh を優先 */
+  object-fit: contain;           /* 画像の全体を見せる */
+  background: #0b0f16;           /* 余白の背景 */
   border-radius: 8px;
   border: 1px solid #00000055;
+}
+/* svh がない環境（iOS 古めなど）へのフォールバック */
+@supports not (height: 1svh) {
+  .pd-shot img { max-height: min(var(--vh-62), 720px); }
 }
 
 .pd-shot figcaption{
@@ -152,11 +177,113 @@
 .pd-pdf__frame{
   display: block;
   width: 100%;
-  height: min(78vh, 900px); /* 画面高に合わせて可変 */
+  height: min(78svh, 900px);
   border: 0;
   background: #1b2230;
+}
+@supports not (height: 1svh) {
+  .pd-pdf__frame { height: min(78vh, 900px); }
 }
 
 /* Links */
 .pd-links{ display: flex; flex-wrap: wrap; gap: 10px; }
 .pd-links--inline{ margin-top: 10px; }
+
+/* ===== 3D Loader Overlay ===== */
+.pd-3d__stage {
+  position: relative;
+}
+
+/* aspect-ratio が不安定な Safari 対応のフォールバック用ボックス
+   （デフォルト 16:9。必要に応じてブレークポイントで上書き） */
+.pd-3d__stage::before{
+  content: "";
+  display: block;
+  padding-top: 56.25%; /* 16:9 = 9/16*100 */
+}
+.pd-3d__canvas{
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block; /* iOS レイアウト崩れ防止 */
+}
+/* aspect-ratio が安定して使える環境では ::before を無効化 */
+@supports (aspect-ratio: 16 / 9) {
+  .pd-3d__stage { aspect-ratio: 16 / 9; }
+  .pd-3d__stage::before{ content:none; display:none; padding:0; }
+}
+
+.pd-3d__loader {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  gap: 10px;
+  /* まずは確実な rgba フォールバック */
+  background: rgba(0,0,0,.65);
+  /* color-mix が使える環境では美しめに */
+  background: color-mix(in srgb, black 65%, transparent);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  transition: opacity .25s ease, visibility .25s ease;
+  opacity: 1;
+  visibility: visible;
+  z-index: 3;
+}
+@supports not (background: color-mix(in srgb, black 65%, transparent)) {
+  .pd-3d__loader { background: rgba(0,0,0,.65); }
+}
+
+.pd-3d__loader.is-done { opacity: 0; visibility: hidden; }
+
+.pd-3d__spinner {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 3px solid #ffffff33;
+  border-top-color: #fff;
+  animation: pdspin 0.9s linear infinite;
+}
+@keyframes pdspin { to { transform: rotate(360deg); } }
+
+.pd-3d__label {
+  color: var(--text, #e6edf3);
+  font-weight: 800;
+  letter-spacing: .02em;
+}
+
+/* ===== Strat 3D viewer: mobile portrait = taller aspect =====
+   フォールバック（::beforeのpadding比率）と aspect-ratio の両対応で縦長変更 */
+@media (max-width: 1024px) and (orientation: portrait) {
+  /* フォールバック側（::before） */
+  #scan-stage::before, #stl-stage::before { padding-top: 75%; } /* 4:3 */
+  /* aspect-ratio 使えるならこちら */
+  @supports (aspect-ratio: 4 / 3) {
+    #scan-stage, #stl-stage { aspect-ratio: 4 / 3; }
+  }
+}
+@media (max-width: 768px) and (orientation: portrait) {
+  #scan-stage::before, #stl-stage::before { padding-top: 133.333%; } /* 3:4 */
+  @supports (aspect-ratio: 3 / 4) {
+    #scan-stage, #stl-stage { aspect-ratio: 3 / 4; }
+  }
+}
+@media (max-width: 480px) and (orientation: portrait) {
+  #scan-stage::before, #stl-stage::before { padding-top: 150%; } /* 2:3 */
+  @supports (aspect-ratio: 2 / 3) {
+    #scan-stage, #stl-stage { aspect-ratio: 2 / 3; }
+  }
+}
+
+/* 念のため iOS 描画安定化 */
+#scan-stage .pd-3d__canvas,
+#stl-stage  .pd-3d__canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* モバイル時だけ h1 を任意の箇所で改行するためのユーティリティ（予備） */
+.pd-hero__title .pd-mob-br { display: inline; }
+@media (max-width: 600px) {
+  .pd-hero__title .pd-mob-br { display: block; }
+}

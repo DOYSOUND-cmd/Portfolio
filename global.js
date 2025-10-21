@@ -11,12 +11,18 @@
    - フォーカスリング制御 / 画像の遅延読み込み
    - Welcome オーバーレイ（毎回表示）
    - Certifications：行一括アコーディオン & 行ごとの高さ統一
-   - ★ 開く/閉じる直前にその行の「目標高さ」を算出し全カードを同じ高さに
    ========================================================= */
 
-/* 1) アンカーのスムーススクロール */
+/* 1) アンカーのスムーススクロール（scrollMarginTop 単位付き/未定義に強い） */
 (function(){
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const parsePx = (v) => {
+    if (!v) return 0;
+    if (typeof v === 'number') return v;
+    const m = String(v).match(/(-?\d+(\.\d+)?)px/);
+    return m ? parseFloat(m[1]) : parseFloat(v) || 0;
+  };
+
   document.addEventListener('click', (e)=>{
     const a = e.target.closest('a[href^="#"]');
     if(!a) return;
@@ -26,10 +32,15 @@
     if(!el) return;
 
     e.preventDefault();
-    const offset = parseInt(getComputedStyle(el).scrollMarginTop || '0', 10);
-    const y = el.getBoundingClientRect().top + window.scrollY - offset;
+    const smt = getComputedStyle(el).scrollMarginTop;
+    const offset = parsePx(smt);
+    const rect = el.getBoundingClientRect();
+    const y = rect.top + window.scrollY - offset;
+
     window.scrollTo({ top: y, behavior: prefersReduced ? 'auto' : 'smooth' });
     history.pushState(null, '', `#${id}`);
+
+    // アクセシビリティ用
     el.setAttribute('tabindex', '-1');
     el.focus({ preventScroll: true });
     el.addEventListener('blur', ()=> el.removeAttribute('tabindex'), { once:true });
@@ -77,11 +88,11 @@
   window.addEventListener('mousedown', onMouse, { passive:true });
 })();
 
-/* 5) 画像の遅延読み込み */
+/* 5) 画像の遅延読み込み（既に属性があれば上書きしない） */
 (function(){
-  document.querySelectorAll('img:not([loading])').forEach(img=>{
-    img.setAttribute('loading', 'lazy');
-    img.setAttribute('decoding', 'async');
+  document.querySelectorAll('img').forEach(img=>{
+    if(!img.hasAttribute('loading'))  img.setAttribute('loading', 'lazy');
+    if(!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
   });
 })();
 
@@ -115,8 +126,8 @@
     const wrap = document.getElementById('welcome');
     if (!wrap) return;
     setTimeout(()=> {
-      wrap.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 460, easing: 'ease' })
-        .onfinish = ()=>{ wrap.style.display = 'none'; };
+      const anim = wrap.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 460, easing: 'ease' });
+      anim.onfinish = ()=>{ wrap.style.display = 'none'; };
     }, delay);
   }
   window.addEventListener('load', open, { once:true });
@@ -124,47 +135,83 @@
 })();
 
 /* 7) Certifications：行一括アコーディオン + 行ごとの高さ統一
-      ＆ 開く/閉じる直前に“行内全カードが同じ高さ”になるよう min-height を確定 */
+      クリックした「行」内のカードを同時開閉。測定→適用の順で安全に。 */
 (function(){
   const grid = document.querySelector('#qualifications .quals');
   if (!grid) return;
 
-  /* --- 同じ「行」のアイテム群を取得（top の差で判定） --- */
+  const items = Array.from(grid.querySelectorAll('.qualification-item'));
+
+  /* 先にインデックス/初期状態をセット */
+  items.forEach((it, i)=>{
+    const btn = it.querySelector('.q-head');
+    const panel = it.querySelector('.qualification-description');
+    if (!btn || !panel) return;
+    if (!btn.querySelector('.q-index')) {
+      const badge = document.createElement('span');
+      badge.className = 'q-index';
+      badge.textContent = String(i + 1);
+      btn.prepend(badge);
+    }
+    btn.setAttribute('aria-expanded', 'false');
+    panel.hidden = true;
+    panel.style.height = null;
+    it.style.minHeight = 'auto';
+  });
+
+  /* 測定用：同じ「行」のアイテム群を取得（top の差で判定） */
   const getRowGroupByItem = (item) => {
-    const items = Array.from(grid.querySelectorAll('.qualification-item'));
-    const rects = items.map(it => ({ it, r: it.getBoundingClientRect() }));
+    const visItems = items.filter(Boolean);
+    if (!visItems.length) return [item];
+    const rects = visItems.map(it => ({ it, r: it.getBoundingClientRect() }));
     const target = rects.find(x => x.it === item);
     if (!target) return [item];
-    const EPS = 6; // px
+    const EPS = 6; // px（行ズレ吸収）
     return rects
       .filter(x => Math.abs(x.r.top - target.r.top) <= EPS)
       .sort((a,b) => a.r.left - b.r.left)
       .map(x => x.it);
   };
 
-  /* --- 行の「目標高さ」を算出して一括適用 --- */
+  /* 行の「目標高さ」を算出して一括適用 */
   const applyRowMinHeight = (rowItems, mode /* 'open' | 'closed' */) => {
-    // まず全て一旦解除（ズレ防止）
-    rowItems.forEach(it => it.style.minHeight = 'auto');
+    const list = rowItems.filter(Boolean);
+    if (!list.length) return;
 
-    // 目標高さを算出
-    let target = 0;
-    rowItems.forEach(it => {
+    // いったんリセットしてから計測
+    list.forEach(it => it.style.minHeight = 'auto');
+
+    let maxH = 0;
+    list.forEach(it => {
       const head  = it.querySelector('.q-head');
       const panel = it.querySelector('.qualification-description');
-      const headH = head ? head.getBoundingClientRect().height : 0;
-      const openExtra = (mode === 'open' && panel) ? panel.scrollHeight : 0; // 内容の自然高を加算
-      const h = Math.ceil(headH + openExtra);
-      if (h > target) target = h;
+      const headH = head ? Math.ceil(head.getBoundingClientRect().height) : 0;
+      let openExtra = 0;
+      if (mode === 'open' && panel) {
+        // 自然高を一時的に出して測る
+        const prevHidden = panel.hidden;
+        const prevH = panel.style.height;
+
+        panel.hidden = false;
+        panel.style.height = 'auto';
+        openExtra = panel.scrollHeight;
+
+        // 元へ戻す
+        panel.hidden = prevHidden;
+        panel.style.height = prevH || null;
+      }
+      const h = headH + openExtra;
+      if (h > maxH) maxH = h;
     });
 
-    // 少し余白（ボーダー・内部マージン分の保険）
-    target += 2;
-    rowItems.forEach(it => it.style.minHeight = `${target}px`);
+    // ボーダー等の余白保険
+    const target = Math.max(0, maxH + 2);
+    list.forEach(it => it.style.minHeight = `${target}px`);
   };
 
-  /* --- パネル開閉（元の状態に完全復帰） --- */
+  /* パネル開閉（元の状態に完全復帰） */
   const openPanel = (btn, panel) => {
+    if (!btn || !panel) return;
     if (!panel.hidden && panel.style.height === 'auto') return;
     btn.setAttribute('aria-expanded', 'true');
     panel.hidden = false;
@@ -181,6 +228,7 @@
   };
 
   const closePanel = (btn, panel) => {
+    if (!btn || !panel) return;
     if (panel.hidden) return;
     btn.setAttribute('aria-expanded', 'false');
     const h = panel.scrollHeight;
@@ -190,20 +238,22 @@
     panel.addEventListener('transitionend', function onEnd(e){
       if (e.propertyName !== 'height') return;
       panel.hidden = true;
-      panel.style.height = null;        // ★ 完全に元へ戻す
+      panel.style.height = null;        // 完全に元へ戻す
       panel.removeEventListener('transitionend', onEnd);
     });
   };
 
-  /* --- クリックした行だけ一括トグル --- */
+  /* クリックした行だけ一括トグル（安全化） */
   const toggleRow = (btn) => {
     const item = btn.closest('.qualification-item');
+    if (!item) return;
     const rowItems = getRowGroupByItem(item);
+    if (!rowItems.length) return;
 
-    // 行内の「開いていない」パネルが1つでもあれば → 開くモード
+    // 「開いていない」パネルが1つでもあれば → 開くモード
     const anyClosed = rowItems.some(it => it.querySelector('.q-head')?.getAttribute('aria-expanded') !== 'true');
 
-    // ★ 先に min-height を「行内で統一」してから開閉開始（アニメ中も揃う）
+    // 先に min-height を行内で統一（アニメ中も揃う）
     applyRowMinHeight(rowItems, anyClosed ? 'open' : 'closed');
 
     // 実際の開閉
@@ -216,7 +266,7 @@
     });
   };
 
-  /* --- イベント --- */
+  /* イベント */
   grid.addEventListener('click', (e)=>{
     const btn = e.target.closest('.q-head');
     if (!btn) return;
@@ -231,48 +281,35 @@
     }
   });
 
-  /* --- 初期：全閉 & 行ごとに「閉じた状態の高さ」で統一 --- */
-  const items = Array.from(grid.querySelectorAll('.qualification-item'));
-  items.forEach((it, i)=>{
-    const btn = it.querySelector('.q-head');
-    const panel = it.querySelector('.qualification-description');
-    if (!btn || !panel) return;
-    // インデックスバッジを付与（先頭）
-    if (!btn.querySelector('.q-index')) {
-      const badge = document.createElement('span');
-      badge.className = 'q-index';
-      badge.textContent = String(i + 1);
-      btn.prepend(badge);
-    }
-    btn.setAttribute('aria-expanded', 'false');
-    panel.hidden = true;
-    panel.style.height = null;
-  });
-
-  // 初期は各行を「閉じた高さ」で統一
+  /* すべての行を「閉じた状態の高さ」で統一（安全版） */
   const unifyClosedAllRows = () => {
-    // 行ごとにグループ化（rect 情報を rows に保持）
+    if (!items.length) return;
+
+    // 現在の配置を測定
     const rects = items.map(it => ({ it, r: it.getBoundingClientRect() }));
     const rows = [];
     const EPS = 6;
-    rects.forEach(x => {
-      const row = rows.find(arr => Math.abs(arr[0].r.top - x.r.top) <= EPS);
-      if (row) row.push(x);          // ← rect オブジェクトを保持
-      else rows.push([x]);
+
+    rects.forEach(obj => {
+      const { it, r } = obj;
+      if (!r) return; /* 念のため防御 */
+      const row = rows.find(arr => arr.length && Math.abs(arr[0].r.top - r.top) <= EPS);
+      if (row) row.push(obj);
+      else rows.push([obj]);
     });
-    // apply 時に DOM 要素配列へ変換
-    rows.forEach(row => applyRowMinHeight(row.map(o => o.it), 'closed'));
+
+    // 行ごとに apply（DOM 要素配列へ変換）
+    rows.forEach(group => {
+      const rowItems = group.map(o => o.it).filter(Boolean);
+      applyRowMinHeight(rowItems, 'closed');
+    });
   };
 
-  // 正しい debounce 実装
+  /* 正しい debounce 実装 */
   const debounce = (fn, ms = 120) => {
     let t;
-    return (...a) => {
-      clearTimeout(t);
-      t = setTimeout(() => fn(...a), ms);
-    };
+    return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
   };
-
   const onResize = debounce(unifyClosedAllRows, 120);
 
   window.addEventListener('load', unifyClosedAllRows, { once:true });

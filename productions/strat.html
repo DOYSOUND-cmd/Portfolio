@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Stratocaster Type Guitar — Product Detail</title>
-  <meta name="description" content="桐材を使用したストラトキャスタータイプギターの製作記。3Dモデリング、CNC加工、配線、試奏、スペクトル解析、Three.js ビューアまで。">
+  <meta name="description" content="桐材を使用したストラトキャスタータイプギターの紹介。">
   <!-- 共通スタイル -->
   <link rel="stylesheet" href="../global.css" />
   <!-- プロダクト詳細 共通スタイル -->
@@ -31,14 +31,13 @@
     gtag('config', 'G-Y39NSDYY9J');
   </script>
 
-</head>
-<body>
-
   <!-- Product Hero -->
   <header class="pd-hero">
     <div class="container">
       <div class="pd-hero__eyebrow">Product Detail</div>
-      <h1 class="pd-hero__title">ストラトキャスタータイプギター</h1>
+        <h1 class="pd-hero__title"><span class="mob-line">ストラトキャスタータイプ</span><span class="mob-line">ギター</span></h1>
+
+
       <p class="pd-hero__lede">
         桐材ボディのストラトキャスタータイプ。3DモデリングからCNC加工、配線まで一貫して製作。<br>
         スイッチポッド採用で演奏時の誤操作を抑え、明瞭なトーンを狙った設計です。
@@ -62,10 +61,10 @@
     </div>
   </header>
 
-  <!-- ===== Main（Overview / Screenshots / CAD / 3D Viewer / CNC / Wiring / Video / Spectrum / Back） ===== -->
+  <!-- ===== Main（Overview / Screenshots / 3D Scan(GLB) / CAD / 3D Viewer(STL) / CNC / Wiring / Video / Spectrum） ===== -->
   <main id="main">
 
-    <!-- 概要（1つに統一） -->
+    <!-- 概要 -->
     <section class="pd-section" aria-labelledby="about-title">
       <div class="container">
         <h2 id="about-title" class="pd-section__title">概要</h2>
@@ -79,7 +78,7 @@
       </div>
     </section>
 
-    <!-- Screenshots（1枚なので中央寄せにしたい：クラスを付与） -->
+    <!-- Screenshots（1枚なので中央寄せ） -->
     <section class="pd-section" aria-labelledby="shots-title">
       <div class="container">
         <h2 id="shots-title" class="pd-section__title">外観</h2>
@@ -88,6 +87,39 @@
             <img src="../assets/MyST_verticality.jpg" alt="完成品：ストラトキャスタータイプギター" width="1080" height="1440" loading="lazy" decoding="async">
             <figcaption>完成：桐材ボディのストラトタイプ</figcaption>
           </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ★ 3D Scan Viewer（glTF 読み込み：OBJから切替） -->
+    <section class="pd-section" aria-labelledby="scan-title">
+      <div class="container">
+        <h2 id="scan-title" class="pd-section__title">3D Scan Viewer</h2>
+        <div class="pd-summary" style="margin-bottom:10px">
+        </div>
+
+        <div class="pd-3d">
+          <div class="pd-3d__stage" id="scan-stage">
+            <!-- data-type="glb" と data-src に GLB のパス -->
+            <canvas
+              id="scan-canvas"
+              class="pd-3d__canvas"
+              data-type="glb"
+              data-src="../assets/Stratocaster/Stratocaster.glb"
+              data-autoRotate="true"
+              data-rotationSpeed="0.4"
+              data-initialDistance="fit"
+              data-exposure="1.72"
+              data-yaw="30"
+              data-pitch="20"
+              aria-label="3Dスキャンモデル"
+            ></canvas>
+          </div>
+          <div class="pd-3d__toolbar">
+            <button class="btn" data-role="toggle-rotate" data-target="#scan-canvas">再生/停止</button>
+            <button class="btn" data-role="reset-view"  data-target="#scan-canvas">リセット</button>
+            <span class="pd-3d__hint">ドラッグで回転・ピンチ/ホイールで拡大縮小</span>
+          </div>
         </div>
       </div>
     </section>
@@ -104,7 +136,6 @@
         </div>
 
         <div class="pd-shots" data-gallery>
-          <!-- 画像が1枚だけになる運用の場合は、コンテナに pd-shots--single を付けて中央寄せにできます -->
           <figure class="pd-shot">
             <img src="../assets/MyST_model1.png" alt="CAD：ボディ外形とキャビティ設計" width="1280" height="720" loading="lazy" decoding="async">
             <figcaption>ボディ設計</figcaption>
@@ -116,18 +147,30 @@
       </div>
     </section>
 
-    <!-- 3D Viewer（Three.js / STL） -->
+    <!-- 3D Model Viewer（STL：CAD形状） -->
     <section class="pd-section" aria-labelledby="viewer-title">
       <div class="container">
         <h2 id="viewer-title" class="pd-section__title">3D Model Viewer</h2>
         <div class="pd-3d">
           <div class="pd-3d__stage" id="stl-stage">
-            <canvas id="stl-canvas" class="pd-3d__canvas"></canvas>
+            <canvas
+              id="stl-canvas"
+              class="pd-3d__canvas"
+              data-type="stl"
+              data-src="../assets/StratocasterType.stl"
+              data-color="#f0c9a2"
+              data-autoRotate="true"
+              data-rotationSpeed="0.3"
+              data-initialDistance="fit"
+              data-yaw="30"
+              data-pitch="20"
+              aria-label="CAD STLモデル"
+            ></canvas>
           </div>
           <div class="pd-3d__toolbar">
-            <button class="btn" id="btn-rotate">再生/停止</button>
-            <button class="btn" id="btn-reset">リセット</button>
-            <span class="pd-3d__hint">ドラッグで回転・ホイールで拡大縮小（OrbitControls対応）</span>
+            <button class="btn" data-role="toggle-rotate" data-target="#stl-canvas">再生/停止</button>
+            <button class="btn" data-role="reset-view"  data-target="#stl-canvas">リセット</button>
+            <span class="pd-3d__hint">ドラッグで回転・ピンチ/ホイールで拡大縮小</span>
           </div>
         </div>
       </div>
@@ -200,14 +243,15 @@
   </main>
 
   <!-- 共通の詳細ページ用スクリプト -->
-  <script src="../product.js" type="module"></script>
+  <script src="./product.js" type="module"></script>
 
   <!-- Three.js（同一バージョンで揃える） -->
   <script src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
   <script src="https://unpkg.com/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
   <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/STLLoader.js"></script>
+  <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>
 
-  <!-- このページ専用：STLビューア初期化 -->
-<script src="./product-3d.js" type="module"></script>
+  <!-- 共通 3D 初期化 -->
+  <script src="./product-3d.js" type="module"></script>
 </body>
 </html>
