@@ -28,7 +28,7 @@ export const PRODUCTS = [
     img:"./assets/work_fpga_fx.png", tags:["FPGA","PYNQ","Linux","HDL","Python","C++"], links:[{label:"詳細",href:"./productions/fpga-fx.html"}] },
   { id:"web-cae", title:"Web CAEアプリ",
     desc:"NASA Space Apps Challenge 2025提出作品",
-    img:"./assets/work_web_cae.png", tags:["CAE","HTML","CSS","JavaScript","Three.js"], links:[{label:"詳細",href:"./productions/web-cae.html"}] },
+    img:"./assets/work_web_cae.png", tags:["CAE","Python","HTML","CSS","JavaScript","Three.js"], links:[{label:"詳細",href:"./productions/web-cae.html"}] },
   { id:"web-nenga", title:"Web年賀状",
     desc:"ブラウザ上で表示できる年賀状",
     img:"./assets/work_web_nenga.png", tags:["HTML","CSS","JavaScript"], links:[{label:"詳細",href:"./productions/nenga.html"}] },
