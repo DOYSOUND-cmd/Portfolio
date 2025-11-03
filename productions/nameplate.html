@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>リアルVRネームプレート — Product Detail</title>
+  <meta name="description" content="VR空間のネームプレートを現実世界で再現した、オフ会・イベント用グッズの紹介ページ。" />
+  <!-- 共通スタイル -->
+  <link rel="stylesheet" href="../global.css" />
+  <!-- プロダクト詳細 共通スタイル -->
+  <link rel="stylesheet" href="./product.css" />
+  <style>
+    /* 3Dビューア用（product.cssに干渉しない軽い補助） */
+    .pd-3d { display: grid; gap: clamp(12px, 2vw, 16px); }
+    .pd-3d__stage {
+      position: relative; width: 100%; aspect-ratio: 16/9;
+      background: #0f141d; border: 1px solid #00000055; border-radius: 10px; overflow: hidden;
+    }
+    .pd-3d__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; border: 0; }
+    .pd-3d__hint { color: var(--muted); font-size: .95rem; }
+    .pd-3d__toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  </style>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Y39NSDYY9J');
+  </script>
+</head>
+<body>
+
+<header class="pd-hero">
+  <div class="container">
+    <div class="pd-hero__eyebrow">Product Detail</div>
+    <h1 class="pd-hero__title">リアルVRネームプレート</h1>
+    <p class="pd-hero__lede">
+      VRChatなどで見慣れた“ネームプレート”を、現実でそのまま装着可能に。<br>
+      イベントやオフ会での自己表現・識別性を高める、軽量・着脱式のカスタムグッズ。
+    </p>
+<ul class="pd-badges pd-badges--icons" aria-label="使用技術">
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/CAE.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>CAE</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/HTML.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>HTML</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/CSS.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>CSS</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/JS.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>JavaScript</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/Threejs.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>Three.js</span>
+        </li>
+      </ul>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="pd-section" aria-labelledby="about-title">
+    <div class="container">
+      <h2 id="about-title" class="pd-section__title">概要</h2>
+      <div class="pd-summary">
+        <p>
+          VR世界での名前表示を現実に持ち出すためのネームプレートです。<br>
+          イベントやリアルVketなどで頭上装着し、自身のVR名・ハンドルネームを表示することで、フレンドとの再会・遭遇率を高めます。<br>
+        </p>
+      </div>
+    </div>
+  </section>
+
+    <section class="pd-section" aria-labelledby="shots-title">
+      <div class="container">
+        <h2 id="shots-title" class="pd-section__title">宣伝POP</h2>
+        <div class="pd-shots pd-shots--single" data-gallery>
+          <figure class="pd-shot">
+            <img src="../assets/nameplate.png" alt="完成品：ストラトキャスタータイプギター" width="1080" height="1440" loading="lazy" decoding="async">
+            <figcaption>VketReal 2025 Summer 出展</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+        <!-- ★ 3D Scan Viewer（glTF 読み込み：OBJから切替） -->
+    <section class="pd-section" aria-labelledby="scan-title">
+      <div class="container">
+        <h2 id="scan-title" class="pd-section__title">3D Scan Viewer</h2>
+        <div class="pd-summary" style="margin-bottom:10px">
+        </div>
+
+        <div class="pd-3d">
+          <div class="pd-3d__stage" id="scan-stage">
+            <!-- data-type="glb" と data-src に GLB のパス -->
+            <canvas
+              id="scan-canvas"
+              class="pd-3d__canvas"
+              data-type="glb"
+              data-src="../assets/Stratocaster/Stratocaster.glb"
+              data-autoRotate="true"
+              data-rotationSpeed="0.4"
+              data-initialDistance="fit"
+              data-exposure="1.72"
+              data-yaw="30"
+              data-pitch="20"
+              aria-label="3Dスキャンモデル"
+            ></canvas>
+          </div>
+          <div class="pd-3d__toolbar">
+            <button class="btn" data-role="toggle-rotate" data-target="#scan-canvas">再生/停止</button>
+            <button class="btn" data-role="reset-view"  data-target="#scan-canvas">リセット</button>
+            <span class="pd-3d__hint">ドラッグで回転・ピンチ/ホイールで拡大縮小</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+        <!-- CAD（画像 + 説明） -->
+    <section class="pd-section" aria-labelledby="cad-title">
+      <div class="container">
+        <h2 id="cad-title" class="pd-section__title">ハードウェア設計</h2>
+        <div class="pd-summary">
+          <p>
+            主に本体の素材選定(独立気泡ポリエチレンフォーム)や構造解析を担当しました。
+          </p>
+        </div>
+
+        <div class="pd-shots" data-gallery>
+          <figure class="pd-shot">
+            <img src="../assets/sanperuka0.png" alt="CAD：ボディ外形とキャビティ設計" width="1280" height="720" loading="lazy" decoding="async">
+            <figcaption>たわみの大きさと肉抜き量の比較</figcaption>
+          </figure>
+          <figure class="pd-shot">
+            <img src="../assets/sanperuka1.png" alt="CAD：ネックポケット・ブリッジ周りの検討" width="1280" height="720" loading="lazy" decoding="async">
+          </figure>
+          <figure class="pd-shot">
+            <img src="../assets/bottom0.png" alt="CAD：ボディ外形とキャビティ設計" width="1280" height="720" loading="lazy" decoding="async">
+            <figcaption>応力計算</figcaption>
+          </figure>
+          <figure class="pd-shot">
+            <img src="../assets/bottom1.png" alt="CAD：ネックポケット・ブリッジ周りの検討" width="1280" height="720" loading="lazy" decoding="async">
+          </figure>
+        </div>
+      </div>
+
+  <section class="pd-section" aria-labelledby="video-title">
+    <div class="container">
+      <h2 id="video-title" class="pd-section__title">制作の様子</h2>
+      <div class="pd-shots pd-shots--single">
+        <figure class="pd-shot">
+          <div style="position:relative; width:100%; aspect-ratio:16/9; background:#000; border-radius:8px; overflow:hidden;">
+            <iframe
+              src="https://www.youtube.com/embed/A0VrSljr9gI"
+              title="VRネームプレート紹介動画"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              style="position:absolute; inset:0; width:100%; height:100%; border:0;">
+            </iframe>
+          </div>
+          <figcaption>使用例や製作背景を紹介</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="pd-section" aria-labelledby="link-title">
+    <div class="container">
+      <h2 id="link-title" class="pd-section__title">リンク</h2>
+      <div class="pd-links">
+        <a class="btn btn--primary" href="https://real-name-plate-system-with-tag-marker-mby2dyxh0-nisshi.vercel.app/" target="_blank" rel="noopener">Web 入稿フォーム</a>
+        <a class="btn" href="https://x.com/nisshi_dev" target="_blank" rel="noopener">nisshi-dev工房</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 共通の詳細ページ用スクリプト -->
+  <script src="./product.js" type="module"></script>
+
+  <!-- Three.js（同一バージョンで揃える） -->
+  <script src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/STLLoader.js"></script>
+  <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>
+
+  <!-- 共通 3D 初期化 -->
+  <script src="./product-3d.js" type="module"></script>
+</body>
+</html>
