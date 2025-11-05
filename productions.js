@@ -39,7 +39,7 @@ export const PRODUCTS = [
     desc:"桐材を使用したストラトキャスタータイプギター",
     img:"./assets/work_strat.jpg", tags:["CAD","electronic circuit"], links:[{label:"詳細",href:"./productions/strat.html"}] },
   { id:"tube-booster", title:"真空管クリーンブースター",
-    desc:"真空管のを用いたアナログギターエフェクター",
+    desc:"真空管を用いたアナログギターエフェクター",
     img:"./assets/work_tube_booster.jpg", tags:["electronic circuit"], links:[{label:"詳細",href:"./productions/booster.html"}] },
     /*
   { id:"megaphone-v2", title:"ライブ用メガホン Ver.2",
