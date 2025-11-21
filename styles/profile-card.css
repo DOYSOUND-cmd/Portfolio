@@ -1,0 +1,408 @@
+/* =========================================================
+   AboutMe（名刺カード）
+   - 外形 16:10 固定 / 内部 1.35:1
+   - クリック反転：.card-inner.is-flipped
+   - ホログラムは背景(.bg)のみ
+   - 文字/余白/アイコンは cqw 連動（比率不変）
+   - 傾き（tilt）用の CSS 変数を維持（JS で --rx/--ry 等を更新）
+   ========================================================= */
+
+:root{
+  --panel:#121826;
+  --line:#1e2633;
+  --fg:#e6edf3;
+  --brand:#6be7ff;
+  --brand2:#9a7bff;
+}
+
+/* セクション全体：常に中央 */
+#cord{ margin:0; padding:0; }
+#cord .container{
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  /* tilt 用 3D パース */
+  perspective: 1400px;
+}
+@media (min-width: 1024px){
+  #cord .container{
+    padding: clamp(12px, 4vw, 32px) 0 calc(40px + clamp(20px, 5vw, 48px));
+  }
+}
+
+/* ===== カード本体（外形16:10固定・等比スケール） ===== */
+#cord .card{
+  width: min(96vw, calc(100dvh * 1.6), 1200px);
+  aspect-ratio: 16 / 10;
+  height: auto;
+
+  /* 落下/チルト用のCSS変数（JSで更新） */
+  --dropY: -120vh;
+  --rz: 0deg; --rx: 0deg; --ry: 0deg;
+  --mx: 50%; --my: 50%;
+  --glossImpact: 0;
+
+  position: relative;
+  transform-style: preserve-3d;
+  transform:
+    translateY(var(--dropY))
+    rotateZ(var(--rz))
+    rotateX(var(--rx)) rotateY(var(--ry));
+  will-change: transform;
+
+  /* = フォントの起点 = */
+  container-type: inline-size;                 /* cqw を有効化 */
+  --font-zoom: 1;                              /* 必要なら JS で微調整 */
+  --card-font-base: clamp(12px, 1.6cqw, 18px); /* PC含む全端末で可変 */
+  font-size: calc(var(--card-font-base) * var(--font-zoom));
+  line-height: 1.6;
+  color: var(--fg);
+}
+@media (min-width: 1024px){
+  #cord .card{
+    width: min(92vw, calc(100dvh * 1.5), 1120px);
+  }
+}
+
+/* ===== 反転は card-inner に適用（tilt と合成可能） ===== */
+#cord .card-inner{
+  position: relative;
+  inset: 0;
+  width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  transition: transform .7s cubic-bezier(.2,.8,.2,1);
+}
+/* flip 中のゴースト重なり対策（Safari含む） */
+#cord .card-inner:not(.is-flipped) .back{
+  visibility: hidden; pointer-events: none;
+}
+#cord .card-inner.is-flipped .front{
+  visibility: hidden; pointer-events: none;
+}
+#cord .card-inner.is-flipped .back{
+  visibility: visible; pointer-events: auto;
+}
+#cord .card-inner.is-flipped{ transform: rotateY(180deg); }
+
+/* ===== 面（前/後） ===== */
+#cord .front, #cord .back{
+  position:absolute; inset:0; width:100%; height:100%;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  transform: translateZ(0); /* Safari の描画最適化 */
+  border-radius: 18px; overflow: hidden;
+  border: 1px solid var(--line);
+  color: var(--fg);
+  box-shadow: 0 22px 48px rgba(0,0,0,.32), inset 0 0 0 1px #ffffff10;
+  background: transparent; /* 背景は .bg が描く */
+}
+#cord .back{ transform: rotateY(180deg) translateZ(0); }
+
+/* ===== 背景レイヤ（ホログラムはここだけ） ===== */
+#cord .bg{
+  position:absolute; inset:0; z-index: 0; border-radius: 18px; pointer-events:none;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  background:
+    radial-gradient(120% 140% at 0% 0%, #0f2a4333 0%, transparent 60%),
+    radial-gradient(120% 140% at 100% 0%, #3a177233 0%, transparent 60%),
+    linear-gradient(180deg, var(--panel), #0f141d);
+}
+#cord .bg::before,
+#cord .bg::after{
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+#cord .bg::before{
+  content:""; position:absolute; inset:-2px; border-radius: 20px;
+  mix-blend-mode: screen; opacity:.38; filter: blur(5px) saturate(1.12);
+  background:
+    conic-gradient(from 180deg at var(--shineX,50%) var(--shineY,50%),
+      #ff00ff22, #00e5ff22, #00ff8c22, #ffd40022, #ff00ff22),
+    linear-gradient(120deg, #fff2 0%, #0000 40%, #fff2 60%, #0000 100%);
+}
+#cord .bg::after{
+  content:""; position:absolute; inset:0; border-radius: 18px;
+  mix-blend-mode: screen; opacity:.62;
+  background:
+    radial-gradient(700px 460px at var(--shineX,50%) var(--shineY,50%),
+      #ffffff22 0%, #ffffff06 40%, transparent 62%),
+    repeating-linear-gradient(0deg, #ffffff06 0 1px, transparent 1px 2px);
+}
+/* ※ 裏面 .bg へ transform を当てない（JS で座標値は front/back 同期） */
+
+/* ===== 内部レイアウト（左テキスト:右画像 = 1.35 : 1） ===== */
+#cord .content{
+  position:relative; z-index: 1;
+  display:grid;
+  grid-template-columns: 1.35fr 1fr;
+  grid-template-rows: 1fr;
+  gap: clamp(8px, 1.6cqw, 18px);             /* 比率維持のため cqw 連動 */
+  width:100%; height:100%;
+  padding: clamp(10px, 2.2cqw, 22px);        /* 同上 */
+  min-width: 0; min-height: 0;
+}
+
+/* テキスト列は 4 行：facts / name(中央) / intro(下寄せ) / skills(最下段) */
+#cord .text{
+  display:grid;
+  grid-template-rows: auto 1fr auto auto;
+  gap: clamp(6px, 1.2cqw, 10px);
+  min-width:0; min-height:0;
+  overflow:hidden;
+}
+
+/* 画像側は常に 3:4 比率でフィット */
+#cord .media{
+  min-width: 0; min-height: 0;
+  display:flex; justify-content:center; align-items:center;
+  aspect-ratio: 3 / 4;
+}
+#cord .face-photo{
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background:#0f141d;
+}
+
+/* ===== タイポ／情報ブロック（= 文字のみ可変、比率不変） ===== */
+
+/* 名前ブロック */
+#cord .idblock{
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+}
+
+/* name-ja: グラデ + 透明塗り + HD で大きく（最大 72px） */
+#cord .idblock .name-ja{
+  margin:0; font-weight:950; letter-spacing:.02em;
+  line-height:1.1;
+
+  /* フォールバック（まず普通に見える） */
+  color: var(--fg);
+
+  /* グラデーション適用（成功すれば透明化して切り抜き） */
+  background-image: linear-gradient(90deg, var(--brand), var(--brand2));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; /* Safari用 */
+
+  /* フォントサイズ（カード幅に応じて積極に可変） */
+  font-size: clamp(24px, 6.2cqw, 72px);
+}
+
+/* name-en: グラデ + 透明塗り + HD で大きく（最大 42px） */
+#cord .idblock .name-en{
+  margin:0; font-weight:950; letter-spacing:.02em;
+  line-height:1.15;
+
+  color: var(--fg);
+  background-image: linear-gradient(90deg, var(--brand), var(--brand2));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  font-size: clamp(24px, 6.2cqw, 72px);
+}
+
+/* 概要（facts） */
+#cord .facts{
+  border-collapse: collapse; table-layout: fixed; width: 100%;
+  margin: .2rem 0 .1rem;
+  --facts-mobile-gap: clamp(6px, 2vw, 14px);
+}
+#cord .facts td{
+  padding: clamp(4px, .8cqw, 7px) clamp(3px, .7cqw, 6px);
+  vertical-align: top; border:none;
+  font-size: 0.95em; /* ベースが cqw なので相対で可変 */
+}
+#cord .facts td:nth-child(1){
+  width: clamp(5.4em, 8vw, 7.6em);
+  text-align:left; white-space:nowrap; color:#cdd9ed; font-weight:800;
+}
+#cord .facts td:nth-child(2){
+  text-align:left; word-wrap:break-word; color:#e6edf3;
+}
+html.is-ios #cord .facts{
+  table-layout: auto;
+}
+html.is-ios #cord .facts td:nth-child(1){
+  white-space: normal;
+}
+@media (max-width: 640px){
+  #cord .facts{
+    border-collapse: separate;
+  }
+  #cord .facts > tbody{
+    display:flex;
+    flex-wrap:wrap;
+    gap: var(--facts-mobile-gap);
+    margin:0;
+    padding:0;
+    width:100%;
+  }
+  #cord .facts tr{
+    display:grid;
+    grid-template-columns: auto 1fr;
+    align-items:flex-start;
+    flex: 1 1 calc(50% - var(--facts-mobile-gap));
+    min-width: min(240px, calc(50% - var(--facts-mobile-gap)));
+    margin:0;
+  }
+  #cord .facts td{
+    padding: clamp(2px, 1.6vw, 6px) clamp(3px, 2vw, 10px);
+  }
+  #cord .facts td:nth-child(1){
+    width:auto;
+  }
+  html.is-ios #cord .facts td{
+    padding-left: clamp(3px, 2vw, 10px);
+    padding-right: clamp(3px, 2vw, 10px);
+  }
+}
+#cord .age-badge{
+  margin-left: clamp(4px, .7cqw, 8px);
+  padding: clamp(2px, .5cqw, 4px) clamp(6px, .9cqw, 10px);
+  border:1px solid var(--line);
+  border-radius:999px;
+  font-size: 0.9em;
+  color:#bcd0e3;
+  background: linear-gradient(180deg,#ffffff12,#ffffff06);
+}
+@media (max-width: 640px){
+  #cord .age-badge{
+    display:none;
+  }
+}
+
+/* 自己紹介（intro：テキストのみ可変） */
+#cord .intro{
+  align-self: end;
+  margin-top: auto;
+  margin-bottom: .1rem;
+  color:#dbe7f7;
+  line-height: 1.55;
+  font-weight:700;
+  font-size: clamp(12px, 2.2cqw, 16px);
+  letter-spacing:.01em;
+  overflow:auto;
+  text-overflow:ellipsis;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Skills：最下段に固定・中央寄せ（あふれは内部スクロールのみ） */
+#cord .skills-title{
+  margin:.2rem 0 0;
+  font-size: 0.95em;  /* ベース連動で可変 */
+  color:#9fb0c3; font-weight:900; letter-spacing:.02em
+}
+#cord .skills{
+  align-self:end;
+  margin-top:auto;
+  padding:0; list-style:none;
+  display:flex; flex-wrap:wrap;
+  gap: clamp(6px, 1cqw, 10px);
+  justify-content:center;
+  overflow:auto;
+  -webkit-overflow-scrolling: touch;
+}
+#cord .skill{
+  display:inline-flex; align-items:center; gap:6px;
+  padding: clamp(6px, .9cqw, 10px) clamp(8px, 1.1cqw, 12px);
+  border-radius:999px;
+  border:1px solid var(--line);
+  background: linear-gradient(180deg,#ffffff12,#ffffff06);
+  color:#dbe7f7; font-weight:800;
+  font-size: 0.95em; /* ベースに追従して可変（レイアウトは不変） */
+  white-space: nowrap;
+}
+#cord .skill__icon,
+#cord .skill--fallback{
+  width: 1.1em; height: 1.1em;
+  object-fit:contain; border-radius:4px; background:#0f141d; display:block;
+}
+#cord .skill--fallback{
+  display:grid; place-items:center;
+  font-size:.7rem; font-weight:900; color:#bcd0e3; border:1px solid var(--line);
+}
+
+/* フォーカス */
+#cord .card:focus-visible{
+  box-shadow: 0 0 0 3px #6be7ff66, 0 22px 48px rgba(0,0,0,.28)
+}
+
+/* 省モーション配慮 */
+@media (prefers-reduced-motion: reduce){
+  #cord .card-inner{ transition:none }
+  #cord .bg::before{ opacity:.22 } 
+  #cord .bg::after{  opacity:.5 }
+}
+
+/* ================================================
+   iOS：Skills を必ず収めるための微縮小・余白最適化
+   （PCは非干渉。レイアウトは不変・文字のみ）
+   ================================================ */
+html.is-ios #cord [data-section="skills"],
+html.is-ios #cord .skills{
+  font-size: 0.88em;      /* ベースに対する係数 */
+  line-height: 1.35;
+}
+html.is-ios #cord .skills :where(ul,ol){
+  display:flex; flex-wrap:wrap;
+  gap: 6px 8px; margin:0; padding:0; list-style:none;
+}
+html.is-ios #cord .skills :where(.chip, .tag, .badge, li){
+  font-size: 0.8em;
+  line-height: 1.3;
+  padding: 4px 8px;
+  border-radius: 8px;
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+}
+html.is-ios #cord .skills :where(p, li, .chip, .tag, .badge){ word-break: keep-all; }
+html.is-ios #cord .skills :where(p, .text, .desc){
+  font-size: 0.9em; line-height: 1.5;
+  -webkit-line-clamp: unset !important; line-clamp: unset !important;
+  white-space: normal !important; overflow: visible !important;
+}
+
+/* iOS かつ狭幅時の最終縮小（文字のみ・外形不変） */
+@media (max-width: 600px){
+  html.is-ios #cord [data-section="skills"],
+  html.is-ios #cord .skills{ font-size: 0.70em; }
+  html.is-ios #cord .skills :where(.chip, .tag, .badge, li){ font-size: 0.70em; }
+  html.is-ios #cord .skills :where(ul,ol){ gap: 5px 7px; }
+}
+
+/* 非破壊の保険：内容が極端に多い場合は“内容だけ”スクロール */
+@supports (height: 100svh){
+  html.is-ios #cord .content{
+    max-height: calc(100svh - 32px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* =========================================================
+   非 container-query 環境のフォールバック（文字だけ）
+   ========================================================= */
+@supports not (container-type: inline-size){
+  /* ベース：viewport 近似（比率は保つ） */
+  #cord .card{ font-size: calc(clamp(12px, 3.0vw, 18px) * var(--font-zoom, 1)); }
+  #cord .idblock .name-ja{ font-size: 1rem; }
+  #cord .idblock .name-en{ font-size: clamp(18px, 4.4vw, 42px); }
+  #cord .intro{ font-size: clamp(12px, 2.8vw, 16px); }
+  #cord .skills{ font-size: 0.9em; }
+}
+
+/* =========================================================
+   超狭幅カード（最終微調整。文字のみ）
+   ========================================================= */
+@container (max-width: 580px){
+  #cord .facts td{ font-size: 0.35rem; }
+  #cord .idblock .name-ja{ font-size: 0.8rem; }
+  #cord .idblock .name-en{ font-size: 0.4rem; }
+  #cord .intro{ font-size: 0.3rem; }
+  /* skills はベースから自動連動。必要なら chip をさらに一段だけ絞る */
+  #cord .skills-title{ font-size: 0.3rem; }
+  #cord .skill{ font-size: 0.3rem; }
+}

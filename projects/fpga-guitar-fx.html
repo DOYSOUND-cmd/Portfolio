@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FPGA Guitar FX — Product Detail</title>
+  <meta name="description" content="FPGA上でリアルタイムにギター信号を処理する試作エフェクターの紹介。">
+  <!-- 共通スタイル -->
+  <link rel="stylesheet" href="../styles/site-core.css" />
+  <!-- プロダクト詳細 共通スタイル -->
+  <link rel="stylesheet" href="../styles/project-detail.css" />
+  
+    <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-S29JRMXN8G"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-S29JRMXN8G');
+      </script>
+  
+</head>
+<body>
+
+  <!-- Product Hero -->
+  <header class="pd-hero">
+    <div class="container">
+      <div class="pd-hero__eyebrow">Product Detail</div>
+      <h1 class="pd-hero__title">FPGAギターエフェクター</h1>
+      <p class="pd-hero__lede">
+        FPGA（PYNQ）上でギター信号を<strong>低遅延</strong>処理する試作エフェクター。<br>
+        HDL で信号経路を構成し、ソフト側からパラメータ制御する構成でリアルタイム動作を検証しました。
+      </p>
+
+      <!-- アイコン付きタグ -->
+      <ul class="pd-badges pd-badges--icons" aria-label="使用技術">
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/fpga.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>FPGA</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/PYNQ.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>PYNQ</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/Linux.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>Linux</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/HDL.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>HDL</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/Python.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>Python</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/Cpurapura.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>C++</span>
+        </li>
+      </ul>
+
+      <div class="pd-cta">
+        <a class="btn" href="../index.html">Topへ戻る</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Main（Overview / Video / Links） ===== -->
+  <main id="main">
+
+    <!-- 概要 -->
+    <section class="pd-section" aria-labelledby="about-title">
+      <div class="container">
+        <h2 id="about-title" class="pd-section__title">概要</h2>
+        <div class="pd-summary">
+          <p>
+            FPGA（PYNQ）を用いてギター信号のリアルタイム処理を試したプロトタイプです。<br>
+            基本的なエフェクト構成を HDL で記述し、ソフト側からパラメータを調整することで、従来のデジタルエフェクターと比較して<br>
+            <strong>低遅延で動作</strong>を実現できるようになる予定です。<br>
+            今後は様々なエフェクトを追加予定です。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo Video -->
+    <section class="pd-section" aria-labelledby="video-title">
+      <div class="container">
+        <h2 id="video-title" class="pd-section__title">GUI デモ</h2>
+        <div class="pd-shots pd-shots--single">
+          <figure class="pd-shot">
+            <div style="position:relative; width:100%; aspect-ratio:16/9; background:#0f141d; border-radius:8px; overflow:hidden; border:1px solid #00000055;">
+              <iframe
+                src="https://www.youtube.com/embed/ipBjrmCIKV8"
+                title="FPGAギターエフェクター デモ動画"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                style="position:absolute; inset:0; width:100%; height:100%; border:0;"
+              ></iframe>
+            </div>
+            <figcaption>プロトタイプ動作の様子（YouTube）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 画像や簡単なギャラリー演出が必要なら（任意） -->
+  <script src="../scripts/project-detail.js" type="module"></script>
+</body>
+</html>

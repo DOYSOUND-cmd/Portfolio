@@ -1,0 +1,345 @@
+/* =========================================================
+   Global Styles (site-wide) — iOS/Safari robust
+   - ベース/カラー/タイポ
+   - コンテナ/セクション/見出し/ボタン
+   - 便利ユーティリティ
+   - 「Productions 見出し⇄カルーセル」の境界線除去
+   - Certifications（資格）… 行ごとに見栄えを統一（色も固定）
+   - ★要望対応：セクションの背景色分け/区切り線を全面オフ
+   ========================================================= */
+
+/* ----- Reset（最小限） ----- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body, h1, h2, h3, h4, p, ul, ol, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+img, svg, video { display: block; max-width: 100%; }
+
+/* ----- Tokens（ダーク基調・可読性固定） ----- */
+:root{
+  --bg: #0b0f16;
+  --panel: #121826;
+  --text: #e6edf3;
+  --muted: #b7c6d6;
+  --line: #1e2633;
+  --brand: #6be7ff;
+  --brand-2: #9a7bff;
+  --accent: #22d3ee;
+
+  --shadow-1: 0 10px 24px rgba(0,0,0,.24);
+  --shadow-2: 0 20px 48px rgba(0,0,0,.32);
+
+  --radius: 14px;
+
+  /* iOS の動的ツールバー対策（svh 非対応環境フォールバック用） */
+  --vh-62: 62vh;
+  --vh-58: 58vh;
+  --vh-54: 54vh;
+}
+
+/* ----- Base ----- */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%; /* iOS 文字拡大で改行崩れを防ぐ */
+}
+body{
+  background:
+    radial-gradient(140vw 120vh at 50% -30%, #122031, transparent 65%),
+    var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ----- Container / Section ----- */
+.container{
+  max-width: 1200px;
+  width: min(92vw, 1200px);
+  margin-inline: auto;
+}
+.section{
+  padding-block: clamp(40px, 6vw, 80px);
+}
+
+/* ----- Page Head ----- */
+.page-head{
+  background: linear-gradient(180deg, #ffffff08, #00000000);
+  border-top: 1px solid #ffffff10;
+  border-bottom: 1px solid #ffffff10;
+  box-shadow: inset 0 1px 0 #ffffff10;
+  margin-bottom: clamp(24px, 4vw, 40px);
+}
+.page-head .container{ padding-block: clamp(18px, 2.8vw, 28px); }
+.page-head .title{
+  font-weight: 900;
+  font-size: clamp(24px, 4.2vw, 40px);
+  letter-spacing: .01em;
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent; /* Safari 安定化 */
+  color: transparent;
+}
+.page-head .lede{
+  color: var(--muted);
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+/* ----- Links / Buttons ----- */
+a{ color: var(--brand); text-decoration: none; }
+a:hover{ text-decoration: underline; }
+
+.btn{
+  display: inline-flex; align-items: center; gap: .5rem;
+  height: 40px; padding: 0 16px; border-radius: 999px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg,#ffffff10,#ffffff06);
+  color: var(--text); font-weight: 800;
+  box-shadow: var(--shadow-1);
+  transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
+  min-width: 0; /* iOS の text-overflow 回避 */
+}
+.btn:hover{ transform: translateY(-1px); box-shadow: var(--shadow-2); text-decoration: none; }
+.btn:active{ transform: translateY(0); }
+.btn--primary{ background: linear-gradient(90deg, var(--brand), var(--brand-2)); border-color: transparent; color: #fff; }
+.btn--ghost{ background: transparent; border-color: var(--line); }
+
+/* ----- Focus ring ----- */
+:where(a, button, [tabindex]):focus-visible{
+  /* color-mix が無い環境でも明るい水色にフォールバック */
+  outline: 2px solid #7fe8ff;
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+@supports (outline-color: color-mix(in oklab, white, black)) {
+  :where(a, button, [tabindex]):focus-visible{
+    outline-color: color-mix(in oklab, var(--brand) 70%, white);
+  }
+}
+
+/* ----- Utils ----- */
+.sr-only{
+  position: absolute!important; width: 1px!important; height: 1px!important;
+  padding: 0!important; margin: -1px!important; overflow: hidden!important;
+  clip: rect(0,0,0,0)!important; white-space: nowrap!important; border: 0!important;
+}
+.center { display:grid; place-items:center; }
+
+/* アンカー遷移時の余白（未設定/単位付でもOKな JS とペア） */
+[id]{ scroll-margin-top: clamp(60px, 8vw, 80px); }
+
+/* 小さなフェード */
+[data-animate="fade-up"]{ opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
+[data-animate="fade-up"].is-in{ opacity: 1; transform: translateY(0); }
+
+/* ============================
+   「Productions 見出し⇄カルーセル」の線を消す
+   ============================ */
+.page-head, .page-head .container{ border: none !important; box-shadow: none !important; }
+.page-head::before, .page-head::after, .page-head .container::before, .page-head .container::after{ content: none !important; }
+#Productions .container, #Productions .carousel{ border-top: none !important; box-shadow: none !important; }
+.page-head { margin-bottom: 0 !important; }
+#Productions.section { margin-top: 0 !important; }
+#main hr{ display:none!important; border:0!important; height:0!important; }
+
+.scroll-hint{
+  width: min(420px, 92vw);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap: clamp(10px, 2vw, 16px);
+  text-align:center;
+  color: var(--muted, #9ba7c5);
+  position: fixed;
+  left: 50%;
+  bottom: clamp(24px, 6vw, 64px);
+  transform: translate(-50%, 0);
+  z-index: 30;
+  pointer-events: none;
+  transition: opacity .3s ease, transform .3s ease;
+}
+.scroll-hint.is-off{
+  opacity: 0;
+  transform: translate(-50%, 20px);
+}
+.scroll-hint__body{
+  display:flex;
+  flex-direction:column;
+  gap:.4rem;
+  align-items:center;
+}
+.scroll-hint__label{
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-size: clamp(12px, 2vw, 14px);
+}
+.scroll-hint__cta{
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid #ffffff33;
+  color: var(--text);
+  text-decoration:none;
+  font-weight: 700;
+  transition: border-color .2s ease, transform .2s ease, color .2s ease;
+  background: rgba(17,23,34,.55);
+  pointer-events: auto;
+}
+.scroll-hint__cta svg{
+  animation: scrollHintArrow 1.8s infinite ease-in-out;
+}
+.scroll-hint__cta:hover{
+  border-color: var(--brand);
+  color: var(--brand);
+  transform: translateY(1px);
+}
+@keyframes scrollHintArrow{
+  0%{ transform: translateY(-1px); opacity: .7; }
+  50%{ transform: translateY(2px); opacity: 1; }
+  100%{ transform: translateY(-1px); opacity: .7; }
+}
+
+@media (max-width: 768px){
+  .scroll-hint{
+    bottom: clamp(16px, 12vw, 40px);
+  }
+  .scroll-hint__cta{
+    padding: 8px 16px;
+  }
+}
+
+
+
+/* =========================================================
+   Certifications（資格）
+   - 行ごとの高さ合わせ（JSが per-row で min-height を付与）
+   - 開閉時に min-height も滑らかに変化
+   - 色は常に読みやすい明度
+   ========================================================= */
+#qualifications { color: var(--text); }
+#qualifications .section-title{
+  font-weight: 900;
+  font-size: clamp(22px, 3.6vw, 34px);
+  letter-spacing: .01em;
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  margin-bottom: clamp(16px, 3vw, 24px);
+}
+
+#qualifications .quals{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: clamp(12px, 2.4vw, 18px);
+}
+@media (max-width: 1024px){ #qualifications .quals{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 640px){  #qualifications .quals{ grid-template-columns: 1fr; } }
+
+#qualifications .qualification-item{
+  display: flex; flex-direction: column;
+  min-height: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg,#ffffff12,#ffffff06);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+  transition: box-shadow .2s ease, transform .06s ease, min-height .28s ease;
+  color: var(--text);
+}
+#qualifications .qualification-item:hover{
+  box-shadow: var(--shadow-2);
+  transform: translateY(-1px);
+}
+
+#qualifications .q-head{
+  display: flex; align-items: center; gap: .6rem;
+  padding: 14px 16px; width: 100%; border: 0; text-align: left;
+  font-weight: 900; color: var(--text);
+  font-size: clamp(17px, 2vw, 17px);
+  background: transparent; cursor: pointer;
+  transition: background .2s ease; min-height: 56px;
+}
+#qualifications .q-head:hover{ background: #ffffff10; }
+#qualifications .q-head:focus-visible{
+  outline: 2px solid #7fe8ff;
+  outline-offset: -2px;
+}
+@supports (outline-color: color-mix(in oklab, white, black)) {
+  #qualifications .q-head:focus-visible{
+    outline-color: color-mix(in oklab,var(--brand) 70%, #fff);
+  }
+}
+
+#qualifications .q-index{
+  display:inline-grid; place-items:center;
+  width: 26px; height: 26px; border-radius: 999px;
+  background: linear-gradient(180deg, var(--brand), var(--brand-2));
+  color: #fff; font-size: 12px; font-weight: 900;
+}
+#qualifications .q-icon{ margin-left: auto; font-weight: 900; color: var(--muted); transition: transform .25s ease; }
+#qualifications .q-head[aria-expanded="true"] .q-icon{ transform: rotate(45deg); }
+
+#qualifications .qualification-description{
+  padding: 0 16px;
+  line-height: 1.7;
+  overflow: hidden;
+  height: 0;               /* 初期は隠す（JSで制御） */
+  border-top: 1px dashed #ffffff22;
+  color: var(--text);
+  opacity: 0;
+  transition:
+    height .32s cubic-bezier(.2,.8,.2,1),
+    opacity .28s ease;
+}
+#qualifications .qualification-description.is-open{
+  opacity: 1;
+}
+#qualifications .qualification-description p{
+  margin: 12px 0 16px; color: var(--text);
+}
+#qualifications .qualification-description a{
+  color: var(--brand); text-decoration: underline;
+}
+
+/* iOS: remove tap highlight */
+:where(a,button,[role='button'],.btn){ -webkit-tap-highlight-color: transparent; }
+
+/* =========================================================
+   ★ Section background / divider 全面オフ（要望対応の上書き）
+   - セクションごとの背景色/区切り線/影を無効化
+   - コンテンツ側の板面（例: .pd-3d__stage）は維持
+   ========================================================= */
+.section,
+.page-head,
+.page-head .container {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.section .container {
+  background: transparent !important;
+}
+.section:nth-of-type(odd),
+.section:nth-of-type(even) {
+  background: transparent !important;
+}
+.section::before, .section::after,
+.page-head::before, .page-head::after {
+  content: none !important;
+}
+#Productions .container,
+#Productions .carousel {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}

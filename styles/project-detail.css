@@ -1,0 +1,354 @@
+﻿/* =========================================================
+   Product Detail ���ʃX�^�C���iiPhone 13/Safari ����Łj
+   - �q�[���[
+   - �Z�N�V����
+   - �o�b�W�i�A�C�R���t�j
+   - �X�N���[���V���b�g�i�؂蔲�����ɑS�̕\���j
+   - PDF���ߍ���
+   - 3D���[�_/�A�X�y�N�g��t�H�[���o�b�N
+   ========================================================= */
+
+/* �x�[�X */
+:root{
+  --panel:#121826;
+  --line:#1e2633;
+  --text:#e6edf3;
+  --muted:#9fb0c3;
+  --brand:#6be7ff;
+    --page-bg:#050c16;
+--radius:14px;
+  --shadow-1:0 10px 24px rgba(0,0,0,.24);
+  --shadow-2:0 20px 48px rgba(0,0,0,.32);
+
+  /* iOS Safari �̓��I�c�[���o�[�΍�: dvh/svh ���g���Ȃ��ꍇ�̃t�H�[���o�b�N */
+  --vh-62: 62vh;
+  --vh-58: 58vh;
+  --vh-54: 54vh;
+}
+
+/* Safari �̃t�H���g�����g��ŉ��s���Y���Ȃ��悤�� */
+html { -webkit-text-size-adjust: 100%; }
+
+body{
+  background: var(--page-bg);
+  background-color: var(--page-bg);
+}
+
+
+/* ---------------- Hero ---------------- */
+.pd-hero{
+  background: var(--page-bg);
+}
+.pd-hero .container{
+  padding-block: clamp(28px,5vw,48px);
+}
+.pd-hero__eyebrow{
+  color: var(--muted);
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* �O���f������ Safari �� -webkit-text-fill-color ���K�v */
+.pd-hero__title{
+  font-weight: 900;
+  font-size: clamp(28px,4.5vw,44px);
+  letter-spacing: .01em;
+  margin: 0 0 10px;
+  background-image: linear-gradient(90deg,#6be7ff,#9a7bff);
+  color: #7fe8ff; /* background-clip が効かない環境向けの水色フォールバック */
+  line-height: 1.15; /* 改行時に収まりやすいよう */
+}
+@supports (-webkit-background-clip:text){
+  .pd-hero__title{
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+}
+/* ���o���̋������s�iHTML���� <span class="mob-line"> ��g���j */
+.pd-hero__title .mob-line { display: inline; }
+@media (max-width: 768px) {
+  .pd-hero__title .mob-line { display: block; }
+}
+
+.pd-hero__lede{
+  color: var(--text);
+  opacity: .92;
+  font-weight: 700;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* �o�b�W�i�A�C�R���t�j */
+.pd-badges{
+  display: flex; flex-wrap: wrap; gap: 8px 10px;
+  margin-top: 14px;
+}
+.pd-badges .badge{
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-radius: 999px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg,#ffffff12,#ffffff06);
+  color: var(--text); font-weight: 800; font-size: 14px;
+  min-width: 0; /* Safari �� flex �͂ݏo���h�~ */
+}
+.pd-badges--icons .badge__icon{
+  width: 18px; height: 18px; object-fit: contain;
+  border-radius: 4px; background: #0f141d;
+}
+
+/* CTA */
+.pd-cta{
+  margin-top: 16px;
+}
+.pd-cta .btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.4rem;
+  padding:.85rem 1.6rem;
+  border-radius:14px;
+  border:none;
+  background:linear-gradient(120deg,#6be7ff,#9a7bff);
+  color:#04121f;
+  font-weight:900;
+  letter-spacing:.03em;
+  text-transform:uppercase;
+  box-shadow:0 18px 38px rgba(107,231,255,.28);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.pd-cta .btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 26px 48px rgba(107,231,255,.35);
+  text-decoration:none;
+}
+.pd-cta .btn:active{ transform:translateY(0); }
+
+/* ---------------- Section ---------------- */
+.pd-section{
+  padding-block: clamp(28px,5vw,48px);
+}
+
+.pd-section .container{
+  position: static;
+}
+.pd-section__title{
+  font-weight: 900;
+  font-size: clamp(20px,3.2vw,28px);
+  margin: 0 0 16px;
+}
+
+/* ---------------- Screenshots ----------------
+   �摜��u�K���S�̂�������v�悤�ɂ���i�؂蔲���Ȃ��j
+------------------------------------------------ */
+.pd-shots{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 840px){
+  .pd-shots{ grid-template-columns: 1fr 1fr; }
+}
+
+/* �� �摜��1���̂Ƃ����E�����ɔz�u�i.pd-shots--single ��t����j */
+.pd-shots.pd-shots--single{
+  grid-template-columns: 1fr;   /* ���1��i���ʂł�j */
+  justify-items: center;        /* �������� */
+}
+.pd-shots.pd-shots--single .pd-shot{
+  max-width: min(900px, 100%);  /* �傫�����h�~ */
+  width: 100%;
+}
+
+.pd-shot{
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #0f141d;
+  box-shadow: var(--shadow-1);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pd-shot__link{
+  display:block;
+  border-radius:8px;
+  overflow:hidden;
+  transform-origin:center;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.pd-shot__link:focus-visible{
+  outline:2px solid color-mix(in oklab,var(--brand) 80%, #fff);
+  outline-offset:4px;
+}
+.pd-shot__link:hover{
+  transform:translateY(-2px);
+}
+
+.pd-shot img{
+  /* �؂蔲�����Ɏ��߂� */
+  width: 100%;
+  height: auto;
+  max-height: min(62svh, 720px); /* svh ��D�� */
+  object-fit: contain;           /* �摜�̑S�̂������ */
+  background: #0b0f16;           /* �]���̔w�i */
+  border-radius: 8px;
+  border: 1px solid #00000055;
+  transition:transform .3s ease;
+}
+@supports not (outline: 1px solid transparent) {
+  .pd-shot__link:focus-visible{
+    outline-color:#7fe8ff;
+  }
+}
+.pd-shot__link:hover img,
+.pd-shot__link:focus-visible img{
+  transform:scale(1.02);
+}
+
+/* svh ���Ȃ����iiOS �Â߂Ȃǁj�ւ̃t�H�[���o�b�N */
+@supports not (height: 1svh) {
+  .pd-shot img { max-height: min(var(--vh-62), 720px); }
+}
+
+.pd-shot figcaption{
+  margin-top: 8px;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* ---------------- Summary ---------------- */
+.pd-summary p{
+  margin: 0;
+  color: var(--text);
+  opacity: .95;
+  line-height: 1.9;
+  font-weight: 700;
+}
+
+/* ---------------- PDF ---------------- */
+.pd-pdf{
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+  background: #0f141d;
+}
+.pd-pdf__frame{
+  display: block;
+  width: 100%;
+  height: min(78svh, 900px);
+  border: 0;
+  background: #1b2230;
+}
+@supports not (height: 1svh) {
+  .pd-pdf__frame { height: min(78vh, 900px); }
+}
+
+/* Links */
+.pd-links{ display: flex; flex-wrap: wrap; gap: 10px; }
+.pd-links--inline{ margin-top: 10px; }
+
+/* ===== 3D Loader Overlay ===== */
+.pd-3d__stage {
+  position: relative;
+}
+
+/* aspect-ratio ���s����� Safari �Ή��̃t�H�[���o�b�N�p�{�b�N�X
+   �i�f�t�H���g 16:9�B�K�v�ɉ����ău���[�N�|�C���g�ŏ㏑���j */
+.pd-3d__stage::before{
+  content: "";
+  display: block;
+  padding-top: 56.25%; /* 16:9 = 9/16*100 */
+}
+.pd-3d__canvas{
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block; /* iOS ���C�A�E�g����h�~ */
+}
+/* aspect-ratio �����肵�Ďg������ł� ::before �𖳌��� */
+@supports (aspect-ratio: 16 / 9) {
+  .pd-3d__stage { aspect-ratio: 16 / 9; }
+  .pd-3d__stage::before{ content:none; display:none; padding:0; }
+}
+
+.pd-3d__loader {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  gap: 10px;
+  /* �܂��͊m���� rgba �t�H�[���o�b�N */
+  background: rgba(0,0,0,.65);
+  /* color-mix ���g������ł͔����߂� */
+  background: color-mix(in srgb, black 65%, transparent);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  transition: opacity .25s ease, visibility .25s ease;
+  opacity: 1;
+  visibility: visible;
+  z-index: 3;
+}
+@supports not (background: color-mix(in srgb, black 65%, transparent)) {
+  .pd-3d__loader { background: rgba(0,0,0,.65); }
+}
+
+.pd-3d__loader.is-done { opacity: 0; visibility: hidden; }
+
+.pd-3d__spinner {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 3px solid #ffffff33;
+  border-top-color: #fff;
+  animation: pdspin 0.9s linear infinite;
+}
+@keyframes pdspin { to { transform: rotate(360deg); } }
+
+.pd-3d__label {
+  color: var(--text, #e6edf3);
+  font-weight: 800;
+  letter-spacing: .02em;
+}
+
+/* ===== Strat 3D viewer: mobile portrait = taller aspect =====
+   �t�H�[���o�b�N�i::before��padding�䗦�j�� aspect-ratio �̗��Ή��ŏc���ύX */
+@media (max-width: 1024px) and (orientation: portrait) {
+  /* �t�H�[���o�b�N���i::before�j */
+  #scan-stage::before, #stl-stage::before { padding-top: 75%; } /* 4:3 */
+  /* aspect-ratio �g����Ȃ炱���� */
+  @supports (aspect-ratio: 4 / 3) {
+    #scan-stage, #stl-stage { aspect-ratio: 4 / 3; }
+  }
+}
+@media (max-width: 768px) and (orientation: portrait) {
+  #scan-stage::before, #stl-stage::before { padding-top: 133.333%; } /* 3:4 */
+  @supports (aspect-ratio: 3 / 4) {
+    #scan-stage, #stl-stage { aspect-ratio: 3 / 4; }
+  }
+}
+@media (max-width: 480px) and (orientation: portrait) {
+  #scan-stage::before, #stl-stage::before { padding-top: 150%; } /* 2:3 */
+  @supports (aspect-ratio: 2 / 3) {
+    #scan-stage, #stl-stage { aspect-ratio: 2 / 3; }
+  }
+}
+
+/* �O�̂��� iOS �`����艻 */
+#scan-stage .pd-3d__canvas,
+#stl-stage  .pd-3d__canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ���o�C�������� h1 ��C�ӂ̉ӏ��ŉ��s���邽�߂̃��[�e�B���e�B�i�\���j */
+.pd-hero__title .pd-mob-br { display: inline; }
+@media (max-width: 600px) {
+  .pd-hero__title .pd-mob-br { display: block; }
+}
