@@ -6,17 +6,17 @@
    ========================================================= */
 
 body{
-  background: var(--bg, #f7f7f5);
+  background: var(--bg, #f5f5f6);
 }
 
 .list-hero{
   padding: clamp(28px, 6vw, 44px) 0 clamp(12px, 4vw, 22px);
-  border-bottom: 1px solid var(--line, #dcdede);
-  background: linear-gradient(180deg, #fefbf6cc, #fefbf600);
+  border-bottom: 1px solid var(--line, #e3e6ea);
+  background: linear-gradient(180deg, #ffffff, #f6f6f8);
 }
 .list-hero .breadcrumbs{
   margin: 0 0 6px;
-  color: var(--muted, #5a5f68);
+  color: var(--muted, #5c6068);
   font-weight: 700;
   font-size: 0.95rem;
 }
@@ -30,7 +30,7 @@ body{
   font-weight: 900;
   font-size: clamp(26px, 4vw, 36px);
   letter-spacing: .01em;
-  background: linear-gradient(90deg, var(--brand, #c30d23), var(--brand-2, #a30f1f));
+  background: linear-gradient(90deg, var(--brand, #cc0000), var(--brand-2, #a60000));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -38,7 +38,7 @@ body{
 }
 .list-hero .lede{
   margin: 0;
-  color: var(--muted, #5a5f68);
+  color: var(--muted, #5c6068);
   font-weight: 700;
 }
 
@@ -61,7 +61,7 @@ body{
   gap: clamp(22px, 4vw, 32px);
 }
 .year-section{
-  border-top: 1px solid var(--line, #dcdede);
+  border-top: 1px solid var(--line, #e3e6ea);
   padding-top: clamp(12px, 3vw, 18px);
 }
 .year-title{
@@ -69,14 +69,14 @@ body{
   font-weight: 900;
   font-size: clamp(18px, 3vw, 22px);
   letter-spacing: .01em;
-  color: var(--text, #1c1f26);
+  color: var(--text, #161616);
 }
 
 /* カードを一覧用に少しコンパクトに */
 .product-card.product-card--list{
   min-height: auto;
   height: 100%;
-  box-shadow: var(--shadow-1, 0 10px 24px rgba(28,31,38,.12));
+  box-shadow: var(--shadow-1, 0 12px 30px rgba(0,0,0,.1));
 }
 .product-card--list .product-media{
   aspect-ratio: 16 / 9;
@@ -106,6 +106,6 @@ body{
 
 .empty-msg{
   margin: clamp(12px, 3vw, 18px) 0;
-  color: var(--muted, #5a5f68);
+  color: var(--muted, #5c6068);
   font-weight: 700;
 }

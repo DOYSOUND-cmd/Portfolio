@@ -1,7 +1,7 @@
 /* ===== TOKENS ===== */
 :root{
-  --bg:#f7f7f5; --bg2:#f9f9f8; --panel:#ffffff; --line:#dcdede; --fg:#1c1f26;
-  --muted:#5a5f68; --brand:#c30d23; --brand2:#a30f1f; --shadow:0 14px 40px rgba(28,31,38,.14);
+  --bg:#f5f5f6; --bg2:#f7f7f8; --panel:#ffffff; --line:#e3e6ea; --fg:#161616;
+  --muted:#5c6068; --brand:#cc0000; --brand2:#a60000; --shadow:0 14px 40px rgba(0,0,0,.12);
 
   /* 横幅を大きめ（SP/タブ/PC） */
   --slide-w: 96%;
@@ -19,12 +19,9 @@
 html,body{height:100%}
 html{scroll-behavior:smooth}
 body{
-  margin:0; font-family:"Noto Sans JP","Noto Sans","Helvetica Neue",Arial,system-ui,-apple-system,"Segoe UI","Hiragino Sans","Roboto",sans-serif;
+  margin:0; font-family:"Helvetica Neue","Noto Sans JP","Noto Sans",Arial,system-ui,-apple-system,"Segoe UI","Hiragino Sans","Roboto",sans-serif;
   line-height:1.75; color:var(--fg);
-  background:
-    radial-gradient(160vw 120vh at 20% -20%, #fdfaf4 0%, transparent 70%),
-    radial-gradient(140vw 130vh at 100% -15%, #ece3d3 0%, transparent 70%),
-    linear-gradient(180deg, var(--bg), var(--bg2));
+  background: linear-gradient(180deg, var(--bg), var(--bg2));
 }
 .container{max-width:1180px;margin:0 auto;padding:0 18px}
 .page-head{padding:54px 0 18px}
@@ -48,7 +45,7 @@ body{
   padding:20px var(--pad-inline);
 
   border-radius:18px;
-  background:linear-gradient(180deg,#ffffff,#f5f0e7);
+  background:linear-gradient(180deg,#ffffff,#f7f7f8);
   border:1px solid var(--line);
   box-shadow:var(--shadow);
   position:relative;
@@ -106,7 +103,7 @@ body{
   display:inline-flex; align-items:center; gap:6px;
   padding:.24rem .6rem; border-radius:999px; border:1px solid var(--line);
   color:#5f656f; font-weight:700; font-size:.86rem; white-space:nowrap;
-  background:linear-gradient(180deg,#ffffff,#f5f0e7);
+  background:linear-gradient(180deg,#ffffff,#f7f7f8);
 }
 .tag img{
   width:18px; height:18px; display:block; object-fit:contain; border-radius:4px; background:#f1ede5
@@ -133,33 +130,34 @@ body{
   padding:.85rem 1.2rem;
   border-radius:14px;
   border:1px solid var(--line);
-  background:linear-gradient(180deg,#ffffff,#f4efe6);
+  background:#ffffff;
   color:var(--fg);
   font-size:1rem;
   font-weight:900;
-  letter-spacing:.01em;
+  letter-spacing:.02em;
   text-decoration:none;
-  box-shadow:0 10px 26px rgba(31,37,47,.18);
-  transition:transform .25s ease, box-shadow .25s ease, filter .25s ease;
+  box-shadow:0 10px 26px rgba(0,0,0,.1);
+  transition:transform .25s ease, box-shadow .25s ease, filter .25s ease, background .2s ease, color .2s ease;
 }
 .product-card .btn:hover{
   transform:translateY(-2px);
-  box-shadow:0 18px 40px rgba(31,37,47,.25);
+  box-shadow:0 18px 40px rgba(0,0,0,.16);
   text-decoration:none;
 }
 .product-card .btn:active{ transform:translateY(0); }
 .product-card .btn--primary{
-  background:linear-gradient(120deg,var(--brand),var(--brand2));
-  border:none;
+  background:var(--brand);
+  border:1px solid var(--brand);
   color:#fff;
   font-size:1.05rem;
   letter-spacing:.03em;
-  box-shadow:0 22px 45px rgba(200,60,49,.25);
+  box-shadow:0 22px 45px rgba(204,0,0,.26);
 }
 .product-card .btn--ghost{
-  border:1px solid var(--line);
-  color:var(--fg);
-  background:linear-gradient(180deg,#ffffff,#f5f0e7);
+  border:1px solid var(--brand);
+  color:var(--brand);
+  background:#ffffff;
+  box-shadow:0 12px 28px rgba(0,0,0,.08);
 }
 
 /* ===== CENTER EMPHASIS（中央だけ拡大） ===== */

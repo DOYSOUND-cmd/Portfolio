@@ -11,15 +11,15 @@
 /* ベース */
 :root{
   --panel:#ffffff;
-  --line:#dcdede;
-  --text:#1c1f26;
-  --muted:#5a5f68;
-  --brand:#c30d23;
-  --brand2:#a30f1f;
-    --page-bg:#f7f7f5;
---radius:14px;
-  --shadow-1:0 10px 24px rgba(31,37,47,.12);
-  --shadow-2:0 20px 48px rgba(31,37,47,.18);
+  --line:#e3e6ea;
+  --text:#161616;
+  --muted:#5c6068;
+  --brand:#cc0000;
+  --brand2:#a60000;
+  --page-bg:#f5f5f6;
+  --radius:14px;
+  --shadow-1:0 12px 30px rgba(0,0,0,.1);
+  --shadow-2:0 20px 48px rgba(0,0,0,.14);
 
   /* iOS Safari の動的ツールバー対策: dvh/svh が使えない場合のフォールバック */
   --vh-62: 62vh;
@@ -33,7 +33,7 @@ html { -webkit-text-size-adjust: 100%; }
 body{
   background: var(--page-bg);
   background-color: var(--page-bg);
-  font-family: "Noto Sans JP","Noto Sans","Helvetica Neue",Arial,system-ui,-apple-system,"Segoe UI","Hiragino Sans","Roboto",sans-serif;
+  font-family: "Helvetica Neue","Noto Sans JP","Noto Sans",Arial,system-ui,-apple-system,"Segoe UI","Hiragino Sans","Roboto",sans-serif;
 }
 
 
@@ -93,13 +93,13 @@ body{
   display: inline-flex; align-items: center; gap: 8px;
   padding: 8px 12px; border-radius: 999px;
   border: 1px solid var(--line);
-  background: linear-gradient(180deg,#ffffff,#f5f0e7);
+  background: linear-gradient(180deg,#ffffff,#f7f7f8);
   color: var(--text); font-weight: 800; font-size: 14px;
   min-width: 0; /* Safari の flex はみ出し防止 */
 }
 .pd-badges--icons .badge__icon{
   width: 18px; height: 18px; object-fit: contain;
-  border-radius: 4px; background: #f1ede5;
+  border-radius: 4px; background: #f2f4f7;
 }
 
 /* CTA */
@@ -113,18 +113,18 @@ body{
   gap:.4rem;
   padding:.85rem 1.6rem;
   border-radius:14px;
-  border:none;
-  background:linear-gradient(120deg,var(--brand),var(--brand2));
+  border:1px solid var(--brand);
+  background:var(--brand);
   color:#fff;
   font-weight:900;
   letter-spacing:.03em;
   text-transform:uppercase;
-  box-shadow:0 18px 38px rgba(200,60,49,.25);
+  box-shadow:0 18px 38px rgba(204,0,0,.24);
   transition:transform .25s ease, box-shadow .25s ease;
 }
 .pd-cta .btn:hover{
   transform:translateY(-2px);
-  box-shadow:0 26px 48px rgba(200,60,49,.3);
+  box-shadow:0 26px 48px rgba(204,0,0,.3);
   text-decoration:none;
 }
 .pd-cta .btn:active{ transform:translateY(0); }
@@ -168,7 +168,7 @@ body{
 .pd-shot{
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: #f8f5ee;
+  background: #f7f7f8;
   box-shadow: var(--shadow-1);
   padding: 12px;
   display: flex;
@@ -197,7 +197,7 @@ body{
   height: auto;
   max-height: min(62svh, 720px); /* svh が効く環境 */
   object-fit: contain;           /* 画像の全体を見せる */
-  background: #f0ece4;           /* 枠内の下地 */
+  background: #f3f5f8;           /* 枠内の下地 */
   border-radius: 8px;
   border: 1px solid rgba(31,37,47,.12);
   transition:transform .3s ease;
@@ -239,14 +239,14 @@ body{
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-1);
-  background: #f8f5ee;
+  background: #f7f7f8;
 }
 .pd-pdf__frame{
   display: block;
   width: 100%;
   height: min(78svh, 900px);
   border: 0;
-  background: #f1ede5;
+  background: #f2f4f7;
 }
 @supports not (height: 1svh) {
   .pd-pdf__frame { height: min(78vh, 900px); }
@@ -286,9 +286,9 @@ body{
   place-items: center;
   gap: 10px;
   /* まずは無難な rgba フォールバック */
-  background: rgba(244,241,235,.85);
+  background: rgba(246,247,250,.9);
   /* color-mix が使える環境では少し薄くする */
-  background: color-mix(in srgb, #f4f1eb 85%, transparent);
+  background: color-mix(in srgb, #f6f7fa 85%, transparent);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
   transition: opacity .25s ease, visibility .25s ease;
@@ -313,7 +313,7 @@ body{
 @keyframes pdspin { to { transform: rotate(360deg); } }
 
 .pd-3d__label {
-  color: var(--text, #1f252f);
+  color: var(--text, #161616);
   font-weight: 800;
   letter-spacing: .02em;
 }

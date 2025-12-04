@@ -9,10 +9,10 @@
 
 :root{
   --panel:#ffffff;
-  --line:#dcdede;
-  --fg:#1c1f26;
-  --brand:#c30d23;
-  --brand2:#a30f1f;
+  --line:#e3e6ea;
+  --fg:#161616;
+  --brand:#cc0000;
+  --brand2:#a60000;
 }
 
 /* セクション全体：常に中央 */
@@ -93,7 +93,7 @@
   border-radius: 18px; overflow: hidden;
   border: 1px solid var(--line);
   color: var(--fg);
-  box-shadow: 0 22px 48px rgba(31,37,47,.18), inset 0 0 0 1px rgba(216,210,198,.6);
+  box-shadow: 0 22px 48px rgba(0,0,0,.14), inset 0 0 0 1px rgba(227,230,234,.7);
   background: transparent; /* 背景は .bg が描く */
 }
 #cord .back{ transform: rotateY(180deg) translateZ(0); }
@@ -103,9 +103,9 @@
   position:absolute; inset:0; z-index: 0; border-radius: 18px; pointer-events:none;
   backface-visibility: hidden; -webkit-backface-visibility: hidden;
   background:
-    radial-gradient(120% 140% at 0% 0%, #d6dce633 0%, transparent 60%),
-    radial-gradient(120% 140% at 100% 0%, #e6dbc933 0%, transparent 60%),
-    linear-gradient(180deg, var(--panel), #f2ede4);
+    radial-gradient(120% 140% at 0% 0%, #e7ebf233 0%, transparent 60%),
+    radial-gradient(120% 140% at 100% 0%, #f6f7fa33 0%, transparent 60%),
+    linear-gradient(180deg, var(--panel), #f6f6f8);
 }
 #cord .bg::before,
 #cord .bg::after{
@@ -116,7 +116,7 @@
   mix-blend-mode: multiply; opacity:.32; filter: blur(4px) saturate(1);
   background:
     conic-gradient(from 180deg at var(--shineX,50%) var(--shineY,50%),
-      #c30d2318, #e0453214, #a30f1f14, #c30d2318),
+      #cc000018, #e7362d14, #a6000014, #cc000018),
     linear-gradient(120deg, #ffffff55 0%, #ffffff00 45%, #ffffff55 80%, #ffffff00 100%);
 }
 #cord .bg::after{
@@ -124,7 +124,7 @@
   mix-blend-mode: soft-light; opacity:.5;
   background:
     radial-gradient(700px 460px at var(--shineX,50%) var(--shineY,50%),
-      rgba(195,13,35,.16) 0%, rgba(28,31,38,.08) 40%, transparent 62%),
+      rgba(204,0,0,.16) 0%, rgba(28,31,38,.08) 40%, transparent 62%),
     repeating-linear-gradient(0deg, rgba(28,31,38,.06) 0 1px, transparent 1px 2px);
 }
 /* ※ 裏面 .bg へ transform を当てない（JS で座標値は front/back 同期） */
@@ -161,7 +161,7 @@
   object-fit: cover;
   border-radius: 14px;
   border: 1px solid var(--line);
-  background:#f0ece4;
+  background:#f3f5f8;
 }
 
 /* ===== タイポ／情報ブロック（= 文字のみ可変、比率不変） ===== */
@@ -193,17 +193,13 @@
 /* name-en: グラデ + 透明塗り + HD で大きく（最大 42px） */
 #cord .idblock .name-en{
   margin:0; font-weight:950; letter-spacing:.02em;
-  line-height:1.1;
+  line-height:1.15;
 
-  /* フォールバック（まず普通に見える） */
   color: var(--fg);
-
-  /* グラデーション適用（成功すれば透明化して切り抜き） */
   background-image: linear-gradient(90deg, var(--brand), var(--brand2));
   -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent; /* Safari用 */
+  -webkit-text-fill-color: transparent;
 
-  /* フォントサイズ（カード幅に応じて積極に可変） */
   font-size: clamp(24px, 6.2cqw, 72px);
 }
 
@@ -269,7 +265,7 @@ html.is-ios #cord .facts td:nth-child(1){
   border-radius:999px;
   font-size: 0.9em;
   color:#5f656f;
-  background: linear-gradient(180deg,#ffffff,#f5f0e7);
+  background: linear-gradient(180deg,#ffffff,#f7f7f8);
 }
 @media (max-width: 640px){
   #cord .age-badge{
@@ -309,20 +305,52 @@ html.is-ios #cord .facts td:nth-child(1){
   -webkit-overflow-scrolling: touch;
 }
 #cord .skill{
+  position: relative;
+  isolation: isolate;
   display:inline-flex; align-items:center; gap:6px;
   padding: clamp(6px, .9cqw, 10px) clamp(8px, 1.1cqw, 12px);
   border-radius:999px;
-  border:1px solid var(--line);
-  background: linear-gradient(180deg,#ffffff,#f5f0e7);
+  border:1px solid rgba(230,235,245,.7);
+  background: linear-gradient(135deg, rgba(255,255,255,.82), rgba(245,248,255,.42));
   color:#1f252f; font-weight:800;
   font-size: 0.95em; /* ベースに追従して可変（レイアウトは不変） */
   white-space: nowrap;
+  box-shadow:
+    0 8px 18px rgba(0,0,0,.08),
+    inset 1px 1px 0 rgba(255,255,255,.7),
+    inset -1px -1px 0 rgba(210,220,235,.3);
+  backdrop-filter: blur(8px) saturate(1.25);
+  -webkit-backdrop-filter: blur(8px) saturate(1.25);
+  overflow: hidden;
+}
+#cord .skill::before,
+#cord .skill::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius: inherit;
+  pointer-events:none;
+}
+#cord .skill::before{
+  background:
+    radial-gradient(120% 120% at 20% 20%, rgba(255,255,255,.55), transparent 55%),
+    radial-gradient(140% 140% at 80% 0%, rgba(255,255,255,.35), transparent 60%);
+  mix-blend-mode: screen;
+  z-index: 1;
+}
+#cord .skill::after{
+  background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
+  z-index: 1;
 }
 #cord .skill__icon,
 #cord .skill--fallback{
   width: 1.1em; height: 1.1em;
-  object-fit:contain; border-radius:4px; background:#f1ede5; display:block;
+  object-fit:contain; border-radius:4px; background:rgba(255,255,255,.78); display:block;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+  position: relative;
+  z-index: 2;
 }
+#cord .skill > *{ position: relative; z-index: 2; }
 #cord .skill--fallback{
   display:grid; place-items:center;
   font-size:.7rem; font-weight:900; color:#5f656f; border:1px solid var(--line);
@@ -330,7 +358,7 @@ html.is-ios #cord .facts td:nth-child(1){
 
 /* フォーカス */
 #cord .card:focus-visible{
-  box-shadow: 0 0 0 3px rgba(195,13,35,.18), 0 22px 48px rgba(31,37,47,.18)
+  box-shadow: 0 0 0 3px rgba(204,0,0,.18), 0 22px 48px rgba(31,37,47,.18)
 }
 
 /* 省モーション配慮 */

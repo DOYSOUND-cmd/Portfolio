@@ -6,11 +6,11 @@
   position: fixed; inset: 0; z-index: 9999;
   display:grid; place-items:center;
   background:
-    radial-gradient(1200px 900px at 50% -20%, #ffffff18, transparent 55%),
-    linear-gradient(160deg, #0f1218, #161922 55%, #0f1218);
+    radial-gradient(1200px 900px at 50% -20%, #ffecec 0%, transparent 60%),
+    linear-gradient(160deg, #ffffff, #f6f6f8 65%, #ffffff);
   overflow:hidden; isolation:isolate;
-  color:#f5f7fb;
-  font-family: "Noto Sans JP","Noto Sans","Helvetica Neue",Arial,sans-serif;
+  color:#161616;
+  font-family: "Helvetica Neue","Noto Sans JP","Noto Sans",Arial,sans-serif;
 }
 #welcome.hidden{ display:none; }
 
@@ -21,9 +21,9 @@
 .w-overlay{
   position:absolute; inset:0; pointer-events:none;
   background:
-    radial-gradient(900px 620px at 50% -10%, rgba(195,13,35,.14), transparent 60%),
-    radial-gradient(1200px 900px at 50% 120%, rgba(0,0,0,.25), transparent 72%);
-  filter: blur(.3px);
+    radial-gradient(900px 620px at 50% -10%, rgba(204,0,0,.14), transparent 60%),
+    radial-gradient(1200px 900px at 50% 120%, rgba(0,0,0,.08), transparent 72%);
+  filter: blur(.2px);
 }
 
 /* Text block */
@@ -39,9 +39,9 @@
   letter-spacing: .18em;
   font-size: clamp(46px, 11vw, 118px);
   position: relative;
-  color: #f5f7fb;
+  color: #cc0000;
   text-shadow:
-    0 10px 24px rgba(0,0,0,.55),
+    0 8px 20px rgba(204,0,0,.18),
     0 0 0 rgba(0,0,0,0);
 }
 
@@ -54,13 +54,13 @@
 
 .w-title.glitch{ animation: pulse 1.6s ease-in-out 2; }
 @keyframes pulse{
-  0%   { text-shadow: 0 10px 24px rgba(0,0,0,.55), 0 0 0 rgba(195,13,35,.0); }
-  50%  { text-shadow: 0 14px 26px rgba(0,0,0,.42), 0 0 22px rgba(195,13,35,.32); }
-  100% { text-shadow: 0 10px 24px rgba(0,0,0,.55), 0 0 0 rgba(195,13,35,.0); }
+  0%   { text-shadow: 0 8px 20px rgba(204,0,0,.18), 0 0 0 rgba(204,0,0,0); }
+  50%  { text-shadow: 0 12px 24px rgba(204,0,0,.24), 0 0 20px rgba(204,0,0,.3); }
+  100% { text-shadow: 0 8px 20px rgba(204,0,0,.18), 0 0 0 rgba(204,0,0,0); }
 }
 
 .w-sub{
-  color: rgba(245,247,251,.86);
+  color: rgba(28,31,38,.86);
   font-weight: 700;
   letter-spacing:.08em;
   font-size: clamp(13px, 2.6vw, 18px);

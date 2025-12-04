@@ -19,19 +19,20 @@ img, svg, video { display: block; max-width: 100%; }
 
 /* ----- Tokens（ダーク基調・可読性固定） ----- */
 :root{
-  --bg: #f7f7f5;
+  --bg: #f5f5f6;
+  --bg-2: #f7f7f8;
   --panel: #ffffff;
-  --text: #1c1f26;
-  --muted: #5a5f68;
-  --line: #dcdede;
-  --brand: #c30d23;
-  --brand-2: #a30f1f;
-  --accent: #e04532;
+  --text: #161616;
+  --muted: #5c6068;
+  --line: #e3e6ea;
+  --brand: #cc0000;
+  --brand-2: #a60000;
+  --accent: #e7362d;
 
-  --shadow-1: 0 10px 24px rgba(28,31,38,.12);
-  --shadow-2: 0 20px 48px rgba(28,31,38,.16);
+  --shadow-1: 0 12px 30px rgba(0,0,0,.08);
+  --shadow-2: 0 18px 46px rgba(0,0,0,.12);
 
-  --radius: 14px;
+  --radius: 12px;
 
   /* iOS の動的ツールバー対策（svh 非対応環境フォールバック用） */
   --vh-62: 62vh;
@@ -45,10 +46,10 @@ html {
   -webkit-text-size-adjust: 100%; /* iOS 文字拡大で改行崩れを防ぐ */
 }
 body{
-  background: var(--bg);
+  background: linear-gradient(180deg, var(--bg), var(--bg-2));
   background-color: var(--bg);
   color: var(--text);
-  font-family: "Noto Sans JP", "Noto Sans", "Helvetica Neue", Arial, system-ui, -apple-system, "Segoe UI", Roboto, "Hiragino Kaku Gothic ProN", Meiryo, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: "Helvetica Neue", "Noto Sans JP", "Noto Sans", Arial, system-ui, -apple-system, "Segoe UI", Roboto, "Hiragino Kaku Gothic ProN", Meiryo, "Apple Color Emoji", "Segoe UI Emoji";
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -66,10 +67,9 @@ body{
 
 /* ----- Page Head ----- */
 .page-head{
-  background: linear-gradient(180deg, #fefbf6cc, #fefbf600);
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
   margin-bottom: clamp(24px, 4vw, 40px);
 }
 .page-head .container{ padding-block: clamp(18px, 2.8vw, 28px); }
@@ -98,27 +98,28 @@ a:hover{ text-decoration: underline; }
 
 .btn{
   display: inline-flex; align-items: center; gap: .5rem;
-  height: 44px; padding: 0 18px; border-radius: 12px;
+  height: 46px; padding: 0 20px; border-radius: 10px;
   border: 1px solid var(--line);
-  background: linear-gradient(180deg, #ffffff, #f2f3f5);
-  color: var(--text); font-weight: 800;
-  box-shadow: var(--shadow-1);
-  transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
+  background: #ffffff;
+  color: var(--text); font-weight: 800; letter-spacing: .02em;
+  box-shadow: 0 10px 26px rgba(0,0,0,.08);
+  transition: transform .1s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
   min-width: 0; /* iOS の text-overflow 回避 */
 }
 .btn:hover{ transform: translateY(-1px); box-shadow: var(--shadow-2); text-decoration: none; }
 .btn:active{ transform: translateY(0); }
 .btn--primary{
-  background: linear-gradient(180deg, var(--brand), var(--brand-2));
-  border-color: transparent;
+  background: var(--brand);
+  border-color: var(--brand);
   color: #fff;
-  box-shadow: 0 12px 28px rgba(195,13,35,.28);
+  box-shadow: 0 14px 36px rgba(204,0,0,.26);
 }
-.btn--primary:hover{ box-shadow: 0 16px 36px rgba(195,13,35,.32); }
+.btn--primary:hover{ box-shadow: 0 18px 42px rgba(204,0,0,.32); }
 .btn--ghost{
   background: #ffffff;
-  border-color: var(--line);
+  border-color: var(--brand);
   color: var(--brand);
+  box-shadow: 0 8px 22px rgba(0,0,0,.06);
 }
 
 /* ----- Focus ring ----- */
@@ -152,11 +153,15 @@ a:hover{ text-decoration: underline; }
 /* ============================
    「Productions 見出し⇄カルーセル」の線を消す
    ============================ */
-.page-head, .page-head .container{ border: none !important; box-shadow: none !important; }
-.page-head::before, .page-head::after, .page-head .container::before, .page-head .container::after{ content: none !important; }
-#Productions .container, #Productions .carousel{ border-top: none !important; box-shadow: none !important; }
-.page-head { margin-bottom: 0 !important; }
-#Productions.section { margin-top: 0 !important; }
+.page-head, .page-head .container{ box-shadow: none; }
+.page-head::before, .page-head::after, .page-head .container::before, .page-head .container::after{
+  content: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+#Productions .container, #Productions .carousel{ border-top: none; box-shadow: none; }
+.page-head { margin-bottom: clamp(18px, 3vw, 28px); }
+#Productions.section { margin-top: 0; }
 #main hr{ display:none!important; border:0!important; height:0!important; }
 
 .scroll-hint{
@@ -194,17 +199,40 @@ a:hover{ text-decoration: underline; }
   align-items:center;
 }
 .scroll-hint__circle{
+  position: relative;
+  isolation: isolate;
   width: 56px; height: 56px;
   border-radius: 50%;
-  border: 2px solid var(--brand);
+  border: 1px solid rgba(230,235,245,.9);
   display:grid; place-items:center;
-  position: relative;
-  background: radial-gradient(circle at 50% 40%, rgba(195,13,35,.14), rgba(255,255,255,1) 56%);
+  background: linear-gradient(135deg, rgba(255,255,255,.86), rgba(245,248,255,.52));
   box-shadow:
     0 10px 28px rgba(12,16,26,.18),
-    0 0 0 1px rgba(255,255,255,.9),
-    0 0 0 8px rgba(195,13,35,.05);
+    inset 0 1px 0 rgba(255,255,255,.8),
+    inset -1px -1px 0 rgba(210,220,235,.35);
+  backdrop-filter: blur(10px) saturate(1.2);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  overflow: hidden;
   animation: scrollHintPulse 2.2s ease-in-out infinite;
+}
+.scroll-hint__circle::before,
+.scroll-hint__circle::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius: inherit;
+  pointer-events:none;
+}
+.scroll-hint__circle::before{
+  background:
+    radial-gradient(150% 120% at 20% 20%, rgba(255,255,255,.55), transparent 50%),
+    radial-gradient(120% 110% at 80% 0%, rgba(255,255,255,.35), transparent 60%);
+  mix-blend-mode: screen;
+  z-index: 1;
+}
+.scroll-hint__circle::after{
+  background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.05));
+  z-index: 1;
 }
 .scroll-hint__chevron{
   display:block;
@@ -236,8 +264,8 @@ a:hover{ text-decoration: underline; }
   50%{ transform: translate(-50%, -6px); }
 }
 @keyframes scrollHintPulse{
-  0%, 100%{ box-shadow: 0 10px 28px rgba(12,16,26,.18), 0 0 0 1px rgba(255,255,255,.9), 0 0 0 8px rgba(195,13,35,.05); }
-  50%{ box-shadow: 0 14px 32px rgba(12,16,26,.22), 0 0 0 1px rgba(255,255,255,1), 0 0 0 12px rgba(195,13,35,.08); }
+  0%, 100%{ box-shadow: 0 10px 28px rgba(12,16,26,.18), 0 0 0 1px rgba(255,255,255,.9), 0 0 0 8px rgba(204,0,0,.05); }
+  50%{ box-shadow: 0 14px 32px rgba(12,16,26,.22), 0 0 0 1px rgba(255,255,255,1), 0 0 0 12px rgba(204,0,0,.08); }
 }
 @keyframes scrollHintArrowFloat{
   0%, 100%{ transform: translateY(-2px) rotate(-45deg); }
@@ -284,7 +312,7 @@ a:hover{ text-decoration: underline; }
   min-height: auto;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: linear-gradient(180deg,#ffffff,#f5f0e7);
+  background: linear-gradient(180deg,#ffffff,#f7f7f8);
   box-shadow: var(--shadow-1);
   overflow: hidden;
   transition: box-shadow .2s ease, transform .06s ease, min-height .28s ease;
@@ -303,7 +331,7 @@ a:hover{ text-decoration: underline; }
   background: transparent; cursor: pointer;
   transition: background .2s ease; min-height: 56px;
 }
-#qualifications .q-head:hover{ background: rgba(200,60,49,.08); }
+#qualifications .q-head:hover{ background: rgba(204,0,0,.08); }
 #qualifications .q-head:focus-visible{
   outline: 2px solid var(--brand);
   outline-offset: -2px;
@@ -349,31 +377,31 @@ a:hover{ text-decoration: underline; }
 :where(a,button,[role='button'],.btn){ -webkit-tap-highlight-color: transparent; }
 
 /* =========================================================
-   ★ Section background / divider 全面オフ（要望対応の上書き）
-   - セクションごとの背景色/区切り線/影を無効化
-   - コンテンツ側の板面（例: .pd-3d__stage）は維持
+   ★ Section background / divider の簡素化（Canonトーン）
+   - セクションはフラットな白基調に統一
+   - 見出しにブランドレッドのラインを付与
    ========================================================= */
-.section,
+.section{
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.section .container{
+  background: transparent;
+}
 .page-head,
-.page-head .container {
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-}
-.section .container {
-  background: transparent !important;
-}
-.section:nth-of-type(odd),
-.section:nth-of-type(even) {
-  background: transparent !important;
+.page-head .container{
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 .section::before, .section::after,
 .page-head::before, .page-head::after {
-  content: none !important;
+  content: none;
 }
 #Productions .container,
 #Productions .carousel {
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
