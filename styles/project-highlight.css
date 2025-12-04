@@ -1,7 +1,7 @@
 /* ===== TOKENS ===== */
 :root{
-  --bg:#0b0f15; --bg2:#0f141d; --panel:#121826; --line:#1e2633; --fg:#e6edf3;
-  --muted:#9fb0c3; --brand:#6be7ff; --brand2:#9a7bff; --shadow:0 14px 40px rgba(0,0,0,.40);
+  --bg:#f7f7f5; --bg2:#f9f9f8; --panel:#ffffff; --line:#dcdede; --fg:#1c1f26;
+  --muted:#5a5f68; --brand:#c30d23; --brand2:#a30f1f; --shadow:0 14px 40px rgba(28,31,38,.14);
 
   /* 横幅を大きめ（SP/タブ/PC） */
   --slide-w: 96%;
@@ -19,11 +19,11 @@
 html,body{height:100%}
 html{scroll-behavior:smooth}
 body{
-  margin:0; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI","Roboto","Noto Sans JP","Hiragino Sans","Helvetica Neue",Arial,sans-serif;
+  margin:0; font-family:"Noto Sans JP","Noto Sans","Helvetica Neue",Arial,system-ui,-apple-system,"Segoe UI","Hiragino Sans","Roboto",sans-serif;
   line-height:1.75; color:var(--fg);
   background:
-    radial-gradient(160vw 120vh at 20% -20%, #0f2a4366 0%, transparent 70%),
-    radial-gradient(140vw 130vh at 100% -15%, #3a177233 0%, transparent 70%),
+    radial-gradient(160vw 120vh at 20% -20%, #fdfaf4 0%, transparent 70%),
+    radial-gradient(140vw 130vh at 100% -15%, #ece3d3 0%, transparent 70%),
     linear-gradient(180deg, var(--bg), var(--bg2));
 }
 .container{max-width:1180px;margin:0 auto;padding:0 18px}
@@ -48,7 +48,7 @@ body{
   padding:20px var(--pad-inline);
 
   border-radius:18px;
-  background:linear-gradient(180deg,#ffffff10,#ffffff05);
+  background:linear-gradient(180deg,#ffffff,#f5f0e7);
   border:1px solid var(--line);
   box-shadow:var(--shadow);
   position:relative;
@@ -76,10 +76,10 @@ body{
 }
 .product-card--interactive{ cursor:pointer; }
 .product-card--interactive:focus-visible{
-  outline:3px solid rgba(107,231,255,.65);
+  outline:3px solid color-mix(in srgb, var(--brand) 70%, #ffffff);
   outline-offset:4px;
 }
-.product-card--interactive:hover{ box-shadow:0 20px 60px rgba(0,0,0,.55); }
+.product-card--interactive:hover{ box-shadow:0 20px 60px rgba(31,37,47,.2); }
 .product-media img{
   width:100%; height:100%; object-fit:cover; aspect-ratio:16/9; display:block;
 }
@@ -91,7 +91,7 @@ body{
 }
 .product-title{margin:0; font-size:clamp(18px,2.4vw,22px); font-weight:900; line-height:1.35}
 .product-sub{margin:0; color:var(--muted); font-weight:700; font-size:.95rem; line-height:1.5}
-.product-desc{margin:0; color:#d7e1ec}
+.product-desc{margin:0; color:#2d323a}
 .clamp-1{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
 .clamp-3{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 
@@ -105,11 +105,11 @@ body{
 .tag{
   display:inline-flex; align-items:center; gap:6px;
   padding:.24rem .6rem; border-radius:999px; border:1px solid var(--line);
-  color:#b6c4d6; font-weight:700; font-size:.86rem; white-space:nowrap;
-  background:linear-gradient(180deg,#ffffff12,#ffffff06);
+  color:#5f656f; font-weight:700; font-size:.86rem; white-space:nowrap;
+  background:linear-gradient(180deg,#ffffff,#f5f0e7);
 }
 .tag img{
-  width:18px; height:18px; display:block; object-fit:contain; border-radius:4px; background:#0f141d
+  width:18px; height:18px; display:block; object-fit:contain; border-radius:4px; background:#f1ede5
 }
 /* 強制改行マーカー（JSが挿入） */
 .tags .br{
@@ -133,33 +133,33 @@ body{
   padding:.85rem 1.2rem;
   border-radius:14px;
   border:1px solid var(--line);
-  background:linear-gradient(180deg,#ffffff12,#ffffff04);
-  color:#eaf2f9;
+  background:linear-gradient(180deg,#ffffff,#f4efe6);
+  color:var(--fg);
   font-size:1rem;
   font-weight:900;
   letter-spacing:.01em;
   text-decoration:none;
-  box-shadow:0 10px 26px rgba(0,0,0,.35);
+  box-shadow:0 10px 26px rgba(31,37,47,.18);
   transition:transform .25s ease, box-shadow .25s ease, filter .25s ease;
 }
 .product-card .btn:hover{
   transform:translateY(-2px);
-  box-shadow:0 18px 40px rgba(0,0,0,.45);
+  box-shadow:0 18px 40px rgba(31,37,47,.25);
   text-decoration:none;
 }
 .product-card .btn:active{ transform:translateY(0); }
 .product-card .btn--primary{
   background:linear-gradient(120deg,var(--brand),var(--brand2));
   border:none;
-  color:#050c16;
+  color:#fff;
   font-size:1.05rem;
   letter-spacing:.03em;
-  box-shadow:0 22px 45px rgba(107,231,255,.35);
+  box-shadow:0 22px 45px rgba(200,60,49,.25);
 }
 .product-card .btn--ghost{
-  border:1px solid #273348;
-  color:#d5e2f4;
-  background:linear-gradient(180deg,#0d1320,#0f1622);
+  border:1px solid var(--line);
+  color:var(--fg);
+  background:linear-gradient(180deg,#ffffff,#f5f0e7);
 }
 
 /* ===== CENTER EMPHASIS（中央だけ拡大） ===== */
@@ -174,7 +174,7 @@ body{
 .car-btn{
   position:absolute; top:50%; transform:translateY(-50%);
   width:44px; height:44px; border-radius:50%; border:1px solid var(--line);
-  background:#0d1220cc; color:#fff; cursor:pointer; box-shadow:var(--shadow); z-index:2;
+  background:#ffffff; color:var(--fg); cursor:pointer; box-shadow:var(--shadow); z-index:2;
 }
 .car-btn.prev{left:-4px} .car-btn.next{right:-4px}
 .car-btn[disabled]{opacity:.45; cursor:not-allowed}
@@ -182,7 +182,7 @@ body{
 .car-dot{width:9px; height:9px; border-radius:50%; border:1px solid var(--line); background:transparent}
 .car-dot[aria-selected="true"]{background:var(--brand)}
 
-.hint{margin:.7rem 0 0; text-align:center; color:#9fb0c3}
+.hint{margin:.7rem 0 0; text-align:center; color:var(--muted)}
 
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}

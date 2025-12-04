@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tube Clean Booster — Product Detail</title>
-  <meta name="description" content="9V駆動でボードに載せやすい真空管クリーンブースターの紹介。">
+  <meta name="description" content="9V駆動でボードに載せやすい真空管クリーンブースターの紹介。" />
   <!-- 共通スタイル -->
   <link rel="stylesheet" href="../styles/site-core.css" />
   <!-- プロダクト詳細 共通スタイル -->
   <link rel="stylesheet" href="../styles/project-detail.css" />
   <style>
-    /* 3Dビューア用（project-detail.cssに干渉しない軽い補助） */
+    /* 3Dビューア用の補助スタイル（project-detail.css に干渉しない範囲で上書き） */
     .pd-3d { display: grid; gap: clamp(12px, 2vw, 16px); }
     .pd-3d__stage {
       position: relative; width: 100%; aspect-ratio: 16/9;
@@ -59,8 +59,8 @@
       <div class="pd-hero__eyebrow">Product Detail</div>
       <h1 class="pd-hero__title">真空管クリーンブースター</h1>
       <p class="pd-hero__lede">
-        真空管ならではの自然な倍音とレンジ感を、エフェクトボード前提の <strong>9V駆動</strong>で実現。<br>
-        回路はKiCadで設計、一般アルミケースに穴あけ＋フェイクレザーで外装を仕上げ、プリント基板実装で組み上げました。
+        真空管ならではの自然な倍音とレンジ感を、エフェクトボード前提の<strong>9V駆動</strong>で実現。<br>
+        回路はKiCadで設計し、アルミケースを穴あけ加工・フェイクレザーで外装仕上げ。プリント基板も発注して組み上げました。
       </p>
 
       <!-- アイコン付きタグ -->
@@ -90,14 +90,14 @@
         <h2 id="about-title" class="pd-section__title">概要</h2>
         <div class="pd-summary">
           <p>
-            真空管エフェクターは高電圧駆動が一般的ですが、本機は9V 駆動を前提に設計し、ボードでの取り回しを重視しています。<br>
-            回路はクリーンブーストを主眼に、位相やノイズ対策を含めてシンプルに最適化。
+            　真空管エフェクターは高電圧駆動が一般的ですが、本機は9V駆動を前提に設計し、ボードでの取り回しを重視しています。<br>
+            　回路はクリーンブーストを主眼に、位相ズレやノイズ対策を含めてシンプルに最適化しました。
           </p>
         </div>
       </div>
     </section>
 
-    <!-- 外観（1枚は中央寄せ） -->
+    <!-- 外観（1枚を中央寄せ） -->
     <section class="pd-section" aria-labelledby="ex-title">
       <div class="container">
         <h2 id="ex-title" class="pd-section__title">外観</h2>
@@ -110,10 +110,10 @@
       </div>
     </section>
 
-    <!-- 3D Model Viewer（筐体 GLB） -->
+    <!-- 3D Model Viewer（筐体GLB） -->
     <section class="pd-section" aria-labelledby="viewer-title">
       <div class="container">
-        <h2 id="scan-title" class="pd-section__title">3D Scan Viewer</h2>
+        <h2 id="viewer-title" class="pd-section__title">3D Scan Viewer</h2>
         <div class="pd-3d">
           <div class="pd-3d__stage" id="glb-stage">
             <canvas
@@ -138,12 +138,11 @@
       </div>
     </section>
 
-    <!-- 回路設計（画像 + ★ GLBビュワー：assets/tube_effector.glb） -->
+    <!-- 回路設計（図＋ GLBビューア） -->
     <section class="pd-section" aria-labelledby="circuit-title">
       <div class="container">
         <h2 id="circuit-title" class="pd-section__title">回路設計</h2>
 
-        <!-- 回路図（画像） -->
         <div class="pd-shots pd-shots--single">
           <figure class="pd-shot">
             <img src="../assets/TubeEffector_circuit.png" alt="回路図（KiCad）" width="1280" height="720" loading="lazy" decoding="async">
@@ -151,7 +150,6 @@
           </figure>
         </div>
 
-        <!-- ★ 回路GLBビューア（指定のGLBに更新） -->
         <div class="pd-3d" style="margin-top:14px">
           <div class="pd-3d__stage" id="circuit-stage">
             <canvas
@@ -184,10 +182,11 @@
         <div class="pd-shots" data-gallery>
           <figure class="pd-shot">
             <img src="../assets/TubeEffector_Process1.jpg" alt="ケース加工：穴あけ" width="1280" height="720" loading="lazy" decoding="async">
-            <figcaption>アルミケースをボール盤で加工</figcaption>
+            <figcaption>アルミケースをドリル盤で加工</figcaption>
           </figure>
           <figure class="pd-shot">
             <img src="../assets/TubeEffector_Process2.jpg" alt="外装仕上げ：フェイクレザー" width="1280" height="720" loading="lazy" decoding="async">
+            <figcaption>外装はフェイクレザーで仕上げ</figcaption>
           </figure>
         </div>
       </div>
@@ -203,8 +202,8 @@
             <figcaption>プリント基板を発注・実装</figcaption>
           </figure>
           <figure class="pd-shot">
-            <img src="../assets/TubeEffector_wiring.jpg" alt="筐体内配線" width="1280" height="720" loading="lazy" decoding="async">
-            <figcaption>筐体内配線の整線と固定</figcaption>
+            <img src="../assets/TubeEffector_wiring.jpg" alt="筐体への配線" width="1280" height="720" loading="lazy" decoding="async">
+            <figcaption>筐体への配線：整線と固定</figcaption>
           </figure>
         </div>
       </div>
@@ -253,7 +252,7 @@
   <!-- 詳細ページ用スクリプト -->
   <script src="../scripts/project-detail.js" type="module"></script>
 
-  <!-- Three.js（同一バージョン） -->
+  <!-- Three.js（同一バージョンを使用） -->
   <script src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
   <script src="https://unpkg.com/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
   <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>

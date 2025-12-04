@@ -6,7 +6,6 @@
   <title>DOYSOUND</title>
   <meta name="description" content="DOYSOUND ポートフォリオサイト" />
   <link rel="stylesheet" href="./styles/site-core.css" />
-  <link rel="stylesheet" href="./styles/welcome-overlay.css" />
   <link rel="stylesheet" href="./styles/project-highlight.css" />
   <link rel="stylesheet" href="./styles/profile-card.css" />
 
@@ -22,16 +21,6 @@
 
 </head>
 <body>
-
-<!-- Welcome Overlay -->
-<div id="welcome" aria-hidden="true">
-  <canvas id="welcome-canvas" class="w-canvas" aria-hidden="true"></canvas>
-  <div class="w-overlay" aria-hidden="true"></div>
-  <div class="w-inner">
-    <h1 class="w-title" data-text="WELCOME">WELCOME</h1>
-    <p class="w-sub">Loading portfolio...</p>
-  </div>
-</div>
 
 <main id="main">
   <!-- AboutMe（名刺寄り） -->
@@ -59,7 +48,7 @@
                 <p class="intro">
                   大阪府出身のエンジニアです。<br>
                   本業は CFD（数値流体解析）を担当しています。<br>
-                  趣味で楽器制作と Web フロントの個人開発に取り組んでいます。
+                  個人では楽器制作とWebフロントの個人開発に取り組んでいます。
                 </p>
                 <h3 class="skills-title">Skills</h3>
                 <ul class="skills" id="skills-front" aria-label="スキル一覧"></ul>
@@ -85,12 +74,12 @@
                   </tr>
                 </table>
                 <header class="idblock">
-                  <h1 class="name-ja">DOYSOUND</h1>
+                  <h1 class="name-en">DOYSOUND</h1>
                 </header>
                 <p class="intro">
                   I am an engineer from Osaka Prefecture.<br>
-                  My primary role is in CFD (computational fluid dynamics).<br>
-                  In my free time, I work on personal projects in instrument making and web front-end development.
+                  My main role is CFD (computational fluid dynamics) analysis.<br>
+                  In my personal projects, I work on instrument making and web front-end development.
                 </p>
                 <h3 class="skills-title">Skills</h3>
                 <ul class="skills" id="skills-back" aria-label="Skills List"></ul>
@@ -107,13 +96,12 @@
 
   <div class="scroll-hint" aria-live="polite">
     <div class="scroll-hint__body">
-      <p class="scroll-hint__label">Scroll to explore more</p>
-      <a class="scroll-hint__cta" href="#Productions-head">
-        <span>View productions</span>
-        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M12 5v14m0 0l-4-4m4 4 4-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-        </svg>
-      </a>
+      <div class="scroll-hint__circle" aria-hidden="true">
+        <span class="scroll-hint__chevron"></span>
+      </div>
+      <p class="scroll-hint__label">
+        <span class="scroll-hint__label-text">Scroll / Swipe to explore</span>
+      </p>
     </div>
   </div>
 
@@ -121,13 +109,15 @@
   <header id="Productions-head" class="page-head" >
     <div class="container">
       <h1 class="title">Productions</h1>
-      <p class="lede">製作物一覧</p>
+      <div class="page-head__cta">
+        <a class="btn btn--ghost" href="./productions.html">一覧ページを見る</a>
+      </div>
     </div>
   </header>
 
   <section id="Productions" class="section">
     <div class="container">
-      <div class="carousel" data-carousel aria-label="制作物カルーセル">
+      <div class="carousel" data-carousel data-scope="home" aria-label="制作物カルーセル">
         <button class="car-btn prev" data-prev aria-controls="track" aria-label="前へ">‹</button>
         <div class="car-viewport" tabindex="0" role="region" aria-roledescription="スライダー" aria-label="作品">
           <ul class="car-track" role="listbox" id="track"></ul>
@@ -153,7 +143,7 @@
           </button>
           <div class="qualification-description" hidden>
             <p>
-              情報処理技術者試験の一つで、ITエンジニアとして必要な基礎的知識と技能を持つことを証明する国家資格です。プログラミング、アルゴリズム、データベース、ネットワーク、セキュリティなど幅広い分野の知識が求められます。
+              情報処理技術者試験の基礎レベルにあたる国家資格です。アルゴリズム・データ構造、ネットワーク、データベース、セキュリティなどIT全般の基礎を体系的に学び、業務で使うプログラミングやシステム設計の土台になっています。
             </p>
           </div>
         </li>
@@ -165,7 +155,7 @@
           </button>
           <div class="qualification-description" hidden>
             <p>
-              組織における情報セキュリティの管理・運用を担当する人材を対象とした国家資格です。情報セキュリティの基本原則やリスク管理、法令・規制に関する知識が評価されます。
+              組織の情報資産を守るためのリスク管理や運用ルールの策定を扱う国家資格です。ISMSやアクセス制御、ログ管理、インシデント対応など、実務で必要な情報セキュリティの考え方を体系的に理解しています。
             </p>
           </div>
         </li>
@@ -177,7 +167,7 @@
           </button>
           <div class="qualification-description" hidden>
             <p>
-              一般住宅や小規模な店舗などの電気設備工事を行うための国家資格です。電気回路の設計・施工、配線作業、安全管理などの技能が求められます。
+               一般住宅や小規模店舗の電気設備工事を行うための国家資格です。配線設計や結線作業、電気機器の取り付け、安全確認までを一通り自分の手で行えるレベルの電気知識と実務スキルを持っています。
             </p>
           </div>
         </li>
@@ -189,19 +179,19 @@
           </button>
           <div class="qualification-description" hidden>
             <p>
-              ガソリンや灯油などの引火性液体を取り扱うための国家資格です。危険物の性質、法令、安全な取扱方法についての知識が必要です。
+              ガソリンや灯油などの引火性液体を取り扱うための国家資格です。危険物の性質や法令、安全な保管・移送・取扱方法について理解しており、現場での安全管理やリスク低減に活かせます。<br>
             </p>
           </div>
         </li>
 
         <li class="qualification-item">
           <button class="q-head" aria-expanded="false">
-            情報技術検定 2級
+            情報技術検定2級
             <span class="q-icon" aria-hidden="true">＋</span>
           </button>
           <div class="qualification-description" hidden>
             <p>
-              情報処理やプログラミングに関する中級レベルの知識を評価する資格です。アルゴリズムの理解、プログラム設計、データ構造などが対象となります。
+              情報処理とプログラミングの基礎～中級レベルを扱う検定です。フローチャートによる処理設計や基本的なアルゴリズム、配列・分岐・繰り返しといった構造化プログラミングを学びました。<br>
             </p>
           </div>
         </li>
@@ -213,31 +203,19 @@
           </button>
           <div class="qualification-description" hidden>
             <p>
-              機械製図の基礎的な知識と技能を評価する資格です。図面の読み書き、製図規格の理解、正確な作図能力が求められます。
+              機械製図の基礎知識を証明する検定です。投影図や寸法記入、はめあい、公差などのJIS製図規格に基づいた図面の読み書きができ、設計意図を図面で正確に伝える力があります。<br>
             </p>
           </div>
         </li>
 
         <li class="qualification-item">
           <button class="q-head" aria-expanded="false">
-            計算技術検定 3級
+            計算技術検定3級
             <span class="q-icon" aria-hidden="true">＋</span>
           </button>
           <div class="qualification-description" hidden>
             <p>
-              工業数学の基礎的な計算能力を評価する資格です。四則演算、代数計算、関数、方程式などの理解が必要です。
-            </p>
-          </div>
-        </li>
-
-        <li class="qualification-item">
-          <button class="q-head" aria-expanded="false">
-            普通自動車免許
-            <span class="q-icon" aria-hidden="true">＋</span>
-          </button>
-          <div class="qualification-description" hidden>
-            <p>
-              エンジン排気量660ccを超える普通自動車を運転するための免許です。道路交通法の理解や安全運転の技能が求められます。
+              工業数学の基礎計算力を証明する検定です。四則演算や方程式、関数の基本的な取り扱いなど、工学系の学習やCAE解析で前提となるレベルの計算力を身につけています。<br>
             </p>
           </div>
         </li>
@@ -249,10 +227,23 @@
           </button>
           <div class="qualification-description" hidden>
             <p>
-              ハーバード大学が提供するコンピュータサイエンスのオンライン入門コースです。C言語やPythonを用いたプログラミング、アルゴリズム、データ構造、Web開発など幅広い内容を学習します。<br>
+              ハーバード大学のコンピュータサイエンス入門オンラインコースです。C言語とPythonを中心に、アルゴリズム、データ構造、Web開発などを実装しながら学習し、複数の課題・最終プロジェクトを完走しています。<br>
             </p>
           </div>
         </li>
+
+                <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            玉掛け技能講習修了
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              クレーンで荷を吊り上げる際に、フックとワイヤ・チェーンスリングを用いて安全に荷を掛け外しするための技能講習です。荷重バランスの取り方、適切な用具選定、合図方法など、現場での安全な荷役作業に必要な知識と技能を修得しています。<br>
+            </p>
+          </div>
+        </li>
+
       </ul>
     </div>
   </section>

@@ -8,11 +8,11 @@
    ========================================================= */
 
 :root{
-  --panel:#121826;
-  --line:#1e2633;
-  --fg:#e6edf3;
-  --brand:#6be7ff;
-  --brand2:#9a7bff;
+  --panel:#ffffff;
+  --line:#dcdede;
+  --fg:#1c1f26;
+  --brand:#c30d23;
+  --brand2:#a30f1f;
 }
 
 /* セクション全体：常に中央 */
@@ -93,7 +93,7 @@
   border-radius: 18px; overflow: hidden;
   border: 1px solid var(--line);
   color: var(--fg);
-  box-shadow: 0 22px 48px rgba(0,0,0,.32), inset 0 0 0 1px #ffffff10;
+  box-shadow: 0 22px 48px rgba(31,37,47,.18), inset 0 0 0 1px rgba(216,210,198,.6);
   background: transparent; /* 背景は .bg が描く */
 }
 #cord .back{ transform: rotateY(180deg) translateZ(0); }
@@ -103,9 +103,9 @@
   position:absolute; inset:0; z-index: 0; border-radius: 18px; pointer-events:none;
   backface-visibility: hidden; -webkit-backface-visibility: hidden;
   background:
-    radial-gradient(120% 140% at 0% 0%, #0f2a4333 0%, transparent 60%),
-    radial-gradient(120% 140% at 100% 0%, #3a177233 0%, transparent 60%),
-    linear-gradient(180deg, var(--panel), #0f141d);
+    radial-gradient(120% 140% at 0% 0%, #d6dce633 0%, transparent 60%),
+    radial-gradient(120% 140% at 100% 0%, #e6dbc933 0%, transparent 60%),
+    linear-gradient(180deg, var(--panel), #f2ede4);
 }
 #cord .bg::before,
 #cord .bg::after{
@@ -113,19 +113,19 @@
 }
 #cord .bg::before{
   content:""; position:absolute; inset:-2px; border-radius: 20px;
-  mix-blend-mode: screen; opacity:.38; filter: blur(5px) saturate(1.12);
+  mix-blend-mode: multiply; opacity:.32; filter: blur(4px) saturate(1);
   background:
     conic-gradient(from 180deg at var(--shineX,50%) var(--shineY,50%),
-      #ff00ff22, #00e5ff22, #00ff8c22, #ffd40022, #ff00ff22),
-    linear-gradient(120deg, #fff2 0%, #0000 40%, #fff2 60%, #0000 100%);
+      #c30d2318, #e0453214, #a30f1f14, #c30d2318),
+    linear-gradient(120deg, #ffffff55 0%, #ffffff00 45%, #ffffff55 80%, #ffffff00 100%);
 }
 #cord .bg::after{
   content:""; position:absolute; inset:0; border-radius: 18px;
-  mix-blend-mode: screen; opacity:.62;
+  mix-blend-mode: soft-light; opacity:.5;
   background:
     radial-gradient(700px 460px at var(--shineX,50%) var(--shineY,50%),
-      #ffffff22 0%, #ffffff06 40%, transparent 62%),
-    repeating-linear-gradient(0deg, #ffffff06 0 1px, transparent 1px 2px);
+      rgba(195,13,35,.16) 0%, rgba(28,31,38,.08) 40%, transparent 62%),
+    repeating-linear-gradient(0deg, rgba(28,31,38,.06) 0 1px, transparent 1px 2px);
 }
 /* ※ 裏面 .bg へ transform を当てない（JS で座標値は front/back 同期） */
 
@@ -161,7 +161,7 @@
   object-fit: cover;
   border-radius: 14px;
   border: 1px solid var(--line);
-  background:#0f141d;
+  background:#f0ece4;
 }
 
 /* ===== タイポ／情報ブロック（= 文字のみ可変、比率不変） ===== */
@@ -193,13 +193,17 @@
 /* name-en: グラデ + 透明塗り + HD で大きく（最大 42px） */
 #cord .idblock .name-en{
   margin:0; font-weight:950; letter-spacing:.02em;
-  line-height:1.15;
+  line-height:1.1;
 
+  /* フォールバック（まず普通に見える） */
   color: var(--fg);
+
+  /* グラデーション適用（成功すれば透明化して切り抜き） */
   background-image: linear-gradient(90deg, var(--brand), var(--brand2));
   -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: transparent; /* Safari用 */
 
+  /* フォントサイズ（カード幅に応じて積極に可変） */
   font-size: clamp(24px, 6.2cqw, 72px);
 }
 
@@ -216,10 +220,10 @@
 }
 #cord .facts td:nth-child(1){
   width: clamp(5.4em, 8vw, 7.6em);
-  text-align:left; white-space:nowrap; color:#cdd9ed; font-weight:800;
+  text-align:left; white-space:nowrap; color:#5f656f; font-weight:800;
 }
 #cord .facts td:nth-child(2){
-  text-align:left; word-wrap:break-word; color:#e6edf3;
+  text-align:left; word-wrap:break-word; color:#1f252f;
 }
 html.is-ios #cord .facts{
   table-layout: auto;
@@ -264,8 +268,8 @@ html.is-ios #cord .facts td:nth-child(1){
   border:1px solid var(--line);
   border-radius:999px;
   font-size: 0.9em;
-  color:#bcd0e3;
-  background: linear-gradient(180deg,#ffffff12,#ffffff06);
+  color:#5f656f;
+  background: linear-gradient(180deg,#ffffff,#f5f0e7);
 }
 @media (max-width: 640px){
   #cord .age-badge{
@@ -278,7 +282,7 @@ html.is-ios #cord .facts td:nth-child(1){
   align-self: end;
   margin-top: auto;
   margin-bottom: .1rem;
-  color:#dbe7f7;
+  color:#2c3139;
   line-height: 1.55;
   font-weight:700;
   font-size: clamp(12px, 2.2cqw, 16px);
@@ -290,9 +294,9 @@ html.is-ios #cord .facts td:nth-child(1){
 
 /* Skills：最下段に固定・中央寄せ（あふれは内部スクロールのみ） */
 #cord .skills-title{
-  margin:.2rem 0 0;
-  font-size: 0.95em;  /* ベース連動で可変 */
-  color:#9fb0c3; font-weight:900; letter-spacing:.02em
+  margin:.1rem 0 0;
+  font-size: 0.90em;  /* ベース連動で可変 */
+  color:#6b717a; font-weight:900; letter-spacing:.02em
 }
 #cord .skills{
   align-self:end;
@@ -309,24 +313,24 @@ html.is-ios #cord .facts td:nth-child(1){
   padding: clamp(6px, .9cqw, 10px) clamp(8px, 1.1cqw, 12px);
   border-radius:999px;
   border:1px solid var(--line);
-  background: linear-gradient(180deg,#ffffff12,#ffffff06);
-  color:#dbe7f7; font-weight:800;
+  background: linear-gradient(180deg,#ffffff,#f5f0e7);
+  color:#1f252f; font-weight:800;
   font-size: 0.95em; /* ベースに追従して可変（レイアウトは不変） */
   white-space: nowrap;
 }
 #cord .skill__icon,
 #cord .skill--fallback{
   width: 1.1em; height: 1.1em;
-  object-fit:contain; border-radius:4px; background:#0f141d; display:block;
+  object-fit:contain; border-radius:4px; background:#f1ede5; display:block;
 }
 #cord .skill--fallback{
   display:grid; place-items:center;
-  font-size:.7rem; font-weight:900; color:#bcd0e3; border:1px solid var(--line);
+  font-size:.7rem; font-weight:900; color:#5f656f; border:1px solid var(--line);
 }
 
 /* フォーカス */
 #cord .card:focus-visible{
-  box-shadow: 0 0 0 3px #6be7ff66, 0 22px 48px rgba(0,0,0,.28)
+  box-shadow: 0 0 0 3px rgba(195,13,35,.18), 0 22px 48px rgba(31,37,47,.18)
 }
 
 /* 省モーション配慮 */
@@ -400,7 +404,7 @@ html.is-ios #cord .skills :where(p, .text, .desc){
 @container (max-width: 580px){
   #cord .facts td{ font-size: 0.35rem; }
   #cord .idblock .name-ja{ font-size: 0.8rem; }
-  #cord .idblock .name-en{ font-size: 0.4rem; }
+  #cord .idblock .name-en{ font-size: 0.8rem; }
   #cord .intro{ font-size: 0.3rem; }
   /* skills はベースから自動連動。必要なら chip をさらに一段だけ絞る */
   #cord .skills-title{ font-size: 0.3rem; }

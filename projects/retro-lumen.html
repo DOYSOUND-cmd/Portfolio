@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Retro Lumen | Product Detail</title>
+  <meta
+    name="description"
+    content="画面/ウィンドウのキャプチャ映像にブラウン管テレビ風シェーダを重ねて表示し、レトロ感を楽しむための Web アプリ Retro Lumen の紹介ページ。WebGL2 と getDisplayMedia を組み合わせたレトロ表現ビューア。"
+  />
+  <link rel="stylesheet" href="../styles/site-core.css" />
+  <link rel="stylesheet" href="../styles/project-detail.css" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S29JRMXN8G"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-S29JRMXN8G');
+  </script>
+</head>
+
+<body>
+  <!-- Product Hero -->
+  <header class="pd-hero">
+    <div class="container">
+      <div class="pd-hero__eyebrow">Product Detail</div>
+      <h1 class="pd-hero__title">Retro Lumen</h1>
+      <p class="pd-hero__lede">
+        画面/ウィンドウのキャプチャ映像にブラウン管テレビ風のシェーダをリアルタイムで重ねるWebアプリケーションです。<br>
+        ブラウザだけでレトロな表現の質感を楽しめるようにしています。
+      </p>
+
+      <ul class="pd-badges pd-badges--icons" aria-label="使用技術">
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/HTML.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>HTML</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/CSS.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>CSS</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/JS.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>JavaScript</span>
+        </li>
+      </ul>
+
+      <div class="pd-cta">
+        <a class="btn" href="../index.html">Topへ戻る</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Main ===== -->
+  <main id="main">
+
+    <!-- 概要 -->
+    <section class="pd-section" aria-labelledby="about-title">
+      <div class="container">
+        <h2 id="about-title" class="pd-section__title">概要</h2>
+        <div class="pd-summary">
+          <p>
+            　Retro Lumen は、画面やウィンドウをブラウザからキャプチャし、その映像にブラウン管テレビ風のエフェクトを重ねて表示する Web アプリです。キャプチャした映像をキャンバス上でリアルタイムに変形・補正し、レトロな表現の質感に変換します。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section class="pd-section" aria-labelledby="shots-title">
+      <div class="container">
+        <h2 id="shots-title" class="pd-section__title">Screenshots</h2>
+
+        <div class="pd-shots" data-gallery>
+          <!-- メイン画面 -->
+          <figure class="pd-shot">
+            <a
+              class="pd-shot__link"
+              href="https://doysound-cmd.github.io/RetroLumen/"
+              target="_blank"
+              rel="noopener"
+              aria-label="Retro Lumen のデモを開く"
+            >
+              <img
+                src="../assets/RetroLumen_0.png"
+                alt="Retro Lumen のメイン画面"
+                width="1280"
+                height="720"
+                loading="lazy"
+                decoding="async"
+              >
+            </a>
+            <figcaption>Retro Lumen のトップ画面</figcaption>
+          </figure>
+
+          <!-- CRT プリセット例 -->
+          <figure class="pd-shot">
+            <a
+              class="pd-shot__link"
+              href="https://doysound-cmd.github.io/RetroLumen/"
+              target="_blank"
+              rel="noopener"
+              aria-label="Retro Lumen のデモを開く"
+            >
+              <img
+                src="../assets/RetroLumen_1.png"
+                alt="画面の曲率・走査線・グローを加えたブラウン管風表示の例"
+                width="1280"
+                height="720"
+                loading="lazy"
+                decoding="async"
+              >
+            </a>
+            <figcaption>画面の曲率・走査線・グローを組み合わせたブラウン管風表示</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- CRT表現 -->
+    <section class="pd-section" aria-labelledby="crt-title">
+      <div class="container">
+        <h2 id="crt-title" class="pd-section__title">CRT(ブラウン管)表現</h2>
+        <div class="pd-summary">
+                    <figure class="pd-shot">
+            <a
+              class="pd-shot__link"
+              href="https://github.com/DOYSOUND-cmd/RetroLumen"
+              target="_blank"
+              rel="noopener"
+              aria-label="Retro Lumen のデモを開く"
+            >
+              <img
+                src="../assets/RetroLumen_system.png"
+                alt="画面の曲率・走査線・グローを加えたブラウン管風表示の例"
+                width="1280"
+                height="720"
+                loading="lazy"
+                decoding="async"
+              >
+            </a>
+            <figcaption>エフェクトの順番</figcaption>
+          </figure>
+          <p>
+            　ブラウン管らしさを出すために、シェーダ側では主に「画面の湾曲」「グロー」「走査線」の3要素を組み合わせています。
+          </p>
+          <p>
+            　画面の湾曲は、フラグメントシェーダ内でテクスチャ座標に対して樽型の歪み（バレルディストーション）をかけることで実現しています。
+            画面中央付近はほぼそのまま、上下左右の端にいくほど座標を内側へ寄せることで、丸みを帯びたブラウン管のガラス面を再現しています。
+            その際、外周はわずかに暗く落とし、角のハイライトが目立ちすぎないようバランスを取っています。
+          </p>
+          <p>
+            　グロー表現では、入力テクスチャの周辺画素をサンプルして、明るい部分をわずかにぼかしながら重ねています。
+            近傍サンプリングで簡易的なブルームをかける形にとどめ、コストを抑えつつ、文字やハイライト部分のエッジがにじんで見えるようにしています。
+            これに合わせて色補正も行い、やや暖色寄り・高コントラスト気味のトーンに寄せることで、アナログディスプレイに近い発色になるよう調整しています。
+          </p>
+          <p>
+            　走査線は、垂直方向のテクスチャ座標から周期的なパターンを生成し、1行ごとに明るさを変えることで表現しています。
+            単純な黒線ではなく、ラインごとにコントラストを変えるマスクを乗算し、明るいラインと暗いラインが交互に並ぶようにして、水平線の存在感だけを強調しています。
+            これにより、解像度の高い現代のディスプレイ上でも、ブラウン管特有の「縞」の印象を残せるようにしています。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Links -->
+    <section class="pd-section" aria-labelledby="link-title">
+      <div class="container">
+        <h2 id="link-title" class="pd-section__title">リンク</h2>
+        <div class="pd-links">
+          <a class="btn btn--primary" href="https://doysound-cmd.github.io/RetroLumen/" target="_blank" rel="noopener">
+            デモを開く
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="../scripts/project-detail.js" type="module"></script>
+</body>
+</html>

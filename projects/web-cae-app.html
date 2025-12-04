@@ -29,8 +29,9 @@
       <div class="pd-hero__eyebrow">Product Detail</div>
       <h1 class="pd-hero__title">Web CAEアプリ</h1>
       <p class="pd-hero__lede">
-        NASAの公開データに基づく熱/変位の挙動を素材ごとに可視化。Three.jsベースのUIで、<br>結果と3Dモデルをブラウザだけで確認できます。<br>
-        本ツールは <strong>NASA Space Apps Challenge 2025</strong>提出作品として作成しました。
+        NASAのオープンデータを使って、材料ごとの熱挙動や変位を可視化するWebアプリです。<br>
+        Three.jsベースのUIで、計算結果と3Dモデルをブラウザ上からそのまま確認できます。<br>
+        本ツールは<strong>NASA Space Apps Challenge 2025</strong>提出作品として作成しました。
       </p>
 
       <!-- アイコン付きタグ -->
@@ -77,17 +78,17 @@
         <h2 id="about-title" class="pd-section__title">概要</h2>
         <div class="pd-summary">
           <p>
-            <strong>NASA Space Apps Challenge</strong> は、NASA が提供するオープンデータを活用して社会的課題や宇宙分野のテーマに挑む、世界規模のハッカソンです。<br>
-            本プロジェクトでは、<strong>低軌道（LEO）</strong>環境における <strong>CubeSat 外壁（パネル）</strong> のふるまいに着目し、放射・アルベド・地球IRなどの境界条件と、<br>
-            材料物性（吸収率・放射率・熱伝導率・比熱・ヤング率 ほか）を組み合わせて、<strong>温度分布・温度差（ΔT）・質量・変位の目安</strong>を<br>
-            ブラウザ上で直感的に比較できるようにしました。教育・研究・試作前のスクリーニング用途を想定した、軽量な Web CAE デモです。
+            　<strong>NASA Space Apps Challenge</strong>は、NASAが提供するオープンデータを活用して社会的課題や宇宙分野のテーマに挑む、世界規模のハッカソンです。<br>
+            本テーマでは、<strong>低軌道（LEO）</strong>環境における<strong>CubeSat(小型人工衛星)の外壁パネル</strong>のふるまいに着目し、放射・アルベド・地球IRなどの境界条件と、<br>
+            材料物性（吸収率・放射率・熱伝導率・比熱・ヤング率ほか）を組み合わせて、<strong>温度分布・温度差（ΔT）・質量・変位の目安</strong>を<br>
+            ブラウザ上で直感的に比較できるようにしました。
           </p>
         </div>
       </div>
     </section>
 
     <!-- Screenshots -->
-        <section class="pd-section" aria-labelledby="shots-title">
+    <section class="pd-section" aria-labelledby="shots-title">
       <div class="container">
         <h2 id="shots-title" class="pd-section__title">Screenshot</h2>
         <div class="pd-shots pd-shots--single" data-gallery>
@@ -100,6 +101,74 @@
         </div>
       </div>
     </section>
+
+    <section class="pd-section" aria-labelledby="leo-challenge-title">
+      <div class="container">
+        <h2 id="leo-challenge-title" class="pd-section__title">
+          開発テーマ：Commercializing Low Earth Orbit (LEO)
+        </h2>
+        <div class="pd-summary">
+          <p>
+            　Commercializing Low Earth Orbit(LEO)は、地球低軌道（LEO）をこれまでの研究・実験中心の場から一歩進めて、
+            民間企業が活用できる「持続可能な商業空間」として発展させるには何が必要かを問うチャレンジです。
+            インフラ、サービス、運用、製造といった観点から、LEOの価値を高める新しいアイデアやツールを提示することが求められました。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pd-section" aria-labelledby="work-title">
+      <div class="container">
+        <h2 id="work-title" class="pd-section__title">取り組んだ内容</h2>
+          <div class="pd-summary">
+            <p>
+              　今回のチャレンジでは、LEO（低軌道）特有の熱環境が
+              CubeSat(小型人工衛星)の外壁にどのような影響を与えるかを
+              「誰でもブラウザで確認できる形」に落とし込むことを目標にしました。
+            </p>
+            <p>
+              　太陽放射・地球アルベド・赤外放射といったNASAオープンデータおよび
+              NASA Material Data Handbookの物性値を参照し、
+              各材料・厚みごとの温度上昇・温度差・熱膨張による変位量を比較できるように構築しています。
+            </p>
+            <p>
+              　熱流束や物性を境界条件としてPrePoMaxでパネルの
+              熱応力解析を行い、得られた温度分布・変位をglTF/JSONに変換。
+              Webビュアーを実装し、ブラウザ上で材料・厚み・日照条件を切り替えて解析結果を可視化できる仕組みを作りました。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="pd-section" aria-labelledby="tech-title">
+        <div class="container">
+          <h2 id="tech-title" class="pd-section__title">実装アプローチ</h2>
+          <figure class="pd-shot">
+            <a class="pd-shot__link" href="https://github.com/DOYSOUND-cmd/NASA_Space_App_Challeng2025-" target="_blank" rel="noopener" aria-label="githubリポジトリを開く">
+              <img src="../assets/WebCAE_system.png"  alt="実装方法" width="1080" height="1440" loading="lazy" decoding="async">
+            </a>
+            <figcaption>実装方法</figcaption>
+          </figure>
+          <div class="pd-summary">
+            <p>
+              　まずPrePoMax(オープンソースのCAEソフトウェア)を使い、材料物性の入力、日照下/日影下の境界条件の設定を行い、
+              各ケースの温度分布・変位量・Tmax/Tminを計算し、得られた結果を<strong>glTF</strong>、<strong>JSON</strong>、へ書き出し、ブラウザから直接読み込めるように加工しました。
+            </p>
+
+            <p>
+              　WebビュワーアプリはThree.jsをベースに作成し、境界条件、外壁パネルの厚さ、素材の切り替えを行うと、それらに対応したglTFと質量、温度、変位の値の表示を実装しています。
+            </p>
+
+            <p>
+              　また、背景に配置した太陽と地球の3Dモデルは、
+              LEOの日照条件を視覚的に理解できるように調整しており、
+              解析結果と環境情報を同時に確認できるビュアーとしてまとめています。
+            </p>
+          </div>
+        </div>
+      </section>
+
+
 
     <!-- Slides（PDF埋め込み） -->
     <section class="pd-section" aria-labelledby="slides-title">
@@ -118,6 +187,7 @@
         <h2 id="link-title" class="pd-section__title">リンク</h2>
         <div class="pd-links">
           <a class="btn btn--primary" href="https://doysound-cmd.github.io/NASA_Space_App_Challeng2025-/" target="_blank" rel="noopener">デモを見る</a>
+          <a class="btn btn--primary" href="https://www.spaceappschallenge.org/2025/challenges/commercializing-low-earth-orbit-leo/" target="_blank" rel="noopener">Commercializing Low Earth Orbit (LEO)</a>
         </div>
       </div>
     </section>

@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Web年賀状 — Product Detail</title>
-  <meta name="description" content="ブラウザで宛名面・絵柄面を編集し、URL共有で送れるWeb年賀状ツールの紹介" />
-  <!-- 既存の共通スタイルを想定 -->
+  <title>Web年賀状 | Product Detail</title>
+  <meta name="description" content="ブラウザで宛名面・絵柄面を編集し、URL共有で送れるWeb年賀状ツールの紹介ページ" />
   <link rel="stylesheet" href="../styles/site-core.css" />
-  <!-- プロダクト詳細の共通スタイル -->
   <link rel="stylesheet" href="../styles/project-detail.css" />
 
     <!-- Google tag (gtag.js) -->
@@ -23,17 +21,14 @@
 </head>
 <body>
 
-  <!-- Product Hero（ヘッダー） -->
   <header class="pd-hero">
     <div class="container">
       <div class="pd-hero__eyebrow">Product Detail</div>
       <h1 class="pd-hero__title">Web年賀状</h1>
       <p class="pd-hero__lede">
-        ブラウザ上で宛名面・絵柄面をインタラクティブに編集し、URL 共有だけで送れる年賀状ツール。
-        画像トリミング、テンプレート、文面プリセット、リアルタイムプレビューに対応。
+        ブラウザ上で宛名面・絵柄面をインタラクティブに編集し、URLを共有するだけで送れる年賀状ツール。
       </p>
 
-      <!-- アイコン付きタグ -->
       <ul class="pd-badges pd-badges--icons" aria-label="使用技術">
         <li class="badge">
           <img class="badge__icon" src="../assets/icons/HTML.png" alt="" width="18" height="18" loading="lazy" decoding="async">
@@ -55,24 +50,19 @@
     </div>
   </header>
 
-  <!-- ===== Main（要求どおり：Screenshots / 概要 / リンクのみ） ===== -->
   <main id="main">
 
-    <!-- 概要 -->
     <section class="pd-section" aria-labelledby="about-title">
       <div class="container">
         <h2 id="about-title" class="pd-section__title">概要</h2>
         <div class="pd-summary">
           <p>
-            ブラウザのみで年賀状を作成・共有できるツールです。宛名・差出人・文面をフォーム入力し、<br>
-            絵柄面は画像のアップロード／トリミング／テンプレート選択で即座にプレビューへ反映。<br>
-            生成されたURLをそのまま送るだけで閲覧できます。
+            　ブラウザ上で動くWeb年賀状アプリです。宛名・敬称・差出人・挨拶文・背景画像を入力すると、その場で年賀状に反映され、同時に共有用のURLも更新されます。URLを共有するだけで、相手はブラウザから年賀状を閲覧できます。
           </p>
         </div>
       </div>
     </section>
 
-    <!-- Screenshots -->
     <section class="pd-section" aria-labelledby="shots-title">
       <div class="container">
         <h2 id="shots-title" class="pd-section__title">Screenshots</h2>
@@ -80,36 +70,63 @@
         <div class="pd-shots" data-gallery>
           <figure class="pd-shot">
             <a class="pd-shot__link" href="https://doysound-cmd.github.io/WebNenga/" target="_blank" rel="noopener" aria-label="Web年賀状のデモを開く">
-              <img src="../assets/work_web_nenga.png" alt="Web年賀状：宛名面と絵柄面のプレビュー" width="1280" height="720" loading="lazy" decoding="async">
+              <img src="../assets/work_web_nenga.png" alt="Web年賀状の宛名面と絵柄面のプレビュー" width="1280" height="720" loading="lazy" decoding="async">
             </a>
-            <figcaption>宛名面・絵柄面の表示例</figcaption>
+            <figcaption>宛名面・絵柄面のプレビュー</figcaption>
           </figure>
 
           <figure class="pd-shot">
             <a class="pd-shot__link" href="https://doysound-cmd.github.io/WebNenga/" target="_blank" rel="noopener" aria-label="Web年賀状のデモを開く">
-              <img src="../assets/work_web_nenga_editer.png" alt="Web年賀状：エディタ画面（画像トリミングと文面編集）" width="1280" height="720" loading="lazy" decoding="async">
+              <img src="../assets/work_web_nenga_editer.png" alt="Web年賀状のエディタ画面。画像トリミングと文面編集の操作例" width="1280" height="720" loading="lazy" decoding="async">
             </a>
-            <figcaption>エディタ：画像トリミング／文面編集／テンプレート</figcaption>
+            <figcaption>エディタでの画像トリミングと文面編集</figcaption>
           </figure>
         </div>
       </div>
     </section>
 
-    <!-- Link -->
+    <section class="pd-section" aria-labelledby="about-title">
+      <div class="container">
+        <h2 id="about-title" class="pd-section__title">3Dカード表現</h2>
+        <div class="pd-summary">
+          <p>
+            　カード自体は CSS の 3D Transform で描画しています。読み込み時にはカードが落ちてくるようなドロップアニメーションを入れていて、ポインタの位置に応じてカードが少し傾いたり、光沢が動いたりします。<br>
+            　スマートフォンではジャイロセンサーの値を読んでいて、端末を傾けるとカードの向きとハイライトも連動して変化させることで、手に持って眺めている感覚を再現しました。
+          </p>
+        </div>
+      </div>
+    </section>
+
+        <section class="pd-section" aria-labelledby="about-title">
+      <div class="container">
+        <h2 id="about-title" class="pd-section__title">システム構成</h2>
+          <figure class="pd-shot">
+            <a class="pd-shot__link" href="https://github.com/DOYSOUND-cmd/WebNenga" target="_blank" rel="noopener" aria-label="githubリポジトリを開く">
+              <img src="../assets/WebNenga_system.png" alt="システム構成図" width="1280" height="720" loading="lazy" decoding="async">
+            </a>
+            <figcaption>システム構成図</figcaption>
+          </figure>
+        <div class="pd-summary">
+          <p>
+            　年賀状の内容（宛名・差出人・挨拶文・背景画像URL・各種フラグ）は、ブラウザ側で1つの状態オブジェクトとしてまとめて扱っています。このオブジェクトをJSONにし、さらにBase64URLへ変換して、"#id=...&data=..."という形でURLハッシュに載せます。受信側のブラウザは"location.hash"から"data"を取り出してデコードし、その状態を復元してカードを表示する、という流れです。<br>
+            　背景画像はすべてクライアント側で処理します。編集パネルで選んだ画像ファイルをCropper.jsに渡してトリミングし、HEIF/HEIC形式の画像はheic2anyでJPEGに変換します。そのあと最大辺をリサイズしてWebPに再エンコードします。<br>
+            　得られたBlobはObject URLにしてすぐプレビューに反映し、同じデータをSupabase Storageにもアップロードします。getPublicUrlで取得した公開URLを状態オブジェクトに保存し、以降はそのURLを背景画像の参照先として使う構成になっています。<br>
+          </p>
+        </div>
+      </div>
+    </section>
+
     <section class="pd-section" aria-labelledby="link-title">
       <div class="container">
         <h2 id="link-title" class="pd-section__title">リンク</h2>
         <div class="pd-links">
           <a class="btn btn--primary" href="https://doysound-cmd.github.io/WebNenga/" target="_blank" rel="noopener">Web年賀状を開く</a>
-          <!-- 必要なら別途リンクを追加（例：ドキュメントやブログ） -->
-          <!-- <a class="btn" href="#" target="_blank" rel="noopener">開発ノート</a> -->
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- 共通の詳細ページ用スクリプト（軽いギャラリー演出など） -->
   <script src="../scripts/project-detail.js" type="module"></script>
 </body>
 </html>
