@@ -24,7 +24,7 @@ export const PROJECTS = [
   {
     id: "fpga-fx",
     title: "FPGAギターエフェクター",
-    desc: "リアルタイム処理が得意なFPGAでオーディオエフェクトを実現（開発中）",
+    desc: "リアルタイム処理が得意なFPGAでオーディオエフェクトを実現(開発中)",
     img: "./assets/work_fpga_fx.png",
     tags: ["FPGA", "PYNQ", "Linux", "HDL", "Python", "C++"],
     links: [{ label: "詳細", href: "./projects/fpga-guitar-fx.html" }],
@@ -42,7 +42,7 @@ export const PROJECTS = [
   {
     id: "web-cae",
     title: "Web CAEアプリ",
-    desc: "NASA Space Apps Challenge 2025提出作品のWeb CAEアプリ",
+    desc: "NASA Space Apps Challenge 2025提出作品",
     img: "./assets/work_web_cae.png",
     tags: ["CAE", "Python", "HTML", "CSS", "JavaScript", "Three.js"],
     links: [{ label: "詳細", href: "./projects/web-cae-app.html" }],
