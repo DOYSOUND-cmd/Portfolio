@@ -53,7 +53,7 @@ export const PROJECTS = [
     title: "Retro Lumen",
     desc: "ブラウン管風シェーダと画面キャプチャを組み合わせたレトロ表示Webアプリ",
     img: "./assets/RetroLumen_0.png",
-    tags: ["HTML", "CSS", "JavaScript", "Three.js"],
+    tags: ["HTML", "CSS", "JavaScript"],
     links: [{ label: "詳細", href: "./projects/retro-lumen.html" }],
     year: 2025
   },
