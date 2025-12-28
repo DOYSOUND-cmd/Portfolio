@@ -1,259 +1,258 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <title>Web年賀状</title>
-  <meta name="description" content="ブラウザ上で表示できるWeb年賀状アプリ" />
-  <meta property="og:title" content="Web年賀状" />
-  <meta property="og:description" content="ブラウザ上で表示できるWeb年賀状アプリ" />
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="ja_JP" />
-  <meta property="og:site_name" content="Web年賀状" />
-  <meta property="og:url" content="https://DOYSOUND-cmd.github.io/WebNenga/" />
-  <meta property="og:image" content="https://DOYSOUND-cmd.github.io/WebNenga/images/ogp-card.jpg" />
-  <meta property="og:image:secure_url" content="https://DOYSOUND-cmd.github.io/WebNenga/images/ogp-card.jpg" />
-  <meta property="og:image:type" content="image/jpeg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Web年賀状のプレビュー画像" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Web年賀状" />
-  <meta name="twitter:description" content="ブラウザ上で表示できるWeb年賀状アプリ" />
-  <meta name="twitter:image" content="https://DOYSOUND-cmd.github.io/WebNenga/images/ogp-card.jpg" />
-  <meta name="twitter:image:alt" content="Web年賀状のプレビュー画像" />
-  <meta name="twitter:url" content="https://DOYSOUND-cmd.github.io/WebNenga/" />
-  <meta name="twitter:domain" content="DOYSOUND-cmd.github.io" />
-  <link rel="canonical" href="https://DOYSOUND-cmd.github.io/WebNenga/" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <link rel="stylesheet" href="nenga.css" />
-  <link rel="stylesheet" href="https://unpkg.com/cropperjs@1.6.2/dist/cropper.min.css">
-  <!-- 改行位置の差異を抑えるため同一フォントを読み込み -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-  
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8ZP24N3HRZ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>DOYSOUND</title>
+  <meta name="description" content="DOYSOUND ポートフォリオサイト" />
+  <meta property="og:image" content="https://doysound-cmd.github.io/Portfolio/assets/ogp.png" />
+  <link rel="stylesheet" href="./styles/site-core.css" />
+  <link rel="stylesheet" href="./styles/project-highlight.css" />
+  <link rel="stylesheet" href="./styles/profile-card.css" />
 
-    gtag('config', 'G-8ZP24N3HRZ');
-  </script>
-  
+    <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-S29JRMXN8G"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-S29JRMXN8G');
+      </script>
+
 </head>
 <body>
-  <!-- カード表示 -->
-  <div id="card-container" class="postcard-stage" aria-label="クリック / Enter / Space で裏表反転">
-    <div id="card" class="new-year-card postcard" role="button" tabindex="0" aria-pressed="false" data-print-root="postcard">
-      <!-- 表：住所面 -->
-      <section id="postcard-face-front" class="side postcard-face address-side" data-face="front" aria-label="宛名面">
-        <!-- 背景ホログラム（画像/文字には非適用） -->
-        <div class="bg" aria-hidden="true"></div>
 
-        <img class="stamp print-hide" src="./images/kitte.png" alt="切手" />
-        <div class="postal-code print-hide" id="print-to-postcode" aria-label="郵便番号"><span class="postal-code__prefix" aria-hidden="true">〒</span><span class="postal-code__first" id="to-postcode3" data-print-field="postcode-first">□□□</span><span class="postal-code__separator" aria-hidden="true">-</span><span class="postal-code__last" id="to-postcode4" data-print-field="postcode-last">□□□□</span></div>
-        <div class="address" id="recipient-block" data-print-field="recipient-block">
-          <span class="address-main" id="to-name" data-print-field="recipient-name">宛名&nbsp;太郎&nbsp;様</span>
-          <span class="tap-hint__text" aria-hidden="true">タップして裏面を見る</span>
-          <div class="tap-hint" aria-hidden="true">
-            <span class="tap-hint__circle"></span>
+<main id="main">
+  <!-- AboutMe（名刺寄り） -->
+  <section id="cord" class="section" aria-label="About Me / 自己紹介カード">
+    <div class="container">
+      <div class="card card--biz" tabindex="0" aria-label="クリック/Enter/Spaceで表裏が反転します。マウス/タッチ操作でカードが反応します">
+        <div class="card-inner">
+          <div class="front" aria-hidden="false">
+            <div class="bg" aria-hidden="true"></div>
+            <div class="content">
+              <div class="text">
+                <table class="facts">
+                  <tr>
+                    <td>生年月日</td>
+                    <td>2002年5月8日 <span id="age-jp" class="age-badge"></span></td>
+                  </tr>
+                  <tr>
+                    <td>現職</td>
+                    <td>CAE解析エンジニア</td>
+                  </tr>
+                </table>
+                <header class="idblock">
+                  <h1 class="name-ja">DOYSOUND</h1>
+                </header>
+                <p class="intro">
+                  大阪府出身のエンジニアです。<br>
+                  本業は CFD（数値流体解析）を担当しています。<br>
+                  個人では楽器制作とWebフロントの個人開発に取り組んでいます。
+                </p>
+                <h3 class="skills-title">Skills</h3>
+                <ul class="skills" id="skills-front" aria-label="スキル一覧"></ul>
+              </div>
+              <div class="media">
+                <img src="./assets/face_photo.jpg" alt="顔写真" class="face-photo" width="420" height="560" />
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="sender" id="from-sender" data-print-field="sender-name">土井&nbsp;仰輝</div>
-      </section>
 
-      <!-- 裏：挨拶面 -->
-      <section id="postcard-face-back" class="side postcard-face greeting-side" data-face="back" aria-label="挨拶面">
-        <!-- 背景ホログラム -->
-        <div class="bg" aria-hidden="true"></div>
-
-        <h1 id="greeting-title" data-print-field="greeting-title"></h1>
-        <img id="greeting-photo" class="new-year-image" src="./images/new-year-image.png" alt="新年イメージ" data-print-field="greeting-image" />
-        <p class="greeting-message" id="greeting-body" data-print-field="greeting-body">謹んで新春のお慶びを申し上げます。<br>旧年中は格別のご高配を賜り厚く御礼申し上げます。<br>本年もご期待に沿えるよう精進してまいります。</p>
-      </section>
+          <div class="back" aria-hidden="true">
+            <div class="bg" aria-hidden="true"></div>
+            <div class="content">
+              <div class="text">
+                <table class="facts">
+                  <tr>
+                    <td>Date of Birth</td>
+                    <td>May 8, 2002 <span id="age-en" class="age-badge"></span></td>
+                  </tr>
+                  <tr>
+                    <td>Role</td>
+                    <td>CAE Analysis Engineer</td>
+                  </tr>
+                </table>
+                <header class="idblock">
+                  <h1 class="name-en">DOYSOUND</h1>
+                </header>
+                <p class="intro">
+                  I am an engineer from Osaka Prefecture.<br>
+                  My main role is CFD (computational fluid dynamics) analysis.<br>
+                  In my personal projects, I work on instrument making and web front-end development.
+                </p>
+                <h3 class="skills-title">Skills</h3>
+                <ul class="skills" id="skills-back" aria-label="Skills List"></ul>
+              </div>
+              <div class="media">
+                <img src="./assets/face_photo.jpg" alt="顔写真" class="face-photo" width="420" height="560" />
+              </div>
+            </div>
+          </div>
+        </div><!-- /.card-inner -->
+      </div>
     </div>
-  </div>
-  <p class="print-hint screen-only">印刷するときはブラウザの設定で「背景のグラフィック」を有効にしてください。</p>
+  </section>
 
-  <!-- 印刷専用テンプレート（静的複製用） -->
-  <div id="print-sheet" class="print-sheet print-only" aria-hidden="true" data-print-root="postcard">
-    <section class="print-face print-face--back" data-face="back" style="--bg-image: url('./images/background_sample1.png');">
-      <div class="print-face__bg" aria-hidden="true"></div>
-      <div class="print-face__content">
-        <h1 class="print-greeting-title" data-print-field="greeting-title"></h1>
-        <img class="print-greeting-image new-year-image" src="./images/new-year-image.png" alt="新年イメージ" data-print-field="greeting-image" />
-        <p class="print-greeting-body greeting-message" data-print-field="greeting-body">旧年中は大変お世話になりました。本年も変わらぬお引き立てのほどよろしくお願い申し上げます。皆様のご健康とご多幸をお祈りいたします。</p>
+  <div class="scroll-hint" aria-live="polite">
+    <div class="scroll-hint__body">
+      <div class="scroll-hint__circle" aria-hidden="true">
+        <span class="scroll-hint__chevron"></span>
       </div>
-    </section>
-    <section class="print-face print-face--front" data-face="front">
-      <div class="print-face__bg" aria-hidden="true"></div>
-      <div class="print-face__content">
-        <div class="address" id="print-recipient-block" data-print-field="recipient-block">
-          <span class="address-main" id="print-to-name" data-print-field="recipient-name">宛名&nbsp;太郎&nbsp;様</span>
-        </div>
-        <div class="sender" id="print-from-sender" data-print-field="sender-name">DOYSOUND</div>
-      </div>
-    </section>
-  </div>
-
-  <!-- 編集UI -->
-  <button id="editor-open" class="floating-cta floating-cta--left" aria-label="編集を開く">編集</button>
-  <button id="btn-print" class="floating-cta floating-cta--right pc-only" aria-label="印刷する">印刷</button>
-  <div id="editor-overlay" aria-hidden="true">
-    <div class="editor-panel" role="dialog" aria-modal="true" aria-labelledby="editor-title">
-      <div class="editor-header">
-        <h2 id="editor-title">Web年賀状エディタ</h2>
-        <button id="editor-close" aria-label="閉じる">×</button>
-      </div>
-
-      <div class="editor-body grid2" id="editor-scroll">
-        <!-- 左：テキスト（CSVモード時は非表示） -->
-        <section class="group" id="panel-text">
-          <h3 class="group-title">テキスト</h3>
-
-          <label class="stack">
-            <span class="label">
-              宛名
-              <button id="btn-csv-mode" type="button" class="ghost small" title="CSV一括生成モードを開く" aria-pressed="false">CSVモード</button>
-            </span>
-            <div class="row">
-              <textarea id="inp-address" class="samebox" rows="3" placeholder="例）宛名 太郎"></textarea>
-              <select id="inp-honorific" title="敬称">
-                <option value="様">様</option>
-                <option value="殿">殿</option>
-                <option value="君">君</option>
-                <option value="御中">御中</option>
-                <option value="">—（なし）</option>
-              </select>
-            </div>
-          </label>
-
-          <label class="stack">
-            <span class="label">差出人</span>
-            <textarea id="inp-sender" class="samebox" rows="3" placeholder="例）差出 次郎"></textarea>
-          </label>
-
-          <div class="stack">
-            <div class="row wrap">
-              <label class="stack flex-1">
-                <span class="label">挨拶文テンプレート</span>
-                <div class="row">
-                  <select id="sel-message-template" title="挨拶文テンプレート"></select>
-                </div>
-                <div class="hint">※ テンプレを選ぶと下の本文に即反映。本文は自由に編集できます。</div>
-              </label>
-            </div>
-
-            <label class="stack">
-              <span class="label">挨拶文（改行可）</span>
-              <textarea id="inp-message" rows="5" placeholder="例）旧年中は大変お世話になりました。&#10;本年もよろしくお願いします。"></textarea>
-            </label>
-          </div>
-
-          <fieldset class="options">
-            <legend>表示オプション</legend>
-            <label class="inline">
-              <input id="chk-photo" type="checkbox" checked />
-              "謹賀新年"表示
-            </label>
-            <label class="inline">
-              <input id="chk-msgbg" type="checkbox" checked />
-              挨拶文の背景色（白半透明）を有効
-            </label>
-          </fieldset>
-
-          <p class="valid-note">※ 宛名と差出人は必須です（空欄不可）。</p>
-        </section>
-
-        <!-- 右：背景（サンプル／アップロード＆トリミング） -->
-        <section class="group">
-          <h3 class="group-title">背景</h3>
-
-          <div class="sample-wrap">
-            <div class="sample-grid" id="sample-grid">
-              <button type="button" class="sample" data-src="./images/background_sample1.png" aria-label="サンプル1">
-                <img src="./images/background_sample1.png" alt="sample1">
-              </button>
-              <button type="button" class="sample" data-src="./images/background_sample2.png" aria-label="サンプル2">
-                <img src="./images/background_sample2.png" alt="sample2">
-              </button>
-              <button type="button" class="sample" data-src="./images/background_sample3.png" aria-label="サンプル3">
-                <img src="./images/background_sample3.png" alt="sample3">
-              </button>
-              <button type="button" class="sample" data-src="./images/background_sample4.png" aria-label="サンプル4">
-                <img src="./images/background_sample4.png" alt="sample4">
-              </button>
-              <button type="button" class="sample" data-src="./images/background_sample5.png" aria-label="サンプル5">
-                <img src="./images/background_sample5.png" alt="sample5">
-              </button>
-            </div>
-            <div class="hint">サンプルをクリックで即適用／共有リンクにも反映されます。</div>
-          </div>
-
-          <hr class="sep"/>
-
-          <div class="uploader" id="bgfile-uploader">
-            <input id="inp-bgfile" class="uploader-input" type="file" accept="image/*" />
-            <label for="inp-bgfile" class="bgfile-trigger">
-              <img src="./images/noImage.jpeg" alt="背景画像をまだ選択していません" />
-              <span class="bgfile-trigger__text">タップして画像を選択</span>
-            </label>
-            <div id="cropper" aria-hidden="true">
-              <div class="cropper-wrap">
-                <img id="crop-img" alt="トリミング対象" />
-              </div>
-              <div class="crop-controls">
-                <button id="btn-crop-reset" type="button">リセット</button>
-                <button id="btn-crop-apply" type="button" class="primary">トリミング適用</button>
-              </div>
-              <div class="hint">画像をドラッグで位置調整、ピンチ／ホイールでズームできます。</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- CSV一括生成パネル（ファイルインポート） -->
-        <section class="group" id="csv-panel" style="grid-column: 1 / -1; display:none;">
-          <h3 class="group-title">CSV一括URL生成</h3>
-          <p class="hint">
-            A=宛名 / B=敬称コード / C=差出 / D=挨拶文 / E=「謹賀新年」表示(0/1) / F=挨拶文背景(0/1)<br/>
-            ※ 敬称コード → 0:様, 1:殿, 2:君, 3:御中, 4:(-)なし
-          </p>
-
-          <div class="row wrap">
-            <input id="csv-file" type="file" accept=".csv,text/csv" />
-            <button id="csv-generate" class="primary" disabled>URL生成してCSVダウンロード</button>
-            <button id="csv-exit" type="button" class="ghost">標準モードに戻る</button>
-          </div>
-
-          <div class="hint" id="csv-summary">CSV未選択</div>
-
-          <label class="stack" style="margin-top:10px;">
-            <span class="label">プレビュー（先頭数行）</span>
-            <textarea id="csv-preview" rows="6" readonly></textarea>
-          </label>
-        </section>
-      </div>
-      <!-- 標準モード専用：URLコピー欄（CSVモード時は非表示にする） -->
-      <div class="editor-actions" id="editor-actions">
-        <input id="share-url" type="text" readonly placeholder="生成された短いURL（自動更新）" />
-        <button id="btn-copy" class="primary" title="URLをコピー">URLをコピー</button>
-      </div>
+      <p class="scroll-hint__label">
+        <span class="scroll-hint__label-text">Scroll / Swipe to explore</span>
+      </p>
     </div>
   </div>
 
-  <!-- トースト／ビジー -->
-  <div id="toast" aria-live="polite" aria-atomic="true"></div>
-  <div id="busy" aria-hidden="true"><div class="spinner" role="status"></div><div class="busy-text">処理中です…</div></div>
+  <!-- Productions -->
+  <header id="Productions-head" class="page-head" >
+    <div class="container">
+      <h1 class="title">Productions</h1>
+      <div class="page-head__cta">
+        <a class="btn btn--ghost" href="./productions.html">一覧ページを見る</a>
+      </div>
+    </div>
+  </header>
 
-  <!-- ライブラリ -->
-  <script src="https://unpkg.com/cropperjs@1.6.2/dist/cropper.min.js"></script>
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <section id="Productions" class="section">
+    <div class="container">
+      <div class="carousel" data-carousel data-scope="home" aria-label="制作物カルーセル">
+        <button class="car-btn prev" data-prev aria-controls="track" aria-label="前へ">‹</button>
+        <div class="car-viewport" tabindex="0" role="region" aria-roledescription="スライダー" aria-label="作品">
+          <ul class="car-track" role="listbox" id="track"></ul>
+          <div class="sr-live" aria-live="polite" aria-atomic="true"></div>
+        </div>
+        <button class="car-btn next" data-next aria-controls="track" aria-label="次へ">›</button>
+        <div class="car-dots" data-dots role="tablist" aria-label="ページャ"></div>
+      </div>
+    </div>
+  </section>
 
-  <!-- アプリ -->
-  <script type="module" src="js/main.js"></script>
-  <!-- 位置調整（既存） -->
-  <script type="module" src="./js/position-controls.js"></script>
-  <!-- 軽量オートフィット（本文変更時のみ計測／リサイズは比例適用） -->
-  <script type="module" src="./js/message-autofit-lite.js"></script>
+  <!-- Certifications（★追加：Productionsの後） -->
+  <section id="qualifications" class="section" aria-labelledby="quals-title">
+    <div class="container">
+      <h2 id="quals-title" class="section-title">Certifications</h2>
+
+      <ul class="quals" role="list">
+        <!-- 各項目：ボタンで開閉（キーボード・スクリーンリーダ対応） -->
+        <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            基本情報技術者試験
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              情報処理技術者試験の基礎レベルにあたる国家資格です。アルゴリズム・データ構造、ネットワーク、データベース、セキュリティなどIT全般の基礎を体系的に学び、業務で使うプログラミングやシステム設計の土台になっています。
+            </p>
+          </div>
+        </li>
+
+        <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            情報セキュリティマネジメント
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              組織の情報資産を守るためのリスク管理や運用ルールの策定を扱う国家資格です。ISMSやアクセス制御、ログ管理、インシデント対応など、実務で必要な情報セキュリティの考え方を体系的に理解しています。
+            </p>
+          </div>
+        </li>
+
+        <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            第二種電気工事士
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+               一般住宅や小規模店舗の電気設備工事を行うための国家資格です。配線設計や結線作業、電気機器の取り付け、安全確認までを一通り自分の手で行えるレベルの電気知識と実務スキルを持っています。
+            </p>
+          </div>
+        </li>
+
+        <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            危険物取扱者乙種4類
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              ガソリンや灯油などの引火性液体を取り扱うための国家資格です。危険物の性質や法令、安全な保管・移送・取扱方法について理解しており、現場での安全管理やリスク低減に活かせます。<br>
+            </p>
+          </div>
+        </li>
+
+        <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            情報技術検定2級
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              情報処理とプログラミングの基礎～中級レベルを扱う検定です。フローチャートによる処理設計や基本的なアルゴリズム、配列・分岐・繰り返しといった構造化プログラミングを学びました。<br>
+            </p>
+          </div>
+        </li>
+
+        <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            基礎製図検定
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              機械製図の基礎知識を証明する検定です。投影図や寸法記入、はめあい、公差などのJIS製図規格に基づいた図面の読み書きができ、設計意図を図面で正確に伝える力があります。<br>
+            </p>
+          </div>
+        </li>
+
+        <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            計算技術検定3級
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              工業数学の基礎計算力を証明する検定です。四則演算や方程式、関数の基本的な取り扱いなど、工学系の学習やCAE解析で前提となるレベルの計算力を身につけています。<br>
+            </p>
+          </div>
+        </li>
+
+        <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            CS50x
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              ハーバード大学のコンピュータサイエンス入門オンラインコースです。C言語とPythonを中心に、アルゴリズム、データ構造、Web開発などを実装しながら学習し、複数の課題・最終プロジェクトを完走しています。<br>
+            </p>
+          </div>
+        </li>
+
+                <li class="qualification-item">
+          <button class="q-head" aria-expanded="false">
+            玉掛け技能講習修了
+            <span class="q-icon" aria-hidden="true">＋</span>
+          </button>
+          <div class="qualification-description" hidden>
+            <p>
+              クレーンで荷を吊り上げる際に、フックとワイヤ・チェーンスリングを用いて安全に荷を掛け外しするための技能講習です。荷重バランスの取り方、適切な用具選定、合図方法など、現場での安全な荷役作業に必要な知識と技能を修得しています。<br>
+            </p>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+</main>
+
+<script src="./scripts/site-core.js" type="module"></script>
+<script src="./scripts/welcome-overlay.js" type="module"></script>
+<script src="./scripts/project-carousel.js" type="module"></script>
+<script src="./scripts/profile-card.js" type="module"></script>
 </body>
 </html>
