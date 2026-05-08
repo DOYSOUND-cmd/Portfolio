@@ -1,4 +1,6 @@
-﻿/* =========================================================
+﻿@import "./liftkitvars.css";
+
+/* =========================================================
    Product Detail ページ用スタイル（iPhone 13/Safari でも確認済み）
    - ヒーロー
    - セクション
@@ -10,16 +12,16 @@
 
 /* ベース */
 :root{
-  --panel:#ffffff;
-  --line:#e3e6ea;
-  --text:#161616;
-  --muted:#5c6068;
+  --panel: var(--light__surface_lkv);
+  --line: #d9dce2;
+  --text: var(--light__onsurface_lkv);
+  --muted: #5a5f67;
   --brand:#cc0000;
-  --brand2:#a60000;
-  --page-bg:#f5f5f6;
-  --radius:14px;
-  --shadow-1:0 12px 30px rgba(0,0,0,.1);
-  --shadow-2:0 20px 48px rgba(0,0,0,.14);
+  --brand2:#cc0000;
+  --page-bg: var(--bg, #f4f4f4);
+  --radius: 8px;
+  --shadow-1:0 8px 22px rgba(17,17,17,.08);
+  --shadow-2:0 14px 32px rgba(17,17,17,.12);
 
   /* iOS Safari の動的ツールバー対策: dvh/svh が使えない場合のフォールバック */
   --vh-62: 62vh;
@@ -43,6 +45,7 @@ body{
 }
 .pd-hero .container{
   padding-block: clamp(28px,5vw,48px);
+  max-width: min(1080px, 94vw);
 }
 .pd-hero__eyebrow{
   color: var(--muted);
@@ -58,17 +61,9 @@ body{
   font-size: clamp(28px,4.5vw,44px);
   letter-spacing: .01em;
   margin: 0 0 10px;
-  background-image: linear-gradient(90deg,var(--brand),var(--brand2));
-  color: var(--brand); /* background-clip が効かない環境向けの水色フォールバック */
+  background-image: none;
+  color: var(--brand);
   line-height: 1.15; /* 改行時に収まりやすいよう */
-}
-@supports (-webkit-background-clip:text){
-  .pd-hero__title{
-    -webkit-background-clip:text;
-    background-clip:text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-  }
 }
 /* モバイル時の改行制御（HTMLで <span class="mob-line"> を挿入） */
 .pd-hero__title .mob-line { display: inline; }
@@ -82,18 +77,19 @@ body{
   font-weight: 700;
   line-height: 1.7;
   margin: 0;
+  max-width: 100%;
 }
 
 /* バッジ（アイコン付き） */
 .pd-badges{
-  display: flex; flex-wrap: wrap; gap: 8px 10px;
-  margin-top: 14px;
+  display: flex; flex-wrap: wrap; gap: 8px 12px;
+  margin-top: 16px;
 }
 .pd-badges .badge{
   display: inline-flex; align-items: center; gap: 8px;
-  padding: 8px 12px; border-radius: 999px;
+  padding: 8px 12px; border-radius: var(--lk-size-xl);
   border: 1px solid var(--line);
-  background: linear-gradient(180deg,#ffffff,#f7f7f8);
+  background: #ffffff;
   color: var(--text); font-weight: 800; font-size: 14px;
   min-width: 0; /* Safari の flex はみ出し防止 */
 }
@@ -112,30 +108,32 @@ body{
   justify-content:center;
   gap:.4rem;
   padding:.85rem 1.6rem;
-  border-radius:14px;
+  min-height: 46px;
+  border-radius:var(--radius);
   border:1px solid var(--brand);
   background:var(--brand);
   color:#fff;
   font-weight:900;
   letter-spacing:.03em;
   text-transform:uppercase;
-  box-shadow:0 18px 38px rgba(204,0,0,.24);
+  box-shadow:0 8px 20px rgba(204,0,0,.24);
   transition:transform .25s ease, box-shadow .25s ease;
 }
 .pd-cta .btn:hover{
   transform:translateY(-2px);
-  box-shadow:0 26px 48px rgba(204,0,0,.3);
+  box-shadow:0 12px 28px rgba(204,0,0,.28);
   text-decoration:none;
 }
 .pd-cta .btn:active{ transform:translateY(0); }
 
 /* ---------------- Section ---------------- */
 .pd-section{
-  padding-block: clamp(28px,5vw,48px);
+  padding-block: clamp(24px, 4.8vw, 44px);
 }
 
 .pd-section .container{
   position: static;
+  max-width: min(1080px, 94vw);
 }
 .pd-section__title{
   font-weight: 900;
@@ -168,7 +166,7 @@ body{
 .pd-shot{
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: #f7f7f8;
+  background: #ffffff;
   box-shadow: var(--shadow-1);
   padding: 12px;
   display: flex;
@@ -231,6 +229,84 @@ body{
   opacity: .95;
   line-height: 1.9;
   font-weight: 700;
+  max-width: 100%;
+  text-wrap: pretty;
+}
+.pd-summary--spaced p + p{
+  margin-top: .8em;
+}
+
+/* ---------------- Analysis Result ---------------- */
+.pd-table-wrap{
+  width: 100%;
+  overflow-x: auto;
+  margin: 16px 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: var(--shadow-1);
+}
+.pd-data-table{
+  width: 100%;
+  min-width: 420px;
+  border-collapse: collapse;
+  color: var(--text);
+  font-size: 14px;
+}
+.pd-data-table caption{
+  caption-side: top;
+  text-align: left;
+  padding: 12px 14px;
+  color: var(--text);
+  font-weight: 900;
+}
+.pd-data-table th,
+.pd-data-table td{
+  padding: 11px 14px;
+  border-top: 1px solid var(--line);
+  vertical-align: top;
+  line-height: 1.55;
+}
+.pd-data-table thead th{
+  background: #f7f8fa;
+  color: var(--muted);
+  font-weight: 900;
+}
+.pd-data-table tbody th{
+  text-align: left;
+  font-weight: 900;
+  white-space: nowrap;
+}
+.pd-data-table td:nth-child(2){
+  white-space: nowrap;
+}
+.pd-data-table__highlight{
+  font-weight: 900;
+  color: var(--brand);
+}
+.pd-shots--analysis{
+  margin-top: 14px;
+}
+.pd-effect > .pd-summary + .pd-shots,
+.pd-effect > .pd-shots + .pd-summary{
+  margin-top: 14px;
+}
+.pd-shots--analysis .pd-shot img{
+  max-height: min(68svh, 760px);
+}
+@supports not (height: 1svh) {
+  .pd-shots--analysis .pd-shot img{ max-height: min(68vh, 760px); }
+}
+@media (min-width: 980px){
+  .pd-shots--analysis{
+    grid-template-columns: 1fr 1fr;
+  }
+  .pd-shots--analysis .pd-shot--wide{
+    grid-column: 1 / -1;
+  }
+  .pd-shots--analysis .pd-shot--wide img{
+    max-height: min(74svh, 860px);
+  }
 }
 
 /* ---------------- PDF ---------------- */
@@ -255,6 +331,58 @@ body{
 /* Links */
 .pd-links{ display: flex; flex-wrap: wrap; gap: 10px; }
 .pd-links--inline{ margin-top: 10px; }
+
+/* ---------------- Effect Article (エフェクト個別ブロック) ---------------- */
+.pd-effect{
+  margin-bottom: 2rem;
+}
+.pd-effect:last-child{
+  margin-bottom: 0;
+}
+.pd-effect__title{
+  font-weight: 900;
+  font-size: clamp(17px, 2.4vw, 22px);
+  margin: 0 0 8px;
+}
+.pd-effect__subtitle{
+  margin-top: 2.2rem;
+  margin-bottom: 0.9rem;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  line-height: 1.5;
+  font-weight: 700;
+  letter-spacing: .03em;
+}
+
+/* ---------------- Video Embed ---------------- */
+.pd-video{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #0f141d;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.33);
+}
+@supports not (aspect-ratio: 16 / 9) {
+  .pd-video::before{
+    content: "";
+    display: block;
+    padding-top: 56.25%;
+  }
+}
+.pd-video iframe{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ---------------- Note (補足テキスト) ---------------- */
+.pd-note{
+  color: var(--muted);
+  font-size: 14px;
+}
 
 /* ===== 3D Loader Overlay ===== */
 .pd-3d__stage {
@@ -354,3 +482,5 @@ body{
 @media (max-width: 600px) {
   .pd-hero__title .pd-mob-br { display: block; }
 }
+
+

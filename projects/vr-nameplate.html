@@ -10,7 +10,7 @@
   <!-- プロダクト詳細 共通スタイル -->
   <link rel="stylesheet" href="../styles/project-detail.css" />
   <style>
-    /* 3Dビューア用のちょい足し。project.cssに干渉しないよう軽めに調整 */
+    /* 3Dビューア用の小さな補助。project-detail.cssに干渉しないように調整 */
     .pd-3d { display: grid; gap: clamp(12px, 2vw, 16px); }
     .pd-3d__stage {
       position: relative; width: 100%; aspect-ratio: 16/9;
@@ -20,16 +20,15 @@
     .pd-3d__hint { color: var(--muted); font-size: .95rem; }
     .pd-3d__toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
   </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-Y39NSDYY9J');
-  </script>
+  gtag('config', 'G-Y39NSDYY9J');
+</script>
 </head>
 <body>
 
@@ -38,28 +37,27 @@
     <div class="pd-hero__eyebrow">Product Detail</div>
     <h1 class="pd-hero__title">リアルVRネームプレート</h1>
     <p class="pd-hero__lede">
-      VRChatなどで見慣れた“ネームプレート”を現実でもそのまま再現できるカスタムグッズ。
-      イベントやオフ会での自己表現・識別性を高める、軽量・着脱式のデザインです。
+      VRChatなどで見慣れた“ネームプレート”を現実でもそのまま再現できるカスタムグッズ。イベントやオフ会での自己表現・識別性を高める、軽量・着脱式のデザインです。
     </p>
     <ul class="pd-badges pd-badges--icons" aria-label="使用技術">
       <li class="badge">
-        <img class="badge__icon" src="../assets/icons/CAE.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+        <img class="badge__icon" src="../assets/icons/CAE.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
         <span>CAE</span>
       </li>
       <li class="badge">
-        <img class="badge__icon" src="../assets/icons/HTML.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+        <img class="badge__icon" src="../assets/icons/HTML.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
         <span>HTML</span>
       </li>
       <li class="badge">
-        <img class="badge__icon" src="../assets/icons/CSS.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+        <img class="badge__icon" src="../assets/icons/CSS.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
         <span>CSS</span>
       </li>
       <li class="badge">
-        <img class="badge__icon" src="../assets/icons/JS.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+        <img class="badge__icon" src="../assets/icons/JS.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
         <span>JavaScript</span>
       </li>
       <li class="badge">
-        <img class="badge__icon" src="../assets/icons/Threejs.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+        <img class="badge__icon" src="../assets/icons/Threejs.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
         <span>Three.js</span>
       </li>
     </ul>
@@ -76,7 +74,7 @@
       <h2 id="about-title" class="pd-section__title">概要</h2>
       <div class="pd-summary">
         <p>
-          VR世界での名前表示を現実に持ち出すためのネームプレートです。イベントなどで頭上装着し、いつものVR名・ハンドルネームを表示することで、フレンドとの再会や会場での遭遇率を高めます。
+          VR世界での名前表示を現実に持ち出すためのネームプレートです。イベントなどで頭上に装着し、いつものVR名・ハンドルネームを表示することで、フレンドとの再会や会場での遭遇性を高めます。
         </p>
         <p>
           取り外ししやすいモジュール構造と、長時間装着しても疲れにくい重量バランスを重視。素材選定と強度解析を繰り返し、屋内外イベントで安心して使える設計にしました。
@@ -90,7 +88,7 @@
       <h2 id="shots-title" class="pd-section__title">宣伝POP</h2>
       <div class="pd-shots pd-shots--single" data-gallery>
         <figure class="pd-shot">
-          <img src="../assets/nameplate.png" alt="リアルVRネームプレートのポスター" width="1080" height="1440" loading="lazy" decoding="async">
+          <img src="../assets/nameplate.jpg" alt="リアルVRネームプレートのポスター" width="1080" height="1440" loading="lazy" decoding="async">
           <figcaption>VketReal 2025 Summer 出展用ポスター</figcaption>
         </figure>
       </div>
@@ -142,19 +140,19 @@
 
       <div class="pd-shots" data-gallery>
         <figure class="pd-shot">
-          <img src="../assets/sanperuka0.png" alt="肉抜き量の違いによるたわみシミュレーション" width="1280" height="720" loading="lazy" decoding="async">
-          <figcaption>たわみの大きさと肉抜き量の比較</figcaption>
+          <img src="../assets/sanperuka0.jpg" alt="肉厚違いによるたわみシミュレーション" width="1280" height="720" loading="lazy" decoding="async">
+          <figcaption>たわみの大きさと肉厚違いの比較</figcaption>
         </figure>
         <figure class="pd-shot">
-          <img src="../assets/sanperuka1.png" alt="ポケット付近の形状検討" width="1280" height="720" loading="lazy" decoding="async">
+          <img src="../assets/sanperuka1.jpg" alt="ポケット付近の形状検討" width="1280" height="720" loading="lazy" decoding="async">
           <figcaption>ポケット周りの形状検討</figcaption>
         </figure>
         <figure class="pd-shot">
-          <img src="../assets/bottom0.png" alt="応力計算結果の可視化" width="1280" height="720" loading="lazy" decoding="async">
+          <img src="../assets/bottom0.jpg" alt="応力計算結果の可視化" width="1280" height="720" loading="lazy" decoding="async">
           <figcaption>応力計算結果</figcaption>
         </figure>
         <figure class="pd-shot">
-          <img src="../assets/bottom1.png" alt="ブリッジ周りの検討と形状の比較" width="1280" height="720" loading="lazy" decoding="async">
+          <img src="../assets/bottom1.jpg" alt="ブリッジ周りの検討と形状の比較" width="1280" height="720" loading="lazy" decoding="async">
           <figcaption>ブリッジ周りの検討</figcaption>
         </figure>
       </div>

@@ -1,4 +1,4 @@
-// ===== cord.js・・lip縺ｯ .card-inner縲∬誠荳・繝√Ν繝医・ .card・・=====
+// ===== Profile card script: flip and tilt are controlled by .card/.card-inner =====
 (function(){
   const card  = document.querySelector("#cord .card");
   const isIOS = document.documentElement.classList.contains('is-ios');
@@ -6,18 +6,18 @@
   const mobileFactsQuery = window.matchMedia("(max-width: 640px)");
   if (!card || !inner) return;
 
-  /* --- 繧ｹ繧ｭ繝ｫ & 蟷ｴ鮨｢ --- */
+  /* --- skills and age badges --- */
   const ICON_BASE = "./assets/icons/";
   const ICON_MAP = {
-    Linux: ICON_BASE+"Linux.png", JavaScript: ICON_BASE+"JS.png",
-    CSS: ICON_BASE+"CSS.png", HTML: ICON_BASE+"HTML.png",
-    CAD: ICON_BASE+"CAD.jpg", CAE: ICON_BASE+"CAE.png",
+    Linux: ICON_BASE+"Linux.jpg", JavaScript: ICON_BASE+"JS.jpg",
+    CSS: ICON_BASE+"CSS.jpg", HTML: ICON_BASE+"HTML.jpg",
+    CAD: ICON_BASE+"CAD.jpg", CAE: ICON_BASE+"CAE.jpg",
     "electronic circuit": ICON_BASE+"electronic_circuit.jpg",
-    "Three.js": ICON_BASE+"Threejs.png",
-    FPGA: ICON_BASE+"fpga.png", PYNQ: ICON_BASE+"PYNQ.png",
-    Python: ICON_BASE+"Python.png", HDL: ICON_BASE+"HDL.png",
-    "C++": ICON_BASE+"Cpurapura.png", Processing: ICON_BASE+"Processing.png",
-    Go: ICON_BASE+"Go.png", Java: ICON_BASE+"Java.png"
+    "Three.js": ICON_BASE+"Threejs.jpg",
+    FPGA: ICON_BASE+"fpga.jpg", PYNQ: ICON_BASE+"PYNQ.jpg",
+    Python: ICON_BASE+"Python.jpg", HDL: ICON_BASE+"HDL.jpg",
+    "C++": ICON_BASE+"Cpurapura.jpg", Processing: ICON_BASE+"Processing.jpg",
+    Go: ICON_BASE+"Go.jpg", Java: ICON_BASE+"Java.jpg"
   };
   const SKILLS = [
     "CAD","CAE","electronic circuit","FPGA","HDL","PYNQ",
@@ -28,7 +28,7 @@
   const fallback=(label)=>{
     const d=document.createElement("div");
     d.className="skill--fallback";
-    const m=(label.match(/[A-Za-z+#]/g)||[label[0]||"窶｢"]).slice(0,2).join("").toUpperCase();
+    const m=(label.match(/[A-Za-z+#]/g)||[label[0]||"?"]).slice(0,2).join("").toUpperCase();
     d.textContent=m; d.setAttribute("aria-hidden","true");
     return d;
   };
@@ -40,7 +40,7 @@
       const src=ICON_MAP[lbl];
       if(src){
         const img=document.createElement("img");
-        img.className="skill__icon"; img.alt=`${lbl} 繧｢繧､繧ｳ繝ｳ`; img.src=src;
+        img.className="skill__icon"; img.alt=`${lbl} icon`; img.src=src;
         img.onerror=()=>img.replaceWith(fallback(lbl));
         li.appendChild(img);
       }else{
@@ -70,18 +70,66 @@
     if(jp) jp.textContent=`（${age}歳）`;
     if(en) en.textContent=`(${age} years old)`;
   };
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+  const textFaces = () => Array.from(card.querySelectorAll(".front .text, .back .text"));
+  const hasTextOverflow = () => textFaces().some((el)=>{
+    return el.scrollHeight - el.clientHeight > 1 || el.scrollWidth - el.clientWidth > 1;
+  });
+  const fitCardFont = ()=>{
+    const w = card.clientWidth;
+    const h = card.clientHeight;
+    if (!w || !h) return;
+
+    // Width-driven baseline zoom (small screens shrink, desktop gently enlarge).
+    const minW = 320;
+    const maxW = 1120;
+    const t = clamp((w - minW) / (maxW - minW), 0, 1);
+    let zoom = 0.84 + (1.06 - 0.84) * t;
+
+    // If card height gets tight, nudge down slightly.
+    if (h < 360) zoom -= 0.03;
+    else if (h > 620) zoom += 0.01;
+
+    zoom = clamp(zoom, 0.82, 1.08);
+    card.style.setProperty("--font-zoom", zoom.toFixed(3));
+
+    // Overflow guard: shrink stepwise until both sides fit.
+    let guard = 0;
+    while (guard < 10 && hasTextOverflow() && zoom > 0.78){
+      zoom -= 0.02;
+      card.style.setProperty("--font-zoom", zoom.toFixed(3));
+      guard++;
+    }
+  };
+  let fitRaf = 0;
+  const scheduleFitCardFont = ()=>{
+    if (fitRaf) cancelAnimationFrame(fitRaf);
+    fitRaf = requestAnimationFrame(()=>{
+      fitRaf = 0;
+      fitCardFont();
+    });
+  };
+
   (function mount(){
     updateAgeBadges();
     if(typeof mobileFactsQuery.addEventListener==="function"){
-      mobileFactsQuery.addEventListener("change", updateAgeBadges);
+      mobileFactsQuery.addEventListener("change", ()=>{
+        updateAgeBadges();
+        scheduleFitCardFont();
+      });
     }else if(typeof mobileFactsQuery.addListener==="function"){
-      mobileFactsQuery.addListener(updateAgeBadges);
+      mobileFactsQuery.addListener(()=>{
+        updateAgeBadges();
+        scheduleFitCardFont();
+      });
     }
     render(document.getElementById("skills-front"));
     render(document.getElementById("skills-back"));
+    scheduleFitCardFont();
   })();
 
-  /* --- 陦ｨ陬上・ ARIA 縺ｮ縺ｿ譖ｴ譁ｰ・・ointer-events 縺ｯ蛻・崛縺励↑縺・ｼ・--- */
+  /* --- flip state and ARIA updates; inactive face is non-interactive --- */
   function setFacesAria(flipped){
     const front = inner.querySelector(".front");
     const back  = inner.querySelector(".back");
@@ -91,20 +139,30 @@
   const toggleFlip=()=>{
     inner.classList.toggle("is-flipped");
     setFacesAria(inner.classList.contains("is-flipped"));
+    scheduleFitCardFont();
   };
 
-  // 繧ｯ繝ｪ繝・け縺ｯ螟門・縺ｮ .card 縺ｧ諡ｾ縺・ｼ医Μ繝ｳ繧ｯ/繝懊ち繝ｳ縺ｯ髯､螟厄ｼ・
+  // Flip the card when clicking on card surface (ignore nested buttons/links).
   card.addEventListener("click",(e)=>{
     if (e.target.closest('a,button')) return;
     toggleFlip();
   });
-  // 繧ｭ繝ｼ謫堺ｽ懶ｼ・nter/Space・・
+  // Keyboard accessibility: Enter/Space flips the card.
   card.addEventListener("keydown",(e)=>{
     const scrollers=['Space','PageUp','PageDown','ArrowUp','ArrowDown','Home','End'];
     if (e.code==='Enter' || e.code==='NumpadEnter' || e.code==='Space'){ e.preventDefault(); toggleFlip(); }
     else if (scrollers.includes(e.code)){ e.preventDefault(); }
   });
   setFacesAria(false);
+  scheduleFitCardFont();
+
+  window.addEventListener("resize", scheduleFitCardFont, { passive:true });
+  window.addEventListener("orientationchange", scheduleFitCardFont, { passive:true });
+  window.addEventListener("load", scheduleFitCardFont, { once:true });
+  if ("ResizeObserver" in window){
+    const ro = new ResizeObserver(scheduleFitCardFont);
+    ro.observe(card);
+  }
 
   /* __IOS_PATCH__ disable tilt/drop */
   if (isIOS) {
@@ -115,7 +173,7 @@
     card.style.setProperty('--dropY', '0vh');
   }
 
-  /* --- 繝昴う繝ｳ繧ｿ繝√Ν繝茨ｼ郁｣城擇縺ｧ繧ょ渚霆｢縺励↑縺・ｼ夊｡ｨ陬丞・騾壹・逶ｴ隕ｳ逧・嫌蜍包ｼ・--- */
+  /* --- pointer-driven tilt and highlight tracking --- */
   const ROT_X_MAX=7, ROT_Y_MAX=7, STIFF=100, DAMP=14;
   let targetRX=0, targetRY=0, curRX=0, curRY=0, vRX=0, vRY=0;
   let shineX=.5, shineY=.5, mx=50, my=50;
@@ -127,15 +185,15 @@
     shineX = px; shineY = py;
     mx = Math.round(px*100); my = Math.round(py*100);
 
-    // -1..1 縺ｫ豁｣隕丞喧・遺・ 陬城擇縺ｧ繧ょ渚霆｢縺励↑縺・ｼ・
+    // Normalize pointer position to range -1..1.
     const nx = px*2 - 1;
     const ny = py*2 - 1;
 
-    // 蜿ｳ縺ｫ蜍輔°縺帙・蜿ｳ縺ｸ縲∽ｸ九↓蜍輔°縺帙・謇句燕縺ｸ・郁｡ｨ陬丞・騾夲ｼ・
+    // Convert normalized pointer position into rotation targets.
     targetRY = nx * ROT_Y_MAX;
     targetRX = -ny * ROT_X_MAX;
 
-    // 繝上う繝ｩ繧､繝医・ front/back 縺ｫ蜷後§ px/py 繧呈ｸ｡縺・
+    // Share highlight coordinates with both front/back background layers.
     const bgFront = inner.querySelector('.front .bg');
     const bgBack  = inner.querySelector('.back  .bg');
     if (bgFront){
@@ -163,7 +221,7 @@
   card.addEventListener("mouseleave", resetTilt);
   card.addEventListener("touchend", resetTilt);
 
-  /* --- 迚ｩ逅・誠荳具ｼ・ard 縺ｫ蜿肴丐・・--- */
+  /* --- drop-in animation and impact spring --- */
   let dropping=false, yVH=-120, vY=0;
   const GRAV=400, REST=0.20, STOP_V=10;
   let rz=0, vrz=0; const Kz=80, Cz=14;
@@ -181,7 +239,7 @@
   function raf(){
     const now=performance.now(); let dt=(now-prev)/1000; prev=now; dt=Math.min(dt,1/30);
 
-    // 關ｽ荳・
+    // Vertical drop simulation.
     if(dropping){
       vY += GRAV*dt; yVH += vY*dt;
       if(yVH>=0){
@@ -197,11 +255,11 @@
       glossImpact = Math.max(0, glossImpact - IMP_DECAY*dt);
     }
 
-    // 繝√Ν繝茨ｼ医せ繝励Μ繝ｳ繧ｰ・・
+    // Critically damped spring toward target rotation.
     const axX=(targetRX-curRX)*STIFF - vRX*DAMP; vRX+=axX*dt; curRX+=vRX*dt;
     const axY=(targetRY-curRY)*STIFF - vRY*DAMP; vRY+=axY*dt; curRY+=vRY*dt;
 
-    // CSS蜿肴丐・・ard 蛛ｴ・・
+    // Push animation values to CSS custom properties.
     card.style.setProperty('--dropY', `${yVH}vh`);
     card.style.setProperty('--rz', `${rz.toFixed(3)}deg`);
     card.style.setProperty('--rx', `${curRX.toFixed(3)}deg`);
@@ -214,7 +272,7 @@
   }
   if (!isIOS) requestAnimationFrame(raf);
 
-  /* --- Welcome 貍泌・邨ゆｺ・〒關ｽ荳矩幕蟋具ｼ育┌縺代ｌ縺ｰ蜊ｳ・・--- */
+  /* --- Start drop after welcome overlay disappears --- */
   function startDrop(){ if (isIOS) return; yVH=-120; vY=0; rz=0; vrz=0; dropping=true; resetTilt(); }
   window.addEventListener('welcome:ended', startDrop, {once:true});
   window.addEventListener('load', ()=>{

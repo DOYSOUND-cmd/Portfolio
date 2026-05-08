@@ -2,25 +2,21 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Web CAE App — Product Detail</title>
   <meta name="description" content="NASAオープンデータを用いた素材評価の可視化デモ。Three.jsで熱・変位などをブラウザ上で視覚化するWeb CAEアプリの紹介。" />
-  <!-- 共通スタイル -->
   <link rel="stylesheet" href="../styles/site-core.css" />
-  <!-- プロダクト詳細 共通スタイル -->
   <link rel="stylesheet" href="../styles/project-detail.css" />
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Y39NSDYY9J');
+</script>
 </head>
-
-    <!-- Google tag (gtag.js) -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-S29JRMXN8G"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-S29JRMXN8G');
-      </script>
-
 <body>
 
   <!-- Product Hero -->
@@ -33,55 +29,48 @@
         Three.jsベースのUIで、計算結果と3Dモデルをブラウザ上からそのまま確認できます。<br>
         本ツールは<strong>NASA Space Apps Challenge 2025</strong>提出作品として作成しました。
       </p>
-
-      <!-- アイコン付きタグ -->
       <ul class="pd-badges pd-badges--icons" aria-label="使用技術">
         <li class="badge">
-          <img class="badge__icon" src="../assets/icons/CAE.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <img class="badge__icon" src="../assets/icons/CAE.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
           <span>CAE</span>
         </li>
         <li class="badge">
-          <img class="badge__icon" src="../assets/icons/Python.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <img class="badge__icon" src="../assets/icons/Python.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
           <span>Python</span>
         </li>
         <li class="badge">
-          <img class="badge__icon" src="../assets/icons/HTML.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <img class="badge__icon" src="../assets/icons/HTML.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
           <span>HTML</span>
         </li>
         <li class="badge">
-          <img class="badge__icon" src="../assets/icons/CSS.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <img class="badge__icon" src="../assets/icons/CSS.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
           <span>CSS</span>
         </li>
         <li class="badge">
-          <img class="badge__icon" src="../assets/icons/JS.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <img class="badge__icon" src="../assets/icons/JS.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
           <span>JavaScript</span>
         </li>
         <li class="badge">
-          <img class="badge__icon" src="../assets/icons/Threejs.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <img class="badge__icon" src="../assets/icons/Threejs.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
           <span>Three.js</span>
         </li>
       </ul>
-
       <div class="pd-cta">
         <a class="btn" href="../index.html">Topへ戻る</a>
       </div>
     </div>
   </header>
 
-  <!-- ===== Main（Screenshots / Slides / 概要 / リンク） ===== -->
   <main id="main">
 
-
-        <!-- 概要 -->
+    <!-- 概要 -->
     <section class="pd-section" aria-labelledby="about-title">
       <div class="container">
         <h2 id="about-title" class="pd-section__title">概要</h2>
         <div class="pd-summary">
           <p>
             　<strong>NASA Space Apps Challenge</strong>は、NASAが提供するオープンデータを活用して社会的課題や宇宙分野のテーマに挑む、世界規模のハッカソンです。<br>
-            本テーマでは、<strong>低軌道（LEO）</strong>環境における<strong>CubeSat(小型人工衛星)の外壁パネル</strong>のふるまいに着目し、放射・アルベド・地球IRなどの境界条件と、<br>
-            材料物性（吸収率・放射率・熱伝導率・比熱・ヤング率ほか）を組み合わせて、<strong>温度分布・温度差（ΔT）・質量・変位の目安</strong>を<br>
-            ブラウザ上で直感的に比較できるようにしました。
+            　本テーマでは、<strong>低軌道（LEO）</strong>環境における<strong>CubeSat（小型人工衛星）の外壁パネル</strong>のふるまいに着目し、放射・アルベド・地球IRなどの境界条件と、材料物性（吸収率・放射率・熱伝導率・比熱・ヤング率ほか）を組み合わせて、<strong>温度分布・温度差（ΔT）・質量・変位の目安</strong>をブラウザ上で直感的に比較できるようにしました。
           </p>
         </div>
       </div>
@@ -93,8 +82,8 @@
         <h2 id="shots-title" class="pd-section__title">Screenshot</h2>
         <div class="pd-shots pd-shots--single" data-gallery>
           <figure class="pd-shot">
-            <a class="pd-shot__link" href="https://doysound-cmd.github.io/NASA_Space_App_Challeng2025-/" target="_blank" rel="noopener" aria-label="Web CAEアプリのデモを開く">
-              <img src="../assets/work_web_cae.png"  alt="Web CAEアプリ：3D結果の可視化UI（温度分布・指標パネル）" width="1080" height="1440" loading="lazy" decoding="async">
+            <a class="pd-shot__link" href="https://DOYSOUND-cmd.github.io/NASA_Space_App_Challeng2025-/" target="_blank" rel="noopener" aria-label="Web CAEアプリのデモを開く">
+              <img src="../assets/work_web_cae.jpg" alt="Web CAEアプリ：3D結果の可視化UI（温度分布・指標パネル）" width="1080" height="1440" loading="lazy" decoding="async">
             </a>
             <figcaption>Webアプリのスクリーンショット</figcaption>
           </figure>
@@ -104,9 +93,7 @@
 
     <section class="pd-section" aria-labelledby="leo-challenge-title">
       <div class="container">
-        <h2 id="leo-challenge-title" class="pd-section__title">
-          開発テーマ：Commercializing Low Earth Orbit (LEO)
-        </h2>
+        <h2 id="leo-challenge-title" class="pd-section__title">開発テーマ：Commercializing Low Earth Orbit (LEO)</h2>
         <div class="pd-summary">
           <p>
             　Commercializing Low Earth Orbit(LEO)は、地球低軌道（LEO）をこれまでの研究・実験中心の場から一歩進めて、
@@ -120,63 +107,67 @@
     <section class="pd-section" aria-labelledby="work-title">
       <div class="container">
         <h2 id="work-title" class="pd-section__title">取り組んだ内容</h2>
-          <div class="pd-summary">
-            <p>
-              　今回のチャレンジでは、LEO（低軌道）特有の熱環境が
-              CubeSat(小型人工衛星)の外壁にどのような影響を与えるかを
-              「誰でもブラウザで確認できる形」に落とし込むことを目標にしました。
-            </p>
-            <p>
-              　太陽放射・地球アルベド・赤外放射といったNASAオープンデータおよび
-              NASA Material Data Handbookの物性値を参照し、
-              各材料・厚みごとの温度上昇・温度差・熱膨張による変位量を比較できるように構築しています。
-            </p>
-            <p>
-              　熱流束や物性を境界条件としてPrePoMaxでパネルの
-              熱応力解析を行い、得られた温度分布・変位をglTF/JSONに変換。
-              Webビュアーを実装し、ブラウザ上で材料・厚み・日照条件を切り替えて解析結果を可視化できる仕組みを作りました。
-            </p>
-          </div>
+        <div class="pd-summary">
+          <p>
+            　今回のチャレンジでは、LEO（低軌道）特有の熱環境が
+            CubeSat(小型人工衛星)の外壁にどのような影響を与えるかを
+            誰でもブラウザで確認できる形に落とし込むことを目標にしました。
+          </p>
+          <p>
+            　太陽放射・地球アルベド・赤外放射といったNASAオープンデータおよび
+            NASA Material Data Handbookの物性値を参照し、
+            各材料・厚みごとの温度上昇・温度差・熱膨張による変位量を比較できるように構築しています。
+          </p>
+          <p>
+            　熱流束や物性を境界条件としてPrePoMaxでパネルの
+            熱応力解析を行い、得られた温度分布・変位をglTF/JSONに変換。
+            Webビュアーを実装し、ブラウザ上で材料・厚み・日照条件を切り替えて解析結果を可視化できる仕組みを作りました。
+          </p>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="pd-section" aria-labelledby="tech-title">
-        <div class="container">
-          <h2 id="tech-title" class="pd-section__title">実装アプローチ</h2>
-          <figure class="pd-shot">
-            <a class="pd-shot__link" href="https://github.com/DOYSOUND-cmd/NASA_Space_App_Challeng2025-" target="_blank" rel="noopener" aria-label="githubリポジトリを開く">
-              <img src="../assets/WebCAE_system.png"  alt="実装方法" width="1080" height="1440" loading="lazy" decoding="async">
-            </a>
-            <figcaption>実装方法</figcaption>
-          </figure>
-          <div class="pd-summary">
-            <p>
-              　まずPrePoMax(オープンソースのCAEソフトウェア)を使い、材料物性の入力、日照下/日影下の境界条件の設定を行い、
-              各ケースの温度分布・変位量・Tmax/Tminを計算し、得られた結果を<strong>glTF</strong>、<strong>JSON</strong>、へ書き出し、ブラウザから直接読み込めるように加工しました。
-            </p>
-
-            <p>
-              　WebビュワーアプリはThree.jsをベースに作成し、境界条件、外壁パネルの厚さ、素材の切り替えを行うと、それらに対応したglTFと質量、温度、変位の値の表示を実装しています。
-            </p>
-
-            <p>
-              　また、背景に配置した太陽と地球の3Dモデルは、
-              LEOの日照条件を視覚的に理解できるように調整しており、
-              解析結果と環境情報を同時に確認できるビュアーとしてまとめています。
-            </p>
-          </div>
+    <section class="pd-section" aria-labelledby="tech-title">
+      <div class="container">
+        <h2 id="tech-title" class="pd-section__title">実装アプローチ</h2>
+        <figure class="pd-shot">
+          <a class="pd-shot__link" href="https://github.com/DOYSOUND-cmd/NASA_Space_App_Challeng2025-" target="_blank" rel="noopener" aria-label="githubリポジトリを開く">
+            <img src="../assets/WebCAE_system.jpg" alt="実装方法" width="1080" height="1440" loading="lazy" decoding="async">
+          </a>
+          <figcaption>実装方法</figcaption>
+        </figure>
+        <div class="pd-summary">
+          <p>
+            　まずPrePoMax(オープンソースのCAEソフトウェア)を使い、材料物性の入力、日照下/日影下の境界条件の設定を行い、
+            各ケースの温度分布・変位量・Tmax/Tminを計算し、得られた結果をglTF/JSONへ書き出し、ブラウザから直接読み込めるように加工しました。
+          </p>
+          <p>
+            　WebビュワーアプリはThree.jsをベースに作成し、境界条件、外壁パネルの厚さ、素材の切り替えを行うと、それらに対応したglTFと質量、温度、変位の値の表示を実装しています。
+          </p>
+          <p>
+            　また、背景に配置した太陽と地球の3Dモデルは、
+            LEOの日照条件を視覚的に理解できるように調整しており、
+            解析結果と環境情報を同時に確認できるビュアーとしてまとめています。
+          </p>
         </div>
-      </section>
-
-
+      </div>
+    </section>
 
     <!-- Slides（PDF埋め込み） -->
     <section class="pd-section" aria-labelledby="slides-title">
       <div class="container">
         <h2 id="slides-title" class="pd-section__title">Slides</h2>
-
         <div class="pd-pdf">
-          <iframe class="pd-pdf__frame" src="https://docs.google.com/presentation/d/e/2PACX-1vQ6htfyo06gTuYdohwXYsupZeV8qetjpPmEwlO2jvG73Ff6vqlTneaDMqmunWwQrWYAHdyGb7NzaEpK/pubembed?start=false&amp;loop=false&amp;delayms=3000" frameborder="0" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" loading="lazy" decoding="async" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe
+            class="pd-pdf__frame"
+            src="https://docs.google.com/presentation/d/e/2PACX-1vQ6htfyo06gTuYdohwXYsupZeV8qetjpPmEwlO2jvG73Ff6vqlTneaDMqmunWwQrWYAHdyGb7NzaEpK/pubembed?start=false&amp;loop=false&amp;delayms=3000"
+            frameborder="0"
+            allowfullscreen="true"
+            mozallowfullscreen="true"
+            webkitallowfullscreen="true"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
       </div>
     </section>
@@ -186,7 +177,8 @@
       <div class="container">
         <h2 id="link-title" class="pd-section__title">リンク</h2>
         <div class="pd-links">
-          <a class="btn btn--primary" href="https://doysound-cmd.github.io/NASA_Space_App_Challeng2025-/" target="_blank" rel="noopener">デモを見る</a>
+          <a class="btn btn--primary" href="https://DOYSOUND-cmd.github.io/NASA_Space_App_Challeng2025-/" target="_blank" rel="noopener">デモを見る</a>
+          <a class="btn btn--primary" href="../assets/Participant_Certificate.pdf" target="_blank" rel="noopener">参加証明書</a>
           <a class="btn btn--primary" href="https://www.spaceappschallenge.org/2025/challenges/commercializing-low-earth-orbit-leo/" target="_blank" rel="noopener">Commercializing Low Earth Orbit (LEO)</a>
         </div>
       </div>
@@ -194,7 +186,6 @@
 
   </main>
 
-  <!-- 共通の詳細ページ用スクリプト -->
   <script src="../scripts/project-detail.js" type="module"></script>
 </body>
 </html>

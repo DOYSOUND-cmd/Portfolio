@@ -9,10 +9,10 @@
 
 :root{
   --panel:#ffffff;
-  --line:#e3e6ea;
-  --fg:#161616;
+  --line:#d9dce2;
+  --fg:#121212;
   --brand:#cc0000;
-  --brand2:#a60000;
+  --brand2:#cc0000;
 }
 
 /* セクション全体：常に中央 */
@@ -64,6 +64,87 @@
     width: min(92vw, calc(100dvh * 1.5), 1120px);
   }
 }
+/* Laptop landscape (1536x864 / 1366x768 / 1334x800) */
+@media (min-width: 1280px) and (max-width: 1536px) and (max-height: 900px){
+  #cord .container{
+    padding: clamp(8px, 1.8vh, 14px) 0 clamp(18px, 3.6vh, 30px);
+  }
+  #cord .card{
+    width: min(90vw, calc(100dvh * 1.36), 1024px);
+  }
+  #Productions-head.page-head .container{
+    padding-block: clamp(6px, 1.3vh, 10px);
+  }
+}
+@media (max-width: 768px){
+  #cord .container{
+    place-items: start center;
+    min-height: auto;
+    padding: 8px 0 4px;
+  }
+  #cord .card{
+    width: min(98vw, 560px);
+    aspect-ratio: 16 / 10;
+    --card-font-base: clamp(14px, 3.1cqw, 18px);
+  }
+  #cord .content{
+    gap: clamp(8px, 2.2cqw, 14px);
+    padding: clamp(10px, 2.6cqw, 14px);
+  }
+  #cord .intro{
+    display: none;
+  }
+  #cord .text{
+    grid-template-rows: auto 1fr auto;
+    align-content: stretch;
+  }
+  #cord .media{
+    align-self: stretch;
+    aspect-ratio: auto;
+    --photo-right-gap: 14px;
+  }
+  #Productions-head.page-head{
+    padding: 8px 0 6px;
+  }
+}
+
+@media (max-width: 420px){
+  #cord .card{
+    aspect-ratio: 1 / 1;
+  }
+  #cord .content{
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
+    padding: 8px;
+    gap: 8px;
+  }
+  #cord .media{
+    --photo-right-gap: 12px;
+  }
+}
+
+@media (max-width: 360px){
+  #cord .card{
+    aspect-ratio: 10 / 11;
+  }
+  #cord .content{
+    grid-template-columns: minmax(0, 1.18fr) minmax(0, .82fr);
+    padding: 7px;
+    gap: 6px;
+  }
+  #cord .media{
+    --photo-right-gap: 10px;
+  }
+  #cord .skill{
+    padding: 1px 4px;
+    gap: 3px;
+    font-size: .74rem;
+    line-height: 1.1;
+  }
+}
+
+#Productions-head.page-head .container{
+  padding-block: clamp(8px, 2.2vw, 16px);
+}
 
 /* ===== 反転は card-inner に適用（tilt と合成可能） ===== */
 #cord .card-inner{
@@ -90,10 +171,10 @@
   position:absolute; inset:0; width:100%; height:100%;
   backface-visibility: hidden; -webkit-backface-visibility: hidden;
   transform: translateZ(0); /* Safari の描画最適化 */
-  border-radius: 18px; overflow: hidden;
+  border-radius: 10px; overflow: hidden;
   border: 1px solid var(--line);
   color: var(--fg);
-  box-shadow: 0 22px 48px rgba(0,0,0,.14), inset 0 0 0 1px rgba(227,230,234,.7);
+  box-shadow: 0 10px 24px rgba(17,17,17,.08), inset 0 0 0 1px rgba(217,220,226,.9);
   background: transparent; /* 背景は .bg が描く */
 }
 #cord .back{ transform: rotateY(180deg) translateZ(0); }
@@ -102,30 +183,17 @@
 #cord .bg{
   position:absolute; inset:0; z-index: 0; border-radius: 18px; pointer-events:none;
   backface-visibility: hidden; -webkit-backface-visibility: hidden;
-  background:
-    radial-gradient(120% 140% at 0% 0%, #e7ebf233 0%, transparent 60%),
-    radial-gradient(120% 140% at 100% 0%, #f6f7fa33 0%, transparent 60%),
-    linear-gradient(180deg, var(--panel), #f6f6f8);
+  background: #ffffff;
 }
 #cord .bg::before,
 #cord .bg::after{
   backface-visibility: hidden; -webkit-backface-visibility: hidden;
 }
 #cord .bg::before{
-  content:""; position:absolute; inset:-2px; border-radius: 20px;
-  mix-blend-mode: multiply; opacity:.32; filter: blur(4px) saturate(1);
-  background:
-    conic-gradient(from 180deg at var(--shineX,50%) var(--shineY,50%),
-      #cc000018, #e7362d14, #a6000014, #cc000018),
-    linear-gradient(120deg, #ffffff55 0%, #ffffff00 45%, #ffffff55 80%, #ffffff00 100%);
+  content:none;
 }
 #cord .bg::after{
-  content:""; position:absolute; inset:0; border-radius: 18px;
-  mix-blend-mode: soft-light; opacity:.5;
-  background:
-    radial-gradient(700px 460px at var(--shineX,50%) var(--shineY,50%),
-      rgba(204,0,0,.16) 0%, rgba(28,31,38,.08) 40%, transparent 62%),
-    repeating-linear-gradient(0deg, rgba(28,31,38,.06) 0 1px, transparent 1px 2px);
+  content:none;
 }
 /* ※ 裏面 .bg へ transform を当てない（JS で座標値は front/back 同期） */
 
@@ -153,15 +221,28 @@
 /* 画像側は常に 3:4 比率でフィット */
 #cord .media{
   min-width: 0; min-height: 0;
-  display:flex; justify-content:center; align-items:center;
+  display:flex; justify-content:flex-start; align-items:center;
   aspect-ratio: 3 / 4;
+  height: 100%;
+  --photo-right-gap: clamp(20px, 3cqw, 40px);
+  padding: 0;
+  overflow: hidden;
+  border-radius: 8px;
 }
 #cord .face-photo{
-  width: 100%; height: 100%;
+  width: calc(100% - var(--photo-right-gap)) !important;
+  height: 100%;
+  margin: 0 var(--photo-right-gap) 0 0 !important;
+  box-sizing: border-box;
+  padding-right: 0 !important;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
   object-fit: cover;
-  border-radius: 14px;
+  object-position: center;
+  border-radius: 8px !important;
   border: 1px solid var(--line);
-  background:#f3f5f8;
+  background: #f3f5f8;
 }
 
 /* ===== タイポ／情報ブロック（= 文字のみ可変、比率不変） ===== */
@@ -179,12 +260,10 @@
   line-height:1.1;
 
   /* フォールバック（まず普通に見える） */
-  color: var(--fg);
+  color: #cc0000;
 
-  /* グラデーション適用（成功すれば透明化して切り抜き） */
-  background-image: linear-gradient(90deg, var(--brand), var(--brand2));
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent; /* Safari用 */
+  background-image: none;
+  -webkit-text-fill-color: #cc0000;
 
   /* フォントサイズ（カード幅に応じて積極に可変） */
   font-size: clamp(24px, 6.2cqw, 72px);
@@ -195,10 +274,9 @@
   margin:0; font-weight:950; letter-spacing:.02em;
   line-height:1.15;
 
-  color: var(--fg);
-  background-image: linear-gradient(90deg, var(--brand), var(--brand2));
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #cc0000;
+  background-image: none;
+  -webkit-text-fill-color: #cc0000;
 
   font-size: clamp(24px, 6.2cqw, 72px);
 }
@@ -229,33 +307,28 @@ html.is-ios #cord .facts td:nth-child(1){
 }
 @media (max-width: 640px){
   #cord .facts{
-    border-collapse: separate;
+    border-collapse: collapse;
+    table-layout: fixed;
   }
   #cord .facts > tbody{
-    display:flex;
-    flex-wrap:wrap;
-    gap: var(--facts-mobile-gap);
-    margin:0;
-    padding:0;
-    width:100%;
+    display: table-row-group !important;
+    width: auto;
   }
   #cord .facts tr{
-    display:grid;
-    grid-template-columns: auto 1fr;
-    align-items:flex-start;
-    flex: 1 1 calc(50% - var(--facts-mobile-gap));
-    min-width: min(240px, calc(50% - var(--facts-mobile-gap)));
-    margin:0;
+    display: table-row !important;
+    min-width: 0;
+    margin: 0;
   }
   #cord .facts td{
-    padding: clamp(2px, 1.6vw, 6px) clamp(3px, 2vw, 10px);
+    padding: 4px 4px;
   }
   #cord .facts td:nth-child(1){
-    width:auto;
+    width: 5.8em;
+    white-space: nowrap;
   }
-  html.is-ios #cord .facts td{
-    padding-left: clamp(3px, 2vw, 10px);
-    padding-right: clamp(3px, 2vw, 10px);
+  #cord .facts td:nth-child(2){
+    overflow-wrap: anywhere;
+    word-break: normal;
   }
 }
 #cord .age-badge{
@@ -287,6 +360,11 @@ html.is-ios #cord .facts td:nth-child(1){
   text-overflow:ellipsis;
   -webkit-overflow-scrolling: touch;
 }
+@media (max-width: 640px){
+  #cord .text{
+    gap: 6px;
+  }
+}
 
 /* Skills：最下段に固定・中央寄せ（あふれは内部スクロールのみ） */
 #cord .skills-title{
@@ -310,18 +388,27 @@ html.is-ios #cord .facts td:nth-child(1){
   display:inline-flex; align-items:center; gap:6px;
   padding: clamp(6px, .9cqw, 10px) clamp(8px, 1.1cqw, 12px);
   border-radius:999px;
-  border:1px solid rgba(230,235,245,.7);
-  background: linear-gradient(135deg, rgba(255,255,255,.82), rgba(245,248,255,.42));
+  border:1px solid var(--line);
+  background: #ffffff;
   color:#1f252f; font-weight:800;
   font-size: 0.95em; /* ベースに追従して可変（レイアウトは不変） */
   white-space: nowrap;
-  box-shadow:
-    0 8px 18px rgba(0,0,0,.08),
-    inset 1px 1px 0 rgba(255,255,255,.7),
-    inset -1px -1px 0 rgba(210,220,235,.3);
-  backdrop-filter: blur(8px) saturate(1.25);
-  -webkit-backdrop-filter: blur(8px) saturate(1.25);
+  box-shadow:none;
   overflow: hidden;
+}
+@media (max-width: 768px){
+  #cord .skills{
+    align-self:start;
+    margin-top: 0;
+    gap: 4px 6px;
+    justify-content: flex-start;
+  }
+  #cord .skill{
+    padding: 2px 5px;
+    gap: 4px;
+    font-size: .8rem;
+    line-height: 1.15;
+  }
 }
 #cord .skill::before,
 #cord .skill::after{
@@ -332,15 +419,10 @@ html.is-ios #cord .facts td:nth-child(1){
   pointer-events:none;
 }
 #cord .skill::before{
-  background:
-    radial-gradient(120% 120% at 20% 20%, rgba(255,255,255,.55), transparent 55%),
-    radial-gradient(140% 140% at 80% 0%, rgba(255,255,255,.35), transparent 60%);
-  mix-blend-mode: screen;
-  z-index: 1;
+  display:none;
 }
 #cord .skill::after{
-  background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
-  z-index: 1;
+  display:none;
 }
 #cord .skill__icon,
 #cord .skill--fallback{
@@ -354,6 +436,13 @@ html.is-ios #cord .facts td:nth-child(1){
 #cord .skill--fallback{
   display:grid; place-items:center;
   font-size:.7rem; font-weight:900; color:#5f656f; border:1px solid var(--line);
+}
+@media (max-width: 768px){
+  #cord .skill__icon,
+  #cord .skill--fallback{
+    width: .9em;
+    height: .9em;
+  }
 }
 
 /* フォーカス */
@@ -374,7 +463,7 @@ html.is-ios #cord .facts td:nth-child(1){
    ================================================ */
 html.is-ios #cord [data-section="skills"],
 html.is-ios #cord .skills{
-  font-size: 0.88em;      /* ベースに対する係数 */
+  font-size: 0.95em;      /* ベースに対する係数 */
   line-height: 1.35;
 }
 html.is-ios #cord .skills :where(ul,ol){
@@ -400,8 +489,8 @@ html.is-ios #cord .skills :where(p, .text, .desc){
 /* iOS かつ狭幅時の最終縮小（文字のみ・外形不変） */
 @media (max-width: 600px){
   html.is-ios #cord [data-section="skills"],
-  html.is-ios #cord .skills{ font-size: 0.70em; }
-  html.is-ios #cord .skills :where(.chip, .tag, .badge, li){ font-size: 0.70em; }
+  html.is-ios #cord .skills{ font-size: 0.85em; }
+  html.is-ios #cord .skills :where(.chip, .tag, .badge, li){ font-size: 0.85em; }
   html.is-ios #cord .skills :where(ul,ol){ gap: 5px 7px; }
 }
 
@@ -430,11 +519,9 @@ html.is-ios #cord .skills :where(p, .text, .desc){
    超狭幅カード（最終微調整。文字のみ）
    ========================================================= */
 @container (max-width: 580px){
-  #cord .facts td{ font-size: 0.35rem; }
-  #cord .idblock .name-ja{ font-size: 0.8rem; }
-  #cord .idblock .name-en{ font-size: 0.8rem; }
-  #cord .intro{ font-size: 0.3rem; }
-  /* skills はベースから自動連動。必要なら chip をさらに一段だけ絞る */
-  #cord .skills-title{ font-size: 0.3rem; }
-  #cord .skill{ font-size: 0.3rem; }
+  #cord .facts td{ font-size: 0.78rem; }
+  #cord .idblock .name-ja{ font-size: clamp(26px, 8cqw, 42px); }
+  #cord .idblock .name-en{ font-size: clamp(24px, 7.2cqw, 38px); }
+  #cord .skills-title{ font-size: 0.82rem; }
+  #cord .skill{ font-size: 0.72rem; }
 }

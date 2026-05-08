@@ -193,6 +193,7 @@ function initCarousel(rootEl) {
     b.type = "button";
     b.setAttribute("role", "tab");
     b.setAttribute("aria-selected", i === 0 ? "true" : "false");
+    b.setAttribute("aria-label", `${i + 1}枚目へ移動`);
     b.addEventListener("click", () => go(startReal + i, true));
     dotsWrap.appendChild(b);
   }
@@ -205,7 +206,11 @@ function initCarousel(rootEl) {
   }
   function updateDots() {
     const realIndex = (idx - startReal + realLen) % realLen;
-    dotsWrap.querySelectorAll(".car-dot").forEach((d, i) => d.setAttribute("aria-selected", i === realIndex ? "true" : "false"));
+    dotsWrap.querySelectorAll(".car-dot").forEach((d, i) => {
+      const selected = i === realIndex;
+      d.setAttribute("aria-selected", selected ? "true" : "false");
+      d.setAttribute("aria-current", selected ? "true" : "false");
+    });
   }
   function jumpIfClone() {
     if (idx > endReal) {
@@ -288,6 +293,14 @@ function initCarousel(rootEl) {
     if (e.key === "ArrowLeft") {
       e.preventDefault();
       go(idx - 1, true);
+    }
+    if (e.key === "Home") {
+      e.preventDefault();
+      go(startReal, true);
+    }
+    if (e.key === "End") {
+      e.preventDefault();
+      go(endReal, true);
     }
   });
 

@@ -1,3 +1,5 @@
+@import "./liftkitvars.css";
+
 /* =========================================================
    Global Styles (site-wide) — iOS/Safari robust
    - ベース/カラー/タイポ
@@ -19,20 +21,25 @@ img, svg, video { display: block; max-width: 100%; }
 
 /* ----- Tokens（ダーク基調・可読性固定） ----- */
 :root{
-  --bg: #f5f5f6;
-  --bg-2: #f7f7f8;
+  /* Canon-like neutral palette */
+  --bg: #f4f4f4;
+  --bg-2: #f4f4f4;
   --panel: #ffffff;
-  --text: #161616;
-  --muted: #5c6068;
-  --line: #e3e6ea;
+  --text: #121212;
+  --muted: #5a5f67;
+  --line: #d9dce2;
   --brand: #cc0000;
-  --brand-2: #a60000;
+  --brand-2: #cc0000;
   --accent: #e7362d;
 
-  --shadow-1: 0 12px 30px rgba(0,0,0,.08);
-  --shadow-2: 0 18px 46px rgba(0,0,0,.12);
+  --shadow-1: 0 6px 20px rgba(17,17,17,.06);
+  --shadow-2: 0 12px 30px rgba(17,17,17,.1);
 
-  --radius: 12px;
+  --radius: 8px;
+  --space-xs: var(--lk-size-xs);
+  --space-sm: var(--lk-size-sm);
+  --space-md: var(--lk-size-md);
+  --space-lg: var(--lk-size-lg);
 
   /* iOS の動的ツールバー対策（svh 非対応環境フォールバック用） */
   --vh-62: 62vh;
@@ -46,23 +53,24 @@ html {
   -webkit-text-size-adjust: 100%; /* iOS 文字拡大で改行崩れを防ぐ */
 }
 body{
-  background: linear-gradient(180deg, var(--bg), var(--bg-2));
+  background: var(--bg);
   background-color: var(--bg);
   color: var(--text);
   font-family: "Helvetica Neue", "Noto Sans JP", "Noto Sans", Arial, system-ui, -apple-system, "Segoe UI", Roboto, "Hiragino Kaku Gothic ProN", Meiryo, "Apple Color Emoji", "Segoe UI Emoji";
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  letter-spacing: .005em;
 }
 
 /* ----- Container / Section ----- */
 .container{
   max-width: 1200px;
-  width: min(92vw, 1200px);
+  width: min(94vw, 1200px);
   margin-inline: auto;
 }
 .section{
-  padding-block: clamp(40px, 6vw, 80px);
+  padding-block: clamp(calc(var(--space-lg) * 1.05), 6vw, calc(var(--lk-size-2xl) * 1.1));
 }
 
 /* ----- Page Head ----- */
@@ -77,11 +85,9 @@ body{
   font-weight: 900;
   font-size: clamp(24px, 4.2vw, 40px);
   letter-spacing: .01em;
-  background: linear-gradient(90deg, var(--brand), var(--brand-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent; /* Safari 安定化 */
-  color: transparent;
+  color: var(--brand);
+  background: none;
+  -webkit-text-fill-color: currentColor;
 }
 .page-head .lede{
   color: var(--muted);
@@ -98,11 +104,13 @@ a:hover{ text-decoration: underline; }
 
 .btn{
   display: inline-flex; align-items: center; gap: .5rem;
-  height: 46px; padding: 0 20px; border-radius: 10px;
+  height: clamp(44px, calc(var(--lk-size-xl) * 1.25), 52px);
+  padding: 0 clamp(14px, 3vw, 20px);
+  border-radius: var(--radius);
   border: 1px solid var(--line);
   background: #ffffff;
-  color: var(--text); font-weight: 800; letter-spacing: .02em;
-  box-shadow: 0 10px 26px rgba(0,0,0,.08);
+  color: var(--text); font-weight: 800; letter-spacing: .018em;
+  box-shadow: 0 4px 14px rgba(17,17,17,.08);
   transition: transform .1s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
   min-width: 0; /* iOS の text-overflow 回避 */
 }
@@ -112,9 +120,9 @@ a:hover{ text-decoration: underline; }
   background: var(--brand);
   border-color: var(--brand);
   color: #fff;
-  box-shadow: 0 14px 36px rgba(204,0,0,.26);
+  box-shadow: 0 8px 22px rgba(204,0,0,.24);
 }
-.btn--primary:hover{ box-shadow: 0 18px 42px rgba(204,0,0,.32); }
+.btn--primary:hover{ box-shadow: 0 12px 28px rgba(204,0,0,.28); }
 .btn--ghost{
   background: #ffffff;
   border-color: var(--brand);
@@ -127,7 +135,7 @@ a:hover{ text-decoration: underline; }
   /* color-mix が無い環境でも明るい水色にフォールバック */
   outline: 2px solid var(--brand);
   outline-offset: 2px;
-  border-radius: 10px;
+  border-radius: var(--radius);
 }
 @supports (outline-color: color-mix(in oklab, white, black)) {
   :where(a, button, [tabindex]):focus-visible{
@@ -277,6 +285,18 @@ a:hover{ text-decoration: underline; }
     bottom: clamp(16px, 12vw, 40px);
   }
 }
+@media (min-width: 1280px) and (max-width: 1536px) and (max-height: 900px){
+  .scroll-hint{
+    bottom: clamp(10px, 2vh, 20px);
+  }
+  .scroll-hint__circle{
+    width: 48px;
+    height: 48px;
+  }
+  .scroll-hint__label{
+    font-size: clamp(12px, 1.4vw, 14px);
+  }
+}
 
 
 
@@ -286,16 +306,15 @@ a:hover{ text-decoration: underline; }
    - 開閉時に min-height も滑らかに変化
    - 色は常に読みやすい明度
    ========================================================= */
-#qualifications { color: var(--text); }
+#qualifications {
+  color: var(--text);
+  margin-top: clamp(28px, 5vw, 72px);
+}
 #qualifications .section-title{
   font-weight: 900;
   font-size: clamp(22px, 3.6vw, 34px);
   letter-spacing: .01em;
-  background: linear-gradient(90deg, var(--brand), var(--brand-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--brand);
   margin-bottom: clamp(16px, 3vw, 24px);
 }
 
@@ -312,7 +331,7 @@ a:hover{ text-decoration: underline; }
   min-height: auto;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: linear-gradient(180deg,#ffffff,#f7f7f8);
+  background: #ffffff;
   box-shadow: var(--shadow-1);
   overflow: hidden;
   transition: box-shadow .2s ease, transform .06s ease, min-height .28s ease;
@@ -325,15 +344,17 @@ a:hover{ text-decoration: underline; }
 
 #qualifications .q-head{
   display: flex; align-items: center; gap: .6rem;
-  padding: 14px 16px; width: 100%; border: 0; text-align: left;
+  padding: clamp(12px, 2vw, 16px) clamp(14px, 2.2vw, 18px);
+  width: 100%; border: 0; text-align: left;
   font-weight: 900; color: var(--text);
   font-size: clamp(17px, 2vw, 17px);
+  line-height: 1.35;
   background: transparent; cursor: pointer;
   transition: background .2s ease; min-height: 56px;
 }
-#qualifications .q-head:hover{ background: rgba(204,0,0,.08); }
+#qualifications .q-head:hover{ background: rgba(0,0,0,.04); }
 #qualifications .q-head:focus-visible{
-  outline: 2px solid var(--brand);
+  outline: 3px solid var(--brand);
   outline-offset: -2px;
 }
 @supports (outline-color: color-mix(in oklab, white, black)) {
@@ -352,8 +373,8 @@ a:hover{ text-decoration: underline; }
 #qualifications .q-head[aria-expanded="true"] .q-icon{ transform: rotate(45deg); }
 
 #qualifications .qualification-description{
-  padding: 0 16px;
-  line-height: 1.7;
+  padding: 0 clamp(14px, 2.2vw, 18px);
+  line-height: 1.75;
   overflow: hidden;
   height: 0;               /* 初期は隠す（JSで制御） */
   border-top: 1px dashed rgba(45,58,76,.18);

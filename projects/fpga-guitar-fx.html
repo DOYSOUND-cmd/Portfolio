@@ -2,62 +2,52 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FPGA Guitar FX — Product Detail</title>
-  <meta name="description" content="FPGA上でリアルタイムにギター信号を処理する試作エフェクターの紹介。">
-  <!-- 共通スタイル -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>FPGAギターエフェクター — Product Detail</title>
+  <meta name="description" content="PYNQ-Z2のFPGA上に信号処理回路を構築し、ギター入力にリアルタイムでエフェクト処理を行うギター用マルチエフェクターの紹介。">
   <link rel="stylesheet" href="../styles/site-core.css" />
-  <!-- プロダクト詳細 共通スタイル -->
   <link rel="stylesheet" href="../styles/project-detail.css" />
-  
-    <!-- Google tag (gtag.js) -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-S29JRMXN8G"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-        gtag('config', 'G-S29JRMXN8G');
-      </script>
-  
+  gtag('config', 'G-Y39NSDYY9J');
+</script>
 </head>
 <body>
 
-  <!-- Product Hero -->
   <header class="pd-hero">
     <div class="container">
       <div class="pd-hero__eyebrow">Product Detail</div>
-      <h1 class="pd-hero__title">FPGAギターエフェクター</h1>
+      <h1 class="pd-hero__title">FPGAギターエフェクター(開発中)</h1>
       <p class="pd-hero__lede">
-        FPGA（PYNQ）上でギター信号を<strong>低遅延</strong>処理する試作エフェクター。<br>
-        HDLで信号経路を構成し、ソフト側からパラメータ制御する構成でリアルタイム動作を検証しました。
+        PYNQ-Z2のFPGA上に信号処理回路を構築し、ギター入力に対してリアルタイムに処理を行うデバイスです。<br>
+        ノイズゲート、コンプレッサー、歪み、アンプ／キャビネットシミュレーター、リバーブを1つのDSPパイプラインとして構成しています。
       </p>
 
-      <!-- アイコン付きタグ -->
       <ul class="pd-badges pd-badges--icons" aria-label="使用技術">
         <li class="badge">
-          <img class="badge__icon" src="../assets/icons/fpga.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <img class="badge__icon" src="../assets/icons/fpga.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
           <span>FPGA</span>
         </li>
         <li class="badge">
-          <img class="badge__icon" src="../assets/icons/PYNQ.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <img class="badge__icon" src="../assets/icons/PYNQ.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
           <span>PYNQ</span>
         </li>
         <li class="badge">
-          <img class="badge__icon" src="../assets/icons/Linux.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <img class="badge__icon" src="../assets/icons/Linux.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
           <span>Linux</span>
         </li>
         <li class="badge">
-          <img class="badge__icon" src="../assets/icons/HDL.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <img class="badge__icon" src="../assets/icons/HDL.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
           <span>HDL</span>
         </li>
         <li class="badge">
-          <img class="badge__icon" src="../assets/icons/Python.png" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <img class="badge__icon" src="../assets/icons/Python.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
           <span>Python</span>
-        </li>
-        <li class="badge">
-          <img class="badge__icon" src="../assets/icons/Cpurapura.png" alt="" width="18" height="18" loading="lazy" decoding="async">
-          <span>C++</span>
         </li>
       </ul>
 
@@ -67,45 +57,593 @@
     </div>
   </header>
 
-  <!-- ===== Main（Overview / Video / Links） ===== -->
   <main id="main">
 
-    <!-- 概要 -->
-    <section class="pd-section" aria-labelledby="about-title">
+    <section class="pd-section" aria-labelledby="overview-title">
       <div class="container">
-        <h2 id="about-title" class="pd-section__title">概要</h2>
+        <h2 id="overview-title" class="pd-section__title">概要</h2>
         <div class="pd-summary">
           <p>
-            　FPGA（PYNQ）を用いてギター信号のリアルタイム処理を試したプロトタイプです。<br>
-            　基本的なエフェクト構成を HDL で記述し、ソフト側からパラメータを調整することで、従来のデジタルエフェクターと比較して<strong>低遅延で動作</strong>を実現できるようになる予定です。<br>
+            　PYNQ-Z2のFPGA上に信号処理回路を構築し、ギター入力に対してリアルタイムに信号処理を行うギター用マルチエフェクターです。ノイズゲート、オーバードライブ、ディストーション、アンプシミュレーター、キャビネットシミュレーター、リバーブを1つの信号処理チェーンとして実装しています。
+          </p>
+          <p>
+            　LINE INから入力された信号をADAU1761コーデックでデジタル化し、PL側（FPGA回路部分）に実装したDSPパイプラインで処理した後、LINE OUTへ返します。エフェクトのON/OFFやパラメータ変更はPS側（CPU・Linuxが動作する部分）のPythonから制御し、信号処理はFPGA側の専用回路でリアルタイムに実行する構成にしました。
           </p>
         </div>
       </div>
     </section>
 
-    <!-- Demo Video -->
-    <section class="pd-section" aria-labelledby="video-title">
+    <section class="pd-section" aria-labelledby="completion-image-title">
       <div class="container">
-        <h2 id="video-title" class="pd-section__title">GUI デモ</h2>
-        <div class="pd-shots pd-shots--single">
+        <h2 id="completion-image-title" class="pd-section__title">完成イメージ</h2>
+        <div class="pd-shots pd-shots--single" data-gallery>
           <figure class="pd-shot">
-            <div style="position:relative; width:100%; aspect-ratio:16/9; background:#0f141d; border-radius:8px; overflow:hidden; border:1px solid #00000055;">
-              <iframe
-                src="https://www.youtube.com/embed/ipBjrmCIKV8"
-                title="FPGAギターエフェクター デモ動画"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
-                style="position:absolute; inset:0; width:100%; height:100%; border:0;"
-              ></iframe>
+            <div class="pd-shot__link">
+              <img
+                src="../assets/fpga-guitar-fx-exterior.jpg"
+                alt="FPGAギターエフェクターの外装設計イメージ"
+                width="1280"
+                height="688"
+                loading="lazy"
+                decoding="async"
+              >
             </div>
-            <figcaption>プロトタイプ動作の様子（YouTube）</figcaption>
+            <figcaption>外装設計</figcaption>
           </figure>
         </div>
       </div>
     </section>
+
+    <section class="pd-section" aria-labelledby="what-effector-title">
+      <div class="container">
+        <h2 id="what-effector-title" class="pd-section__title">ギターエフェクターとは</h2>
+        <div class="pd-summary">
+          <p>
+            　ギターエフェクターとは、エレキギターの音色や音量、周波数バランス、空間感を変化させるための機器です。音を歪ませる、ノイズを抑える、音の粒をそろえる、残響を加えるなどの処理によって、演奏者が求めるサウンドを作ります。
+
+          </p>
+          <p>
+            　このプロダクトでは、複数のエフェクトを1つの信号処理チェーンとして接続し、FPGA上でリアルタイムに処理するマルチエフェクターとして設計しています。 
+          </p>
+        </div>
+        <div class="pd-shots pd-shots--single" data-gallery>
+          <figure class="pd-shot">
+            <div class="pd-shot__link">
+              <img
+                src="../assets/What_is_effecter.jpg"
+                alt="ギターエフェクターとは"
+                width="1184"
+                height="648"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+            <figcaption>信号の流れ</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="pd-section" aria-labelledby="what-fpga-title">
+      <div class="container">
+        <h2 id="what-fpga-title" class="pd-section__title">FPGA / PYNQ とは</h2>
+        <div class="pd-summary">
+          <p>
+            　FPGAは、内部の論理回路や配線構成を目的に応じて書き換えられる半導体デバイスです。CPUが命令を順番に実行するのに対し、FPGAでは処理内容を専用のハードウェア回路として構成できます。そのため、一定周期でデータを処理し続ける音声信号処理や、低レイテンシが求められるリアルタイム処理に向いています。
+          </p>
+          <p>
+            　PYNQは、Zynq SoCのFPGA領域をPythonから扱いやすくするための開発環境です。本プロジェクトでは、PS側でGUIやパラメータ制御を行い、PL側で音声信号処理を実行する構成を採用しています。
+          </p>
+        </div>
+        <div class="pd-shots pd-shots--single" data-gallery>
+          <figure class="pd-shot">
+            <div class="pd-shot__link">
+              <img
+                src="../assets/What_is_FPGA.jpg"
+                alt="FPGA / PYNQ とは"
+                width="1200"
+                height="673"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+            <figcaption>FPGA / PYNQ 動作原理</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="pd-section" aria-labelledby="system-title">
+      <div class="container">
+        <h2 id="system-title" class="pd-section__title">システム構成</h2>
+        <div class="pd-summary">
+          <p>
+            　入力されたギター信号は、PYNQ-Z2に搭載されているADAU1761コーデックのADCによってデジタル信号に変換されます。デジタル化された音声データはI2S形式で受け取られ、AXI-Stream形式に変換された後、FPGA側のDSPパイプラインへ送られます。
+          </p>
+          <p>
+            　FPGA内部では、ノイズサプレッサー、コンプレッサー、オーバードライブ、ディストーション、アンプシミュレーター、キャビネットシミュレーター、リバーブなどの各エフェクトを順番に処理します。処理後の信号は再びI2S形式に戻され、ADAU1761コーデックのDACを通してアナログ信号として出力されます。
+
+          </p>
+          <p>
+            　エフェクトのON/OFFやパラメータ変更は、ZynqのPS側で動作するLinux/Pythonから制御します。音声処理はPL側のFPGA回路、設定変更やGUI操作はPS側のPythonに分担させることで、リアルタイム処理と操作性を両立させています。
+
+          </p>
+        </div>
+        <div class="pd-shots pd-shots--single" data-gallery>
+          <figure class="pd-shot">
+            <div class="pd-shot__link">
+              <img
+                src="../assets/fpga-guitar-fx_Working_principle.jpg"
+                alt="システム構成"
+                width="1207"
+                height="675"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+            <figcaption>システム構成</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="pd-section" aria-labelledby="workflow-title">
+      <div class="container">
+        <h2 id="workflow-title" class="pd-section__title">開発の流れ</h2>
+        <div class="pd-summary">
+          <p>
+            　まず、各エフェクトの信号処理アルゴリズムを設計し、固定小数点演算で実装できる形に整理しました。その後、Clashを用いてFPGA上に実装するDSP回路を記述し、生成したVHDLをVivadoへ取り込みました。
+          </p>
+          <p>
+            　Vivado上では、PYNQ-Z2の既存オーディオ入出力系にDSPパイプラインを接続し、合成・配置配線を行ってbitstreamとhwhファイルを生成します。生成した回路データをPYNQ-Z2へ配置し、PS側のPythonからOverlayとして読み込むことで、実機上で信号処理とパラメータ制御を確認しました。
+          </p>
+          <p>
+            　Clashでの記述は固定小数点演算を前提にしており、音量調整やクリッピング処理ではビット幅と飽和処理を意識してオーバーフローによるノイズが発生しにくいよう設計しています。実機評価ではLINE INからLINE OUTまで各段で実際に音を聴きながら、ノイズ・音量差・パラメータ応答を確認しました。
+          </p>
+          <p class="pd-note">
+            bitstream：FPGA に書き込む回路データ。&emsp;hwh：Python 側が回路構成やアドレス情報を理解するための情報ファイル。&emsp;Overlay：PYNQ で Python から読み込む FPGA 回路データ一式。
+          </p>
+        </div>
+        <div class="pd-shots pd-shots--single" data-gallery>
+          <figure class="pd-shot">
+            <div class="pd-shot__link">
+              <img
+                src="../assets/fpga-guitar-fx-develop.jpg"
+                alt="開発の流れ"
+                width="1211"
+                height="674"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+            <figcaption>開発の流れ</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="pd-section" aria-labelledby="gui-title">
+      <div class="container">
+        <h2 id="gui-title" class="pd-section__title">GUI サンプル</h2>
+        <div class="pd-shots pd-shots--single">
+          <figure class="pd-shot">
+            <div class="pd-video">
+              <iframe
+                src="https://www.youtube.com/embed/ipBjrmCIKV8"
+                title="FPGA Guitar Effector GUI デモ動画"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <figcaption>GUIデモ：エフェクトのON/OFFとパラメータ操作</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="pd-section" aria-labelledby="effects-title">
+      <div class="container">
+        <h2 id="effects-title" class="pd-section__title">各エフェクトの説明</h2>
+
+        <article class="pd-effect">
+          <h3 class="pd-effect__title">Noise Suppressor</h3>
+          <div class="pd-summary">
+            <p>
+              　入力信号のエンベロープ、つまり振幅の包絡線をサンプルごとに追跡し、設定した閾値と比較して出力ゲインを制御します。信号レベルが閾値を下回ると、ゲインを徐々に下げることで、弦を弾いていないときの環境ノイズやハムノイズを抑制します。
+              DECAYパラメータでゲインが下がる速さを、DAMPパラメータで最大抑制量を調整できます。完全にミュートする設定から、自然に音量を下げる設定まで調整できるようにしています。
+              単純なオン／オフ式のゲートではなく、平滑化されたゲイン制御として実装することで、音の切れ際が不自然になりにくい構成を目指しました。
+            </p>
+          </div>
+          <div class="pd-shots" data-gallery>
+            <figure class="pd-shot">
+              <img src="../assets/01_noise_suppressor_waveform.jpg" alt="Noise Suppressor 時間波形" width="1280" height="710" loading="lazy" decoding="async">
+              <figcaption>Noise Suppressor 時間波形</figcaption>
+            </figure>
+            <figure class="pd-shot">
+              <img src="../assets/02_noise_suppressor_gain_curve.jpg" alt="Noise Suppressor ゲイン特性" width="1132" height="720" loading="lazy" decoding="async">
+              <figcaption>Noise Suppressor ゲイン特性</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="pd-effect">
+          <h3 class="pd-effect__title">Compressor</h3>
+          <div class="pd-summary">
+            <p>
+              　入力信号のエンベロープをサンプルごとに追跡し、設定した閾値を超えた信号に対してゲインリダクションを行います。閾値を超えた分をRATIOパラメータに応じて圧縮することで、大きな音を抑え、音量差を整えます。
+              ATTACKパラメータでは圧縮がかかり始める速さを、RELEASEパラメータでは圧縮が戻る速さを制御します。これにより、ピッキングのアタック感を残しながら音量のばらつきを抑えたり、サステインを整えたりする調整が可能になります。
+              小さな音を直接大きくするのではなく、大きな音を抑えたうえで全体の音量バランスを整える処理として設計しています。
+            </p>
+          </div>
+          <div class="pd-shots" data-gallery>
+            <figure class="pd-shot">
+              <img src="../assets/03_compressor_waveform.jpg" alt="Compressor 時間波形" width="1214" height="720" loading="lazy" decoding="async">
+              <figcaption>Compressor 時間波形</figcaption>
+            </figure>
+            <figure class="pd-shot">
+              <img src="../assets/04_compressor_transfer.jpg" alt="Compressor ゲイン特性" width="1115" height="720" loading="lazy" decoding="async">
+              <figcaption>Compressor ゲイン特性</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="pd-effect">
+          <h3 class="pd-effect__title">Overdrive</h3>
+          <div class="pd-summary">
+            <p>
+              　入力信号をDRIVEパラメータで増幅し、ソフトクリッピング処理を通すことで、波形の山と谷を緩やかに丸めます。ハードクリッピングのように急激に波形を切り落とすのではなく、入力レベルが大きくなるほど滑らかに圧縮されるため、比較的自然で扱いやすい歪みになります。
+              強く弾いたときには歪みが増え、弱く弾いたときには原音のニュアンスが残りやすいため、ピッキングの強弱に反応する歪みを狙っています。
+            </p>
+          </div>
+          <div class="pd-shots" data-gallery>
+            <figure class="pd-shot">
+              <img src="../assets/05_overdrive_waveform.jpg" alt="Overdrive 時間波形" width="1189" height="720" loading="lazy" decoding="async">
+              <figcaption>Overdrive 時間波形</figcaption>
+            </figure>
+            <figure class="pd-shot">
+              <img src="../assets/06_overdrive_transfer.jpg" alt="Overdrive 入出力特性" width="1100" height="720" loading="lazy" decoding="async">
+              <figcaption>Overdrive 入出力特性</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="pd-effect">
+          <h3 class="pd-effect__title">Distortion</h3>
+          <div class="pd-summary">
+            <p>
+              　入力信号を大きく増幅したうえでハードクリッピングを適用し、波形の山と谷を一定レベルで切り落とします。これにより波形は矩形波に近づき、倍音成分が増加します。
+              ソフトクリッピングを用いるオーバードライブに比べて波形の変化が急峻なため、より強く、輪郭の立った歪みになります。アタックを強く弾いたときにはクリッピング量が増え、ザラつきのある飽和感が得られるように設計しています。
+            </p>
+          </div>
+          <div class="pd-shots" data-gallery>
+            <figure class="pd-shot">
+              <img src="../assets/07_distortion_waveform.jpg" alt="Distortion 時間波形" width="1189" height="720" loading="lazy" decoding="async">
+              <figcaption>Distortion 時間波形</figcaption>
+            </figure>
+            <figure class="pd-shot">
+              <img src="../assets/08_distortion_transfer.jpg" alt="Distortion 入出力特性" width="1100" height="720" loading="lazy" decoding="async">
+              <figcaption>Distortion 入出力特性</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="pd-effect">
+          <h3 class="pd-effect__title">Amp Simulator / Cab IR</h3>
+          <div class="pd-summary">
+            <p>
+              　アンプシミュレーターとキャビネットIRは、ギターアンプとスピーカーキャビネットを通したときの音色変化を簡易的に再現するための処理です。
+              　アンプシミュレーターでは、入力ゲインによって信号を増幅し、BASS / MIDDLE / TREBLE / PRESENCE の各トーンフィルタで周波数特性を調整します。RESONANCEでは低域の共鳴感を付加し、MASTERで最終的な出力レベルを制御します。
+            </p>
+            <p>
+              　続くCab IRでは、スピーカーキャビネットの周波数特性を短いタップ数のFIRフィルタとして近似し、信号に畳み込みます。ライン出力のフラットな信号に対して、キャビネット特有の高域減衰や中域のまとまりを加えることで、直接出力の硬さを抑え、アンプを通した音に近い質感を狙っています。
+            </p>
+          </div>
+          <div class="pd-shots" data-gallery>
+            <figure class="pd-shot">
+              <img src="../assets/09_amp_cab_waveform.jpg" alt="Amp Simulator / Cab IR 時間波形" width="1174" height="720" loading="lazy" decoding="async">
+              <figcaption>Amp Simulator / Cab IR 時間波形</figcaption>
+            </figure>
+            <figure class="pd-shot">
+              <img src="../assets/10_amp_cab_frequency_response.jpg" alt="Amp Simulator / Cab IR 周波数特性" width="1112" height="720" loading="lazy" decoding="async">
+              <figcaption>Amp Simulator / Cab IR 周波数特性</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="pd-effect">
+          <h3 class="pd-effect__title">Reverb</h3>
+          <div class="pd-summary">
+            <p>
+              　フィードバックループを持つディレイラインを組み合わせたアルゴリズムで残響を生成します。入力信号をループ内で繰り返し反射させながら徐々に減衰させることで、空間の響きを模擬します。DECAYで残響の長さ（減衰速度）を、TONEで残響成分の高域フィルタ特性を制御します。MIXで原音と残響の混合比を調整します。PYNQ-Z2のPLリソースを考慮して軽量なバッファ構成にしており、長い空間系よりも短め〜中程度の残響に向いています。音に少し距離感と奥行きが生まれ、ドライな音がまとまりのある空間の中に置かれているように聴こえます。
+            </p>
+          </div>
+          <div class="pd-shots" data-gallery>
+            <figure class="pd-shot">
+              <img src="../assets/11_reverb_impulse_response.jpg" alt="Reverb インパルス応答" width="1214" height="720" loading="lazy" decoding="async">
+              <figcaption>Reverb インパルス応答</figcaption>
+            </figure>
+            <figure class="pd-shot">
+              <img src="../assets/12_reverb_edc.jpg" alt="Reverb エネルギー減衰曲線" width="1128" height="720" loading="lazy" decoding="async">
+              <figcaption>Reverb エネルギー減衰曲線（EDC）</figcaption>
+            </figure>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+        <section class="pd-section" aria-labelledby="effect-demo-title">
+      <div class="container">
+        <h2 id="effect-demo-title" class="pd-section__title">エフェクトデモ動画</h2>
+        <div class="pd-shots pd-shots--single">
+          <figure class="pd-shot">
+            <div class="pd-video">
+              <iframe
+                src="https://www.youtube.com/embed/6HqLrtO6SwM"
+                title="FPGA Guitar Effector エフェクトデモ動画"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <figcaption>エフェクト処理のデモ</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+<section class="pd-section" aria-labelledby="analysis-title">
+  <div class="container">
+    <h2 id="analysis-title" class="pd-section__title">音響評価・信号解析</h2>
+
+    <article class="pd-effect">
+      <h3 class="pd-effect__title">レイテンシー計測</h3>
+
+      <div class="pd-summary pd-summary--spaced">
+        <p>
+          　FPGA上のDSPパイプラインがギター演奏に与える遅延を確認するため、入力信号、バイパス出力、全7エフェクト有効時の出力を比較しました。入力信号とバイパス出力でシステム経路の参考遅延を確認し、エフェクトなし基準信号と全7エフェクト有効時の出力を比較し、全エフェクト有効時の相対遅延を測定しました。
+        </p>
+        <p>
+          　遅延推定にはGCC-PHATと波形相互相関を併用しました。GCC-PHATは音量差や周波数特性差の影響を比較的受けにくいため、窓中央値を主な採用値としています。グラフ上段では、横軸が遅延サンプル数、鋭いピークの位置が推定遅延量です。
+        </p>
+        <p>
+          　中段の波形相互相関は、2つの波形が最も似ている位置を確認する補助指標です。ギター信号は周期性を持つため、別のピークを拾う場合があります。下段は推定遅延に基づいて波形を重ねた図で、波形の完全一致ではなく、アタックのタイミングを確認しています。
+        </p>
+      </div>
+
+      <div class="pd-shots pd-shots--analysis" data-gallery>
+        <figure class="pd-shot">
+          <img
+            src="../assets/fpga-fx-analysis-latency-all-7fx.jpg"
+            alt="エフェクトなし基準信号と全7エフェクト有効時のレイテンシー解析"
+            width="1920"
+            height="1440"
+            loading="lazy"
+            decoding="async"
+          >
+          <figcaption>エフェクトなし基準信号と全7エフェクト有効時のレイテンシー解析</figcaption>
+        </figure>
+
+        <figure class="pd-shot">
+          <img
+            src="../assets/fpga-fx-analysis-latency-input-bypass.jpg"
+            alt="入力信号からバイパス出力までのレイテンシー解析"
+            width="1920"
+            height="1440"
+            loading="lazy"
+            decoding="async"
+          >
+          <figcaption>入力信号からバイパス出力までの参考レイテンシー解析</figcaption>
+        </figure>
+      </div>
+
+      <div class="pd-summary pd-summary--spaced">
+        <p>
+          　測定結果として、入力信号からバイパス出力までの参考遅延は約51.6 samples、48 kHz換算で約1.08 msでした。全7エフェクト有効時の遅延は約53.1 samples、約1.11 msで、今回の測定条件では7種類のエフェクトを直列に通しても大きな遅延増加は確認されませんでした。
+          この結果から、複数のDSPブロックをFPGA上に直列実装しても、十分に低い遅延を維持できることを確認しました。
+        </p>
+        <p>
+          各メーカーのマルチエフェクターの実測例と比べても、本機の約1.11 msは1 ms台前半の低遅延レンジに入ります。
+        </p>
+      </div>
+
+      <div class="pd-table-wrap" role="region" aria-label="市販デジタルプロセッサーとの参考レイテンシー比較">
+        <table class="pd-data-table">
+          <caption>市販デジタルプロセッサーとの参考レイテンシー比較</caption>
+          <thead>
+            <tr>
+              <th scope="col">機種</th>
+              <th scope="col">遅延の目安</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th class="pd-data-table__highlight" scope="row">FPGAギターエフェクター</th>
+              <td class="pd-data-table__highlight">約1.11 ms</td>
+            </tr>
+            <tr>
+              <th scope="row">BOSS GT-1000</th>
+              <td>約0.58〜0.7 ms</td>
+            </tr>
+            <tr>
+              <th scope="row">Fractal Audio Axe-Fx III</th>
+              <td>約1.6〜2.2 ms</td>
+            </tr>
+            <tr>
+              <th scope="row">Line 6 Helix Floor</th>
+              <td>約1.8〜2.0 ms</td>
+            </tr>
+            <tr>
+              <th scope="row">Neural DSP Quad Cortex</th>
+              <td>約1.86 ms以上</td>
+            </tr>
+            <tr>
+              <th scope="row">Kemper Profiler</th>
+              <td>約2〜3 ms</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="pd-effect">
+      <h3 class="pd-effect__title">入力とバイパスの比較</h3>
+
+      <div class="pd-summary pd-summary--spaced">
+        <p>
+          　入力信号とバイパス出力の正規化スペクトルを比較しました。横軸は対数スケールの周波数、縦軸は最大レベルを0 dBにそろえた正規化PSDです。音量差ではなく、どの周波数帯が相対的に強いかを確認できます。青線が入力信号、橙線がバイパス出力です。
+        </p>
+        <p>
+          　本システムのバイパスは、機械式の完全バイパスではありません。入力信号はアナログ入力段、ADAU1761 codec、I2S、FPGA、DAC、録音経路を通過するため、バイパス出力にはハードウェア経路や録音環境の特性も含まれます。
+        </p>
+      </div>
+
+      <div class="pd-shots pd-shots--single" data-gallery>
+        <figure class="pd-shot">
+          <img
+            src="../assets/fpga-fx-analysis-input-bypass-spectrum.jpg"
+            alt="入力信号とバイパス出力の正規化スペクトル比較"
+            width="1680"
+            height="960"
+            loading="lazy"
+            decoding="async"
+          >
+          <figcaption>入力信号とバイパス出力の正規化スペクトル比較</figcaption>
+        </figure>
+      </div>
+
+      <div class="pd-summary">
+        <p>
+          　グラフでは、入力信号は1〜3 kHz付近の中高域成分が強く、ギターの輪郭やピッキング感に関わる帯域が確認できます。一方、バイパス出力は低域寄りに見え、1 kHz以上の成分が弱くなっています。
+        </p>
+      </div>
+    </article>
+
+    <article class="pd-effect">
+      <h3 class="pd-effect__title">エフェクトごとの周波数特性と時間変化</h3>
+
+      <div class="pd-summary pd-summary--spaced">
+        <p>
+          　各エフェクト出力について、帯域別エネルギー比率、正規化スペクトル、スペクトログラムを用いて解析しました。ここでは音量の大小ではなく、各エフェクトの音色傾向、歪みによる倍音、高域ノイズやfizz、周波数成分の時間変化を確認しています。
+        </p>
+      </div>
+
+      <h4 class="pd-effect__subtitle">帯域別エネルギー比率のヒートマップ</h4>
+
+      <div class="pd-summary pd-summary--spaced">
+        <p>
+          　帯域別エネルギー比率のヒートマップは、各音源のエネルギーがどの周波数帯に集中しているかを比較するグラフです。行が各音源、列が周波数帯域を表し、各セルの数値は該当帯域が占める割合です。明るいセルほど、その帯域にエネルギーが集中しています。
+        </p>
+        <p>
+          　20〜80 Hzは超低域や振動成分、80〜250 Hzは音の太さ、250 Hz〜1 kHzはギターの芯、1〜3 kHzはピッキング感や抜け、3〜8 kHzはアタック感やfizz、8〜16 kHzは超高域成分やデジタル的なざらつきに関係します。
+        </p>
+      </div>
+
+      <div class="pd-shots pd-shots--single" data-gallery>
+        <figure class="pd-shot">
+          <img
+            src="../assets/fpga-fx-analysis-band-energy.jpg"
+            alt="各エフェクト出力の周波数帯域ごとのエネルギー比率"
+            width="2000"
+            height="1120"
+            loading="lazy"
+            decoding="async"
+          >
+          <figcaption>各エフェクト出力の帯域別エネルギー比率</figcaption>
+        </figure>
+      </div>
+
+      <div class="pd-summary pd-summary--spaced">
+        <p>
+          　入力信号では250 Hz〜1 kHzおよび1〜3 kHzの割合が大きく、ギターの芯や輪郭に関わる中域〜中高域成分が多いことが分かります。一方、バイパス出力は80〜250 Hzが大きく、低域寄りの傾向を示しています。この差にはハードウェア要因も含まれるため、DSPエフェクト単体の評価とは切り分けています。
+        </p>
+        <p>
+          　DS-1 Distortionでは250 Hz〜1 kHz付近の中域が増え、ディストーションらしい押し出しが確認できます。Amp Simでは8〜16 kHz帯域が16.1%と大きく、超高域成分が強く出ています。fizzやデジタル臭さにつながる可能性があるため、後段のCab SimやLPFによる高域減衰処理が改善対象です。
+        </p>
+      </div>
+
+      <h4 class="pd-effect__subtitle">正規化スペクトル比較</h4>
+
+      <div class="pd-summary pd-summary--spaced">
+        <p>
+          　正規化スペクトル比較では、各信号の最大スペクトルレベルを0 dBにそろえ、音量差の影響を除いた状態でスペクトル形状を比較しています。横軸は周波数、縦軸は相対的な強さで、線が高い帯域ほど目立つ成分が多いことを表します。横軸は周波数、縦軸は相対的な強さで、線が高い帯域ほど目立つ成分が多いことを表します。
+        </p>
+      </div>
+
+      <div class="pd-shots pd-shots--single" data-gallery>
+        <figure class="pd-shot">
+          <img
+            src="../assets/fpga-fx-analysis-spectrum-normalized.jpg"
+            alt="各エフェクト出力の正規化スペクトル比較"
+            width="2000"
+            height="1200"
+            loading="lazy"
+            decoding="async"
+          >
+          <figcaption>各エフェクト出力の正規化スペクトル比較</figcaption>
+        </figure>
+      </div>
+
+      <div class="pd-summary pd-summary--spaced">
+        <p>
+          　正規化スペクトルでは、バイパス、ノイズサプレッサー、コンプレッサー、キャビネットシミュレーター、リバーブが低域〜中低域寄りに見えます。入力からバイパスまでの基準経路自体も低域寄りに見えるため、ハードウェア経路の影響も含めて評価する必要があります。
+        </p>
+        <p>
+          　DS-1 Distortionは中域の成分が目立ち、歪みエフェクトとしてのキャラクターがスペクトル上にも現れています。一方、Amp Simは8 kHz以上の成分が強く、後段で適切に整えないと耳に痛い高域やfizzとして聞こえる可能性があります。
+        </p>
+        <p>
+          　全7エフェクト有効時は1〜3 kHzの中高域成分が保持され、ギターの輪郭に関わる帯域が残っています。一方で3〜8 kHz帯域も残るため、抜けを残しながら高域のざらつきを抑える調整が必要です。今後はAmp Sim後段の高域減衰処理とCab Simの周波数特性を調整します。
+        </p>
+      </div>
+
+      <h4 class="pd-effect__subtitle">スペクトログラム</h4>
+
+      <div class="pd-summary pd-summary--spaced">
+        <p>
+          　スペクトログラムは、周波数成分の時間変化を可視化したものです。横軸が時間、縦軸が周波数、色の強さが成分の強さを示します。演奏中のどのタイミングでどの帯域が強く出ているかを確認できます。
+        </p>
+        <p>
+          　縦方向に明るい筋はピッキングの瞬間、音の後ろに残る色はサステインやリバーブ成分、高域に広く出続ける色は高域ノイズやfizzの候補として読み取れます。
+      </div>
+
+      <div class="pd-shots pd-shots--single" data-gallery>
+        <figure class="pd-shot">
+          <img
+            src="../assets/fpga-fx-analysis-spectrogram-grid.jpg"
+            alt="各エフェクト出力のスペクトログラム一覧"
+            width="2880"
+            height="1248"
+            loading="lazy"
+            decoding="async"
+          >
+          <figcaption>各エフェクト出力のスペクトログラム一覧</figcaption>
+        </figure>
+      </div>
+
+      <div class="pd-summary pd-summary--spaced">
+        <p>
+          　ノイズサプレッサーは、演奏していない区間で不要な成分を抑えるように動作しており、バイパスに近い時間周波数分布を保ちながら、非演奏時に高域成分が大きく残りにくい傾向が確認できます。今後は無音入力やノイズを含む信号を用いて、ゲートの開閉や減衰挙動をより詳細に評価していきます。
+        </p>
+        <p>
+          　Amp Simでは高域側に広く成分が見られます。8 kHz以上が強く残ると、耳に痛いfizzやデジタル的なざらつきとして聞こえる可能性があります。Cab Simでは高域を抑える方向の特性が見られるため、今後は5〜6 kHz以上の減衰量や2〜4 kHzの抜けを調整します。
+        </p>
+      </div>
+
+      <h4 class="pd-effect__subtitle">全体を通して</h4>
+
+      <div class="pd-summary pd-summary--spaced">
+        <p>
+          　今回の解析では、全7エフェクト有効時でも1〜3 kHz帯域が45.5%となり、ギターの輪郭に関わる中高域成分が保持されていました。一方で、Amp Simでは8〜16 kHz帯域が大きく、全7エフェクト有効時にも3〜8 kHz帯域が残るため、高域の抜けを残しながらfizz成分を抑える調整が必要です。
+        </p>
+        <p>
+          　現時点のDSPパイプラインは、低遅延で複数エフェクトを直列処理できています。一方、音質面ではAmp Sim後段の高域制御とCab Simの周波数特性が主要な改善ポイントだと考えています。
+        </p>
+      </div>
+    </article>
+  </div>
+</section>
+
   </main>
 
-  <!-- 画像や簡単なギャラリー演出が必要なら（任意） -->
   <script src="../scripts/project-detail.js" type="module"></script>
 </body>
 </html>

@@ -2,39 +2,40 @@
 const ICON_BASE = "./assets/icons/";
 
 export const ICON_MAP = {
-  Linux: ICON_BASE + "Linux.png",
-  JavaScript: ICON_BASE + "JS.png",
-  CSS: ICON_BASE + "CSS.png",
-  HTML: ICON_BASE + "HTML.png",
+  Linux: ICON_BASE + "Linux.jpg",
+  JavaScript: ICON_BASE + "JS.jpg",
+  CSS: ICON_BASE + "CSS.jpg",
+  HTML: ICON_BASE + "HTML.jpg",
   CAD: ICON_BASE + "CAD.jpg",
-  CAE: ICON_BASE + "CAE.png",
+  CAE: ICON_BASE + "CAE.jpg",
   "electronic circuit": ICON_BASE + "electronic_circuit.jpg",
-  "Three.js": ICON_BASE + "Threejs.png",
-  FPGA: ICON_BASE + "fpga.png",
-  PYNQ: ICON_BASE + "PYNQ.png",
-  Python: ICON_BASE + "Python.png",
-  HDL: ICON_BASE + "HDL.png",
-  "C++": ICON_BASE + "Cpurapura.png",
-  Processing: ICON_BASE + "Processing.png"
+  "Three.js": ICON_BASE + "Threejs.jpg",
+  FPGA: ICON_BASE + "fpga.jpg",
+  PYNQ: ICON_BASE + "PYNQ.jpg",
+  Python: ICON_BASE + "Python.jpg",
+  HDL: ICON_BASE + "HDL.jpg",
+  "C++": ICON_BASE + "Cpurapura.jpg",
+  Processing: ICON_BASE + "Processing.jpg"
 };
 
 // Projects shown in carousel/list (ordered newest -> old)
 export const PROJECTS = [
-  // 2025
+  // 2026
   {
     id: "fpga-fx",
-    title: "FPGAギターエフェクター",
-    desc: "リアルタイム処理が得意なFPGAでオーディオエフェクトを実現(開発中)",
-    img: "./assets/work_fpga_fx.png",
-    tags: ["FPGA", "PYNQ", "Linux", "HDL", "Python", "C++"],
+    title: "FPGAギターエフェクター(開発中)",
+    desc: "リアルタイム音声処理デバイス",
+    img: "./assets/work_fpga_fx.jpg",
+    tags: ["FPGA", "PYNQ", "Linux", "HDL", "Python"],
     links: [{ label: "詳細", href: "./projects/fpga-guitar-fx.html" }],
-    year: 2025
+    year: 2026
   },
+    // 2025
   {
     id: "web-nenga",
     title: "Web年賀状",
-    desc: "ブラウザ上で表示できる年賀状",
-    img: "./assets/work_web_nenga.png",
+    desc: "ブラウザ上で作成・共有できる年賀状ツール",
+    img: "./assets/work_web_nenga.jpg",
     tags: ["HTML", "CSS", "JavaScript"],
     links: [{ label: "詳細", href: "./projects/web-new-year-card.html" }],
     year: 2025
@@ -43,7 +44,7 @@ export const PROJECTS = [
     id: "web-cae",
     title: "Web CAEアプリ",
     desc: "NASA Space Apps Challenge 2025提出作品",
-    img: "./assets/work_web_cae.png",
+    img: "./assets/work_web_cae.jpg",
     tags: ["CAE", "Python", "HTML", "CSS", "JavaScript", "Three.js"],
     links: [{ label: "詳細", href: "./projects/web-cae-app.html" }],
     year: 2025
@@ -52,19 +53,10 @@ export const PROJECTS = [
     id: "retro-lumen",
     title: "Retro Lumen",
     desc: "ブラウン管風シェーダと画面キャプチャを組み合わせたレトロ表示Webアプリ",
-    img: "./assets/RetroLumen_0.png",
+    img: "./assets/RetroLumen_0.jpg",
     tags: ["HTML", "CSS", "JavaScript"],
     links: [{ label: "詳細", href: "./projects/retro-lumen.html" }],
     year: 2025
-  },
-
-    { id:"nameplate", 
-      title:"リアルVRネームプレート",
-      desc:"VR空間のネームプレートを現実世界で再現",
-      img:"./assets/nameplate.png", 
-      tags:["CAE","HTML","CSS","JavaScript","Three.js"], 
-      links:[{label:"詳細",href:"./projects/vr-nameplate.html"}] ,
-      year:2025
   },
 
   // 2024
@@ -101,7 +93,7 @@ export const PROJECTS = [
     id: "glove-drum",
     title: "手袋型電子ドラム",
     desc: "指先のピエゾをトリガーにした省スペース電子ドラム",
-    img: "./assets/drams1.png",
+    img: "./assets/drams1.jpg",
     tags: ["electronic circuit", "C++"],
     links: [{ label: "詳細", href: "./projects/glove_drum.html" }],
     year: 2023
@@ -126,6 +118,7 @@ export const PROJECTS = [
     links: [{ label: "詳細", href: "./projects/megaphone_v1.html" }],
     year: 2022
   },
+
 
   // 2019
   {

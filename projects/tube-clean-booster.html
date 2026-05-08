@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Tube Clean Booster — Product Detail</title>
   <meta name="description" content="9V駆動でボードに載せやすい真空管クリーンブースターの紹介。" />
   <!-- 共通スタイル -->
@@ -42,14 +42,15 @@
       to{ transform: rotate(360deg); }
     }
   </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S29JRMXN8G"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date()); gtag('config', 'G-S29JRMXN8G');
-  </script>
+  gtag('config', 'G-Y39NSDYY9J');
+</script>
 </head>
 <body>
 
@@ -145,7 +146,7 @@
 
         <div class="pd-shots pd-shots--single">
           <figure class="pd-shot">
-            <img src="../assets/TubeEffector_circuit.png" alt="回路図（KiCad）" width="1280" height="720" loading="lazy" decoding="async">
+            <img src="../assets/TubeEffector_circuit.jpg" alt="回路図（KiCad）" width="1280" height="720" loading="lazy" decoding="async">
             <figcaption>KiCadで回路図作成</figcaption>
           </figure>
         </div>
@@ -186,7 +187,7 @@
           </figure>
           <figure class="pd-shot">
             <img src="../assets/TubeEffector_Process2.jpg" alt="外装仕上げ：フェイクレザー" width="1280" height="720" loading="lazy" decoding="async">
-            <figcaption>外装はフェイクレザーで仕上げ</figcaption>
+            <figcaption>仮組み</figcaption>
           </figure>
         </div>
       </div>
@@ -236,11 +237,11 @@
         <h2 id="spectrum-title" class="pd-section__title">スペクトル解析</h2>
         <div class="pd-shots" data-gallery>
           <figure class="pd-shot">
-            <img src="../assets/tube_off.png" alt="直アンプ時のスペクトル" width="1280" height="720" loading="lazy" decoding="async">
+            <img src="../assets/tube_off.jpg" alt="直アンプ時のスペクトル" width="1280" height="720" loading="lazy" decoding="async">
             <figcaption>直アンプ時のスペクトル</figcaption>
           </figure>
           <figure class="pd-shot">
-            <img src="../assets/tube_on.png" alt="ブースター有効時のスペクトル" width="1280" height="720" loading="lazy" decoding="async">
+            <img src="../assets/tube_on.jpg" alt="ブースター有効時のスペクトル" width="1280" height="720" loading="lazy" decoding="async">
             <figcaption>ブースター有効時：中域が前に出る傾向</figcaption>
           </figure>
         </div>

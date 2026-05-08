@@ -30,11 +30,7 @@ body{
   font-weight: 900;
   font-size: clamp(26px, 4vw, 36px);
   letter-spacing: .01em;
-  background: linear-gradient(90deg, var(--brand, #cc0000), var(--brand-2, #a60000));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--brand, #cc0000);
 }
 .list-hero .lede{
   margin: 0;
@@ -76,6 +72,7 @@ body{
 .product-card.product-card--list{
   min-height: auto;
   height: 100%;
+  border-radius: 16px;
   box-shadow: var(--shadow-1, 0 12px 30px rgba(0,0,0,.1));
 }
 .product-card--list .product-media{
@@ -102,6 +99,11 @@ body{
 .product-card--list .actions{
   margin-top: auto;
   gap: 10px;
+}
+.product-card--list .btn{
+  min-height: auto;
+  padding: .85rem 1.2rem;
+  border-radius: 14px;
 }
 
 .empty-msg{
