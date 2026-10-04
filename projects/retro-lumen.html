@@ -4,21 +4,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Retro Lumen | Product Detail</title>
+
+  <!-- OGP / Twitter Card（SNSやチャットでの共有プレビュー用） -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DOYSOUND — Portfolio" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="Retro Lumen | DOYSOUND" />
+  <meta property="og:description" content="ブラウン管風シェーダと画面キャプチャを組み合わせたレトロ表示Webアプリ" />
+  <meta property="og:url" content="https://doysound-cmd.github.io/Portfolio/projects/retro-lumen.html" />
+  <link rel="canonical" href="https://doysound-cmd.github.io/Portfolio/projects/retro-lumen.html" />
+  <meta property="og:image" content="https://doysound-cmd.github.io/Portfolio/assets/RetroLumen_0.jpg" />
+  <meta property="og:image:alt" content="Retro Lumen | DOYSOUND" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Retro Lumen | DOYSOUND" />
+  <meta name="twitter:description" content="ブラウン管風シェーダと画面キャプチャを組み合わせたレトロ表示Webアプリ" />
+  <meta name="twitter:image" content="https://doysound-cmd.github.io/Portfolio/assets/RetroLumen_0.jpg" />
   <meta
     name="description"
     content="画面/ウィンドウのキャプチャ映像にブラウン管テレビ風シェーダを重ねて表示し、レトロ感を楽しむための Web アプリ Retro Lumen の紹介ページ。WebGL2 と getDisplayMedia を組み合わせたレトロ表現ビューア。"
   />
+  <link rel="stylesheet" href="../styles/liftkitvars.css" />
   <link rel="stylesheet" href="../styles/site-core.css" />
   <link rel="stylesheet" href="../styles/project-detail.css" />
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  gtag('config', 'G-Y39NSDYY9J');
-</script>
+    gtag('config', 'G-Y39NSDYY9J');
+  </script>
+
+  <!-- Site chrome: theme / 共通ナビ（site-chrome.js とペア） -->
+  <link rel="icon" href="data:," />
+  <meta name="theme-color" content="#f4f4f4" />
+  <link rel="stylesheet" href="../styles/site-chrome.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;family=Zen+Kaku+Gothic+New:wght@500;700;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/site-theatre.css" />
+  <script src="../scripts/theme-init.js"></script>
 </head>
 <body>
 
@@ -29,7 +55,7 @@
       <h1 class="pd-hero__title">Retro Lumen</h1>
       <p class="pd-hero__lede">
         画面/ウィンドウのキャプチャ映像にブラウン管テレビ風のシェーダをリアルタイムで重ねるWebアプリケーションです。<br>
-        ブラウザだけでレトロな表現の質感を楽しめるようにしています。
+        ブラウザだけでレトロな質感の表現を楽しめるようにしています。
       </p>
       <ul class="pd-badges pd-badges--icons" aria-label="使用技術">
         <li class="badge">
@@ -59,7 +85,7 @@
         <h2 id="about-title" class="pd-section__title">概要</h2>
         <div class="pd-summary">
           <p>
-            　Retro Lumen は、画面やウィンドウをブラウザからキャプチャし、その映像にブラウン管テレビ風のエフェクトを重ねて表示する Web アプリです。キャプチャした映像をキャンバス上でリアルタイムに変形・補正し、レトロな表現の質感に変換します。
+            　Retro Lumen は、画面やウィンドウをブラウザからキャプチャし、その映像にブラウン管テレビ風のエフェクトを重ねて表示する Web アプリです。キャプチャした映像をキャンバス上でリアルタイムに変形・補正し、レトロな質感へ変換します。
           </p>
         </div>
       </div>
@@ -82,7 +108,7 @@
                 src="../assets/RetroLumen_0.jpg"
                 alt="Retro Lumen のメイン画面"
                 width="1280"
-                height="720"
+                height="688"
                 loading="lazy"
                 decoding="async"
               >
@@ -100,8 +126,8 @@
               <img
                 src="../assets/RetroLumen_1.jpg"
                 alt="画面の曲率・走査線・グローを加えたブラウン管風表示の例"
-                width="1280"
-                height="720"
+                width="1629"
+                height="875"
                 loading="lazy"
                 decoding="async"
               >
@@ -127,9 +153,9 @@
             >
               <img
                 src="../assets/RetroLumen_system.jpg"
-                alt="画面の曲率・走査線・グローを加えたブラウン管風表示の例"
-                width="1280"
-                height="720"
+                alt="CRT表現を構成するエフェクトの適用順序を示す図"
+                width="1209"
+                height="680"
                 loading="lazy"
                 decoding="async"
               >
@@ -173,5 +199,7 @@
   </main>
 
   <script src="../scripts/project-detail.js" type="module"></script>
+  <script src="../scripts/site-chrome.js" type="module"></script>
+  <script src="../scripts/site-theatre.js" type="module"></script>
 </body>
 </html>

@@ -4,6 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ESP32_Vocal_Effector</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Y39NSDYY9J');
+  </script>
+  <meta name="description" content="ライブ用メガホン Ver.2 のブラウザGUI。ESP32上の音声エフェクトをWebから操作する画面の解説。" />
+
+  <!-- OGP / Twitter Card（SNSやチャットでの共有プレビュー用） -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DOYSOUND — Portfolio" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="ライブ用メガホン Ver.2 GUI | DOYSOUND" />
+  <meta property="og:description" content="ライブ用メガホン Ver.2 のブラウザGUI。ESP32上の音声エフェクトをWebから操作する画面の解説。" />
+  <meta property="og:url" content="https://doysound-cmd.github.io/Portfolio/projects/megaphone_v2_GUI.html" />
+  <link rel="canonical" href="https://doysound-cmd.github.io/Portfolio/projects/megaphone_v2_GUI.html" />
+  <meta property="og:image" content="https://doysound-cmd.github.io/Portfolio/assets/ogp.jpg" />
+  <meta property="og:image:alt" content="ライブ用メガホン Ver.2 GUI | DOYSOUND" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ライブ用メガホン Ver.2 GUI | DOYSOUND" />
+  <meta name="twitter:description" content="ライブ用メガホン Ver.2 のブラウザGUI。ESP32上の音声エフェクトをWebから操作する画面の解説。" />
+  <meta name="twitter:image" content="https://doysound-cmd.github.io/Portfolio/assets/ogp.jpg" />
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
     <style>
         body {
@@ -203,6 +228,12 @@
             }
         }
     </style>
+
+  <!-- Site chrome: theme / 共通ナビ（site-chrome.js とペア） -->
+  <link rel="icon" href="data:," />
+  <meta name="theme-color" content="#f4f4f4" />
+  <link rel="stylesheet" href="../styles/site-chrome.css" />
+  <script src="../scripts/theme-init.js"></script>
 </head>
 <body>
     <div class="smartphone-frame">
@@ -338,5 +369,6 @@
         createFootSwitch('footSwitch2', 'led2');
         createFootSwitch('footSwitch3', 'led3');
     </script>
+  <script src="../scripts/site-chrome.js" type="module"></script>
 </body>
 </html>

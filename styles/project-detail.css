@@ -1,5 +1,3 @@
-﻿@import "./liftkitvars.css";
-
 /* =========================================================
    Product Detail ページ用スタイル（iPhone 13/Safari でも確認済み）
    - ヒーロー
@@ -148,9 +146,20 @@ body{
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
+  /* 行の高さに引き伸ばさない。縦横比の違う図を並べたとき、
+     背の低いカードの下に空白ができるのを防ぐ */
+  align-items: start;
 }
 @media (min-width: 840px){
   .pd-shots{ grid-template-columns: 1fr 1fr; }
+}
+
+/* 複数枚を並べるとき、縦横比が違ってもカードの大きさをそろえる
+   （.pd-shots--even を付与）。画像は枠内に収めて中央へ置くので、
+   行の下に中途半端な空白が出ない */
+.pd-shots--even .pd-shot img{
+  height: clamp(240px, 30vw, 360px);
+  object-fit: contain;
 }
 
 /* ※ 画像が1枚のときは中央寄せ（.pd-shots--single を付与） */
@@ -370,6 +379,12 @@ body{
     padding-top: 56.25%;
   }
 }
+/* 操作パネルを持つ埋め込み（CFD結果デモ）は少し縦を取る */
+.pd-video--tall{ aspect-ratio: 4 / 3; }
+@supports not (aspect-ratio: 4 / 3) {
+  .pd-video--tall::before{ padding-top: 75%; }
+}
+
 .pd-video iframe{
   position: absolute;
   inset: 0;
@@ -484,3 +499,131 @@ body{
 }
 
 
+/* =========================================================
+   追加コンポーネント（3DGS × CFD 詳細ページで追加）
+   - タイムライン（制作フロー）
+   - 条件カード（境界条件）
+   - ステータスバナー（計算中などの進捗表示）
+   - 3枚並びの比較ギャラリー
+   - 仕様リスト（モデル化の工夫）
+   ※ 色は --panel / --line / --text / --muted / --brand の
+     共通トークンのみを使うので、ダークテーマにも追従する。
+   ========================================================= */
+
+
+/* ---------------- ブロック間の既定マージン ---------------- */
+.pd-summary + .pd-shots,
+.pd-shots + .pd-shots,
+.pd-table-wrap + .pd-shots{
+  margin-top: 16px;
+}
+.pd-shots + .pd-note,
+.pd-video + .pd-note,
+.pd-links + .pd-note{
+  margin-top: 14px;
+}
+
+/* =========================================================
+   3Dビューア共通スタイル（3DGS × CFD ページで追加）
+   - project-3d-viewer.js が生成する .pd-3d__loading に対応
+   - 既存ページは各自の <style> で同名クラスを上書きしているため、
+     ここでの定義は既存ページの見た目を変えない
+   ========================================================= */
+.pd-3d{
+  display: grid;
+  gap: clamp(12px, 2vw, 16px);
+  margin-top: 16px;
+}
+.pd-3d__stage{
+  background: #0f141d;
+  border: 1px solid rgba(0, 0, 0, .33);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.pd-3d__toolbar{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.pd-3d__hint{
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+.pd-3d__loading{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, 1vw, 12px);
+  background: rgba(10, 15, 24, .82);
+  color: #f5f7fb;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+  z-index: 3;
+}
+.pd-3d__loading.is-active{ opacity: 1; }
+.pd-3d__text{ font-size: 13px; }
+
+/* ---------------- モバイル表示の調整 ---------------- */
+/* 埋め込みビューアは16:9だと縦が足りず操作しづらいので、
+   狭い画面では縦長にして表示領域を稼ぐ */
+@media (max-width: 640px){
+  .pd-video{ aspect-ratio: 3 / 4; }
+  /* 操作列と凡例を持つデモはもう少し縦を取る */
+  .pd-video--tall{ aspect-ratio: 2 / 3; }
+  @supports not (aspect-ratio: 3 / 4){
+    .pd-video::before{ padding-top: 133.333%; }
+    .pd-video--tall::before{ padding-top: 150%; }
+  }
+}
+
+/* 表は横スクロールだと見切れて気づきにくいので、
+   狭い画面では1行ずつ縦に積む。3列以上の表は data-label で項目名を出す */
+@media (max-width: 640px){
+  .pd-table-wrap{ overflow-x: visible; }
+  .pd-data-table{ min-width: 0; display: block; }
+  .pd-data-table caption{ display: block; padding: 12px 14px 4px; }
+  .pd-data-table thead{
+    position: absolute;
+    width: 1px; height: 1px;
+    margin: -1px; padding: 0;
+    overflow: hidden; clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .pd-data-table tbody,
+  .pd-data-table tr,
+  .pd-data-table tbody th,
+  .pd-data-table td{ display: block; width: auto; }
+  .pd-data-table tr{
+    border-top: 1px solid var(--line);
+    padding: 12px 14px;
+  }
+  .pd-data-table tbody th{
+    padding: 0 0 6px;
+    border: 0;
+    white-space: normal;
+    font-size: 15px;
+  }
+  .pd-data-table td,
+  .pd-data-table td:nth-child(2){
+    padding: 0 0 4px;
+    border: 0;
+    /* 通常時の td:nth-child(2){white-space:nowrap} を、
+       同じ詳細度で後から上書きして折り返させる */
+    white-space: normal;
+  }
+  .pd-data-table td:last-child{ padding-bottom: 0; }
+  .pd-data-table td[data-label]::before{
+    content: attr(data-label) "：";
+    color: var(--muted);
+    font-weight: 900;
+  }
+}

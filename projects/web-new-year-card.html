@@ -4,18 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Web年賀状 | Product Detail</title>
+
+  <!-- OGP / Twitter Card（SNSやチャットでの共有プレビュー用） -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DOYSOUND — Portfolio" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="Web年賀状 | DOYSOUND" />
+  <meta property="og:description" content="ブラウザ上で作成・共有できる年賀状ツール" />
+  <meta property="og:url" content="https://doysound-cmd.github.io/Portfolio/projects/web-new-year-card.html" />
+  <link rel="canonical" href="https://doysound-cmd.github.io/Portfolio/projects/web-new-year-card.html" />
+  <meta property="og:image" content="https://doysound-cmd.github.io/Portfolio/assets/work_web_nenga.jpg" />
+  <meta property="og:image:alt" content="Web年賀状 | DOYSOUND" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Web年賀状 | DOYSOUND" />
+  <meta name="twitter:description" content="ブラウザ上で作成・共有できる年賀状ツール" />
+  <meta name="twitter:image" content="https://doysound-cmd.github.io/Portfolio/assets/work_web_nenga.jpg" />
   <meta name="description" content="ブラウザで宛名面・絵柄面を編集し、URL共有で送れるWeb年賀状ツールの紹介ページ" />
+  <link rel="stylesheet" href="../styles/liftkitvars.css" />
   <link rel="stylesheet" href="../styles/site-core.css" />
   <link rel="stylesheet" href="../styles/project-detail.css" />
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  gtag('config', 'G-Y39NSDYY9J');
-</script>
+    gtag('config', 'G-Y39NSDYY9J');
+  </script>
+
+  <!-- Site chrome: theme / 共通ナビ（site-chrome.js とペア） -->
+  <link rel="icon" href="data:," />
+  <meta name="theme-color" content="#f4f4f4" />
+  <link rel="stylesheet" href="../styles/site-chrome.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;family=Zen+Kaku+Gothic+New:wght@500;700;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/site-theatre.css" />
+  <script src="../scripts/theme-init.js"></script>
 </head>
 <body>
 
@@ -71,7 +97,7 @@
           </figure>
           <figure class="pd-shot">
             <a class="pd-shot__link" href="https://DOYSOUND-cmd.github.io/WebNenga" target="_blank" rel="noopener" aria-label="Web年賀状のデモを開く">
-              <img src="../assets/work_web_nenga_editer.jpg" alt="Web年賀状のエディタ画面。画像トリミングと文面編集の操作例" width="1280" height="720" loading="lazy" decoding="async">
+              <img src="../assets/work_web_nenga_editer.jpg" alt="Web年賀状のエディタ画面。画像トリミングと文面編集の操作例" width="1280" height="688" loading="lazy" decoding="async">
             </a>
             <figcaption>エディタでの画像トリミングと文面編集</figcaption>
           </figure>
@@ -84,8 +110,8 @@
         <h2 id="card3d-title" class="pd-section__title">3Dカード表現</h2>
         <div class="pd-summary">
           <p>
-            　カード自体は CSS の 3D Transform で描画しています。読み込み時にはカードが落ちてくるようなドロップアニメーションを入れていて、ポインタの位置に応じてカードが少し傾いたり、光沢が動いたりします。<br>
-            　スマートフォンではジャイロセンサーの値を読んでいて、端末を傾けるとカードの向きとハイライトも連動して変化させることで、手に持って眺めている感覚を再現しました。
+            　カード自体は CSS の 3D Transform で描画しています。読み込み時にはカードが落ちてくるドロップアニメーションを取り入れており、ポインタの位置に応じてカードが少し傾いたり、光沢が動いたりします。<br>
+            　スマートフォンではジャイロセンサーの値を読み取り、端末を傾けるとカードの向きとハイライトが連動して変化するようにして、手に持って眺めている感覚を再現しました。
           </p>
         </div>
       </div>
@@ -96,14 +122,14 @@
         <h2 id="system-title" class="pd-section__title">システム構成</h2>
         <figure class="pd-shot">
           <a class="pd-shot__link" href="https://github.com/DOYSOUND-cmd/WebNenga" target="_blank" rel="noopener" aria-label="githubリポジトリを開く">
-            <img src="../assets/WebNenga_system.jpg" alt="システム構成図" width="1280" height="720" loading="lazy" decoding="async">
+            <img src="../assets/WebNenga_system.jpg" alt="システム構成図" width="1205" height="675" loading="lazy" decoding="async">
           </a>
           <figcaption>システム構成図</figcaption>
         </figure>
         <div class="pd-summary">
           <p>
-            　年賀状の内容（宛名・差出人・挨拶文・背景画像URL・各種フラグ）は、ブラウザ側で1つの状態オブジェクトとしてまとめて扱っています。このオブジェクトをJSONにし、さらにBase64URLへ変換して、"#id=...&data=..."という形でURLハッシュに載せます。受信側のブラウザは"location.hash"から"data"を取り出してデコードし、その状態を復元してカードを表示する、という流れです。<br>
-            　背景画像はすべてクライアント側で処理します。編集パネルで選んだ画像ファイルをCropper.jsに渡してトリミングし、HEIF/HEIC形式の画像はheic2anyでJPEGに変換します。そのあと最大辺をリサイズしてWebPに再エンコードします。<br>
+            　年賀状の内容（宛名・差出人・挨拶文・背景画像URL・各種フラグ）は、ブラウザ側で1つの状態オブジェクトとしてまとめて扱っています。このオブジェクトをJSON化し、さらにBase64URLへ変換して、「#id=...&data=...」という形でURLハッシュに載せます。受信側のブラウザは location.hash から data を取り出してデコードし、その状態を復元してカードを表示する、という流れです。<br>
+            　背景画像はすべてクライアント側で処理します。編集パネルで選んだ画像ファイルをCropper.jsに渡してトリミングし、HEIF/HEIC形式の画像はheic2anyでJPEGに変換します。その後、最大辺を基準にリサイズしてWebPに再エンコードします。<br>
             　得られたBlobはObject URLにしてすぐプレビューに反映し、同じデータをSupabase Storageにもアップロードします。getPublicUrlで取得した公開URLを状態オブジェクトに保存し、以降はそのURLを背景画像の参照先として使う構成になっています。
           </p>
         </div>
@@ -122,5 +148,7 @@
   </main>
 
   <script src="../scripts/project-detail.js" type="module"></script>
+  <script src="../scripts/site-chrome.js" type="module"></script>
+  <script src="../scripts/site-theatre.js" type="module"></script>
 </body>
 </html>

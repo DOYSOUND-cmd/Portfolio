@@ -3,22 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>DOYSOUND</title>
+  <title>DOYSOUND — Portfolio</title>
+
+  <!-- OGP / Twitter Card（SNSやチャットでの共有プレビュー用） -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="DOYSOUND — Portfolio" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="DOYSOUND — Portfolio" />
+  <meta property="og:description" content="DOYSOUND ポートフォリオサイト" />
+  <meta property="og:url" content="https://doysound-cmd.github.io/Portfolio/" />
+  <link rel="canonical" href="https://doysound-cmd.github.io/Portfolio/" />
+  <meta property="og:image" content="https://doysound-cmd.github.io/Portfolio/assets/ogp.jpg" />
+  <meta property="og:image:alt" content="DOYSOUND — Portfolio" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="DOYSOUND — Portfolio" />
+  <meta name="twitter:description" content="DOYSOUND ポートフォリオサイト" />
+  <meta name="twitter:image" content="https://doysound-cmd.github.io/Portfolio/assets/ogp.jpg" />
   <meta name="description" content="DOYSOUND ポートフォリオサイト" />
-  <meta property="og:image" content="./assets/ogp.jpg" />
+  <link rel="stylesheet" href="./styles/liftkitvars.css" />
   <link rel="stylesheet" href="./styles/site-core.css" />
   <link rel="stylesheet" href="./styles/project-highlight.css" />
   <link rel="stylesheet" href="./styles/profile-card.css" />
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-Y39NSDYY9J');
-</script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
+      gtag('config', 'G-Y39NSDYY9J');
+    </script>
+
+
+  <!-- Site chrome: theme / 共通ナビ（site-chrome.js とペア） -->
+  <link rel="icon" href="data:," />
+  <meta name="theme-color" content="#f4f4f4" />
+  <link rel="stylesheet" href="./styles/site-chrome.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;family=Zen+Kaku+Gothic+New:wght@500;700;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles/site-theatre.css" />
+  <script src="./scripts/theme-init.js"></script>
 </head>
 <body>
 
@@ -26,6 +52,15 @@
   <!-- AboutMe（名刺寄り） -->
   <section id="cord" class="section" aria-label="About Me / 自己紹介カード">
     <div class="container">
+      <div class="thx-reticle" aria-hidden="true"></div>
+      <div class="thx-frame" aria-hidden="true">
+        <i></i><i></i><i></i><i></i>
+        <b><span class="thx-rec"></span>Portfolio — DOYSOUND</b>
+        <b>EST.2002 / Osaka, JP</b>
+        <b>CFD &times; FPGA &times; Lutherie</b>
+        <b>FIG.01 — About</b>
+      </div>
+
       <div class="card card--biz" tabindex="0" aria-label="クリック/Enter/Spaceで表裏が反転します。マウス/タッチ操作でカードが反応します">
         <div class="card-inner">
           <div class="front" aria-hidden="false">
@@ -74,7 +109,7 @@
                   </tr>
                 </table>
                 <header class="idblock">
-                  <h1 class="name-en">DOYSOUND</h1>
+                  <p class="name-en">DOYSOUND</p>
                 </header>
                 <p class="intro">
                   I am an engineer from Osaka Prefecture.<br>
@@ -106,18 +141,22 @@
   </div>
 
   <!-- Productions -->
-  <header id="Productions-head" class="page-head" >
+  <header id="Productions-head">
     <div class="container">
-      <h1 class="title">Productions</h1>
-      <div class="page-head__cta">
-        <a class="btn btn--ghost" href="./productions.html">一覧ページを見る</a>
+      <div class="thx-sechead" data-no="01">
+        <span class="thx-sechead__no">01</span>
+        <div>
+          <h2 class="thx-sechead__title" data-split>Productions</h2>
+          <p class="thx-sechead__sub">Selected Works / 2019 — 2026</p>
+        </div>
+        <a class="btn btn--ghost thx-sechead__cta" href="./productions.html">一覧ページを見る</a>
       </div>
     </div>
   </header>
 
   <section id="Productions" class="section">
     <div class="container">
-      <div class="carousel" data-carousel data-scope="home" aria-label="制作物カルーセル">
+      <div class="carousel" data-carousel data-scope="home" aria-label="制作物カルーセル" data-reveal>
         <button class="car-btn prev" data-prev aria-controls="track" aria-label="前へ">‹</button>
         <div class="car-viewport" tabindex="0" role="region" aria-roledescription="スライダー" aria-label="作品">
           <ul class="car-track" role="listbox" id="track"></ul>
@@ -128,11 +167,16 @@
       </div>
     </div>
   </section>
-
   <!-- Certifications（★追加：Productionsの後） -->
   <section id="qualifications" class="section" aria-labelledby="quals-title">
     <div class="container">
-      <h2 id="quals-title" class="section-title">Certifications</h2>
+      <div class="thx-sechead" data-no="02">
+        <span class="thx-sechead__no">02</span>
+        <div>
+          <h2 id="quals-title" class="thx-sechead__title" data-split>Certifications</h2>
+          <p class="thx-sechead__sub">Licenses &amp; Qualifications / 資格</p>
+        </div>
+      </div>
 
       <ul class="quals" role="list">
         <!-- 各項目：ボタンで開閉（キーボード・スクリーンリーダ対応） -->
@@ -250,8 +294,9 @@
 </main>
 
 <script src="./scripts/site-core.js" type="module"></script>
-<script src="./scripts/welcome-overlay.js" type="module"></script>
 <script src="./scripts/project-carousel.js" type="module"></script>
 <script src="./scripts/profile-card.js" type="module"></script>
+  <script src="./scripts/site-chrome.js" type="module"></script>
+  <script src="./scripts/site-theatre.js" type="module"></script>
 </body>
 </html>

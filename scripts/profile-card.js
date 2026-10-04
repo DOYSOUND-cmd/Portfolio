@@ -1,3 +1,5 @@
+import { ICON_MAP } from "./projects-data.js";
+
 // ===== Profile card script: flip and tilt are controlled by .card/.card-inner =====
 (function(){
   const card  = document.querySelector("#cord .card");
@@ -7,20 +9,10 @@
   if (!card || !inner) return;
 
   /* --- skills and age badges --- */
-  const ICON_BASE = "./assets/icons/";
-  const ICON_MAP = {
-    Linux: ICON_BASE+"Linux.jpg", JavaScript: ICON_BASE+"JS.jpg",
-    CSS: ICON_BASE+"CSS.jpg", HTML: ICON_BASE+"HTML.jpg",
-    CAD: ICON_BASE+"CAD.jpg", CAE: ICON_BASE+"CAE.jpg",
-    "electronic circuit": ICON_BASE+"electronic_circuit.jpg",
-    "Three.js": ICON_BASE+"Threejs.jpg",
-    FPGA: ICON_BASE+"fpga.jpg", PYNQ: ICON_BASE+"PYNQ.jpg",
-    Python: ICON_BASE+"Python.jpg", HDL: ICON_BASE+"HDL.jpg",
-    "C++": ICON_BASE+"Cpurapura.jpg", Processing: ICON_BASE+"Processing.jpg",
-    Go: ICON_BASE+"Go.jpg", Java: ICON_BASE+"Java.jpg"
-  };
+  // アイコンは projects-data.js と共通。分野ごとに並べる
   const SKILLS = [
-    "CAD","CAE","electronic circuit","FPGA","HDL","PYNQ",
+    "CAE","CFD","Blender","CAD",
+    "electronic circuit","FPGA","HDL","PYNQ",
     "Linux","C++","Python","Go","Java","Processing",
     "HTML","CSS","JavaScript","Three.js"
   ];

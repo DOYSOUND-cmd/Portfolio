@@ -4,18 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>FPGAギターエフェクター — Product Detail</title>
+
+  <!-- OGP / Twitter Card（SNSやチャットでの共有プレビュー用） -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DOYSOUND — Portfolio" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="FPGAギターエフェクター(開発中) | DOYSOUND" />
+  <meta property="og:description" content="リアルタイム音声処理デバイス" />
+  <meta property="og:url" content="https://doysound-cmd.github.io/Portfolio/projects/fpga-guitar-fx.html" />
+  <link rel="canonical" href="https://doysound-cmd.github.io/Portfolio/projects/fpga-guitar-fx.html" />
+  <meta property="og:image" content="https://doysound-cmd.github.io/Portfolio/assets/work_fpga_fx.jpg" />
+  <meta property="og:image:alt" content="FPGAギターエフェクター(開発中) | DOYSOUND" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="FPGAギターエフェクター(開発中) | DOYSOUND" />
+  <meta name="twitter:description" content="リアルタイム音声処理デバイス" />
+  <meta name="twitter:image" content="https://doysound-cmd.github.io/Portfolio/assets/work_fpga_fx.jpg" />
   <meta name="description" content="PYNQ-Z2のFPGA上に信号処理回路を構築し、ギター入力にリアルタイムでエフェクト処理を行うギター用マルチエフェクターの紹介。">
+  <link rel="stylesheet" href="../styles/liftkitvars.css" />
   <link rel="stylesheet" href="../styles/site-core.css" />
   <link rel="stylesheet" href="../styles/project-detail.css" />
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  gtag('config', 'G-Y39NSDYY9J');
-</script>
+    gtag('config', 'G-Y39NSDYY9J');
+  </script>
+
+  <!-- Site chrome: theme / 共通ナビ（site-chrome.js とペア） -->
+  <link rel="icon" href="data:," />
+  <meta name="theme-color" content="#f4f4f4" />
+  <link rel="stylesheet" href="../styles/site-chrome.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;family=Zen+Kaku+Gothic+New:wght@500;700;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/site-theatre.css" />
+  <script src="../scripts/theme-init.js"></script>
 </head>
 <body>
 
@@ -25,7 +51,7 @@
       <h1 class="pd-hero__title">FPGAギターエフェクター(開発中)</h1>
       <p class="pd-hero__lede">
         PYNQ-Z2のFPGA上に信号処理回路を構築し、ギター入力に対してリアルタイムに処理を行うデバイスです。<br>
-        ノイズゲート、コンプレッサー、歪み、アンプ／キャビネットシミュレーター、リバーブを1つのDSPパイプラインとして構成しています。
+        10種類のエフェクトを1つのDSPパイプラインとして構成し、多くのエフェクトで実在のアンプ・ペダルをモデルにした機種切替に対応しています。
       </p>
 
       <ul class="pd-badges pd-badges--icons" aria-label="使用技術">
@@ -64,10 +90,10 @@
         <h2 id="overview-title" class="pd-section__title">概要</h2>
         <div class="pd-summary">
           <p>
-            　PYNQ-Z2のFPGA上に信号処理回路を構築し、ギター入力に対してリアルタイムに信号処理を行うギター用マルチエフェクターです。ノイズゲート、オーバードライブ、ディストーション、アンプシミュレーター、キャビネットシミュレーター、リバーブを1つの信号処理チェーンとして実装しています。
+            　PYNQ-Z2のFPGA上に信号処理回路を構築し、ギター入力に対してリアルタイムに信号処理を行うギター用マルチエフェクターです。ノイズサプレッサー、コンプレッサー、ワウ、オーバードライブ、ディストーション、アンプシミュレーター、キャビネットシミュレーター、EQ、コーラス、リバーブの10ブロックを1つの信号処理チェーンとして実装しています。アンプ6機種、オーバードライブ6機種、ディストーション系ペダル7種類、コーラス3機種など、多くのエフェクトで実在の機材をモデルにした機種切替に対応しています。
           </p>
           <p>
-            　LINE INから入力された信号をADAU1761コーデックでデジタル化し、PL側（FPGA回路部分）に実装したDSPパイプラインで処理した後、LINE OUTへ返します。エフェクトのON/OFFやパラメータ変更はPS側（CPU・Linuxが動作する部分）のPythonから制御し、信号処理はFPGA側の専用回路でリアルタイムに実行する構成にしました。
+            　ギター信号は、Pmod I2S2オーディオモジュールのADC（CS5343）で96 kHz / 24-bitにデジタル化します。これをPL側（FPGA回路部分）のDSPパイプラインで処理し、同モジュールのDAC（CS4344）から出力します。エフェクトのON/OFFやパラメータ変更はPS側（CPU・Linuxが動作する部分）のPythonから制御し、信号処理はFPGA側の専用回路でリアルタイムに実行する構成にしました。操作系として、HDMI接続の5インチLCDに表示するGUIのほか、ロータリーエンコーダ、フットスイッチ、エクスプレッションペダルを自作のFPGA回路として統合しています。
           </p>
         </div>
       </div>
@@ -158,15 +184,20 @@
         <h2 id="system-title" class="pd-section__title">システム構成</h2>
         <div class="pd-summary">
           <p>
-            　入力されたギター信号は、PYNQ-Z2に搭載されているADAU1761コーデックのADCによってデジタル信号に変換されます。デジタル化された音声データはI2S形式で受け取られ、AXI-Stream形式に変換された後、FPGA側のDSPパイプラインへ送られます。
+            　入力されたギター信号は、Pmod I2S2オーディオモジュールに搭載されたCS5343 ADCによって96 kHz / 24-bitのデジタル信号に変換されます。デジタル化された音声データはI2S形式で受け取られ、AXI-Stream形式に変換された後、FPGA側のDSPパイプラインへ送られます。
           </p>
           <p>
-            　FPGA内部では、ノイズサプレッサー、コンプレッサー、オーバードライブ、ディストーション、アンプシミュレーター、キャビネットシミュレーター、リバーブなどの各エフェクトを順番に処理します。処理後の信号は再びI2S形式に戻され、ADAU1761コーデックのDACを通してアナログ信号として出力されます。
-
+            　FPGA内部では、これら10ブロックを順番に処理します。処理後の信号は再びI2S形式に戻され、CS4344 DACを通してアナログ信号として出力されます。全エフェクトOFF時には、入力と出力がビット単位で一致する完全なバイパスになるよう設計しています。
+          </p>
+          <p>
+            　深い歪み処理の論理は100 MHzのファブリッククロックではタイミング収束せず、最悪スラック（WNS）が約-10 nsまで悪化していました。そこでDSPコアだけを33.33 MHzの専用クロックアイランドに隔離し、クロック間はAXI-Streamのクロックコンバータで接続する構成に変更しています。これで96 kHzの1サンプルあたり約347サイクルの余裕が生まれます。そのうえで各エフェクトを1段1機能の小さなレジスタステージの連鎖としてパイプライン化し、現行ビルドはWNS +0.457 nsでタイミング収束しています。
           </p>
           <p>
             　エフェクトのON/OFFやパラメータ変更は、ZynqのPS側で動作するLinux/Pythonから制御します。音声処理はPL側のFPGA回路、設定変更やGUI操作はPS側のPythonに分担させることで、リアルタイム処理と操作性を両立させています。
 
+          </p>
+          <p>
+            　制御レジスタはエフェクトブロックごとに独立したAXI GPIOとして実装しており、PS側は32-bitの制御ワードを書き込むだけで、音声データの経路には一切介在しません。パラメータはGUI上0〜100の統一スケールに揃えています。クロックアイランドをまたぐ制御ワードは2段フリップフロップと安定検出で同期してからDSPに反映するため、演奏中に動かしてもノイズが乗りにくい構成です。
           </p>
         </div>
         <div class="pd-shots pd-shots--single" data-gallery>
@@ -184,6 +215,48 @@
             <figcaption>システム構成</figcaption>
           </figure>
         </div>
+
+        <div class="pd-table-wrap" role="region" aria-label="主要ハードウェアと開発ツール">
+          <table class="pd-data-table">
+            <caption>主要ハードウェアと開発ツール</caption>
+            <thead>
+              <tr>
+                <th scope="col">項目</th>
+                <th scope="col">内容</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">ボード</th>
+                <td>PYNQ-Z2（Zynq-7000 SoC / xc7z020clg400-1）</td>
+              </tr>
+              <tr>
+                <th scope="row">オーディオ入出力</th>
+                <td>Digilent Pmod I2S2（ADC: CS5343 / DAC: CS4344、96 kHz / 24-bit）</td>
+              </tr>
+              <tr>
+                <th scope="row">表示</th>
+                <td>5インチ HDMI LCD（PL側から SVGA 800×600 のフレームバッファを直接出力）</td>
+              </tr>
+              <tr>
+                <th scope="row">操作系</th>
+                <td>押し込みスイッチ付きロータリーエンコーダ ×3 / 3PDTフットスイッチ ×3 / エクスプレッションペダル（FPGA内蔵ADCのXADCで読み取り）</td>
+              </tr>
+              <tr>
+                <th scope="row">DSP記述</th>
+                <td>Clash 1.8.1（Haskell）で回路を記述し、VHDLを自動生成</td>
+              </tr>
+              <tr>
+                <th scope="row">合成・配置配線</th>
+                <td>Vivado 2019.1（bitstream / hwh を生成）</td>
+              </tr>
+              <tr>
+                <th scope="row">PS側ソフトウェア</th>
+                <td>PYNQ 2020.1（Linux + Python）。Jupyter Notebook / CLI / HDMI GUI から制御</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -198,7 +271,13 @@
             　Vivado上では、PYNQ-Z2の既存オーディオ入出力系にDSPパイプラインを接続し、合成・配置配線を行ってbitstreamとhwhファイルを生成します。生成した回路データをPYNQ-Z2へ配置し、PS側のPythonからOverlayとして読み込むことで、実機上で信号処理とパラメータ制御を確認しました。
           </p>
           <p>
-            　Clashでの記述は固定小数点演算を前提にしており、音量調整やクリッピング処理ではビット幅と飽和処理を意識してオーバーフローによるノイズが発生しにくいよう設計しています。実機評価ではLINE INからLINE OUTまで各段で実際に音を聴きながら、ノイズ・音量差・パラメータ応答を確認しました。
+            　Clashでの記述は固定小数点演算を前提にしており、音量調整やクリッピング処理ではビット幅と飽和処理を意識してオーバーフローによるノイズが発生しにくいよう設計しています。実機評価では入力から出力まで各段で実際に音を聴きながら、ノイズ・音量差・パラメータ応答を確認しました。
+          </p>
+          <p>
+            　また、音作りの反復を高速化するため、FPGAと同一のClash回路記述をホストPC上でそのまま実行するオフラインDSPシミュレーション環境を整備しました。周波数特性や歪みのキャラクター、機種別モデルの音の差をVivadoでの合成前に自動チェックし、全エフェクトOFF時のビット完全バイパスを不変条件として回帰テストで保証しています。そのうえで、最終的な合否は必ず実機での試聴によって判定する開発サイクルにしています。
+          </p>
+          <p>
+            　制御ソフト側にも自動テストを整備しています。レジスタへの書き込み内容やプリセット、GUIの状態管理、エンコーダ入力のデコードなどを対象に、約170件のPython単体テストを実機なしで実行できるようにしました。実機上では、オーディオ経路・エンコーダ・HDMI出力それぞれのスモークテストスクリプトで確認します。ビルドはmake一発でbitstreamとhwhが生成され、デプロイスクリプトがボード上の参照箇所へ同期してハッシュ値で整合を検証する、再現可能な手順にまとめました。
           </p>
           <p class="pd-note">
             bitstream：FPGA に書き込む回路データ。&emsp;hwh：Python 側が回路構成やアドレス情報を理解するための情報ファイル。&emsp;Overlay：PYNQ で Python から読み込む FPGA 回路データ一式。
@@ -241,9 +320,113 @@
       </div>
     </section>
 
+    <section class="pd-section" aria-labelledby="controls-title">
+      <div class="container">
+        <h2 id="controls-title" class="pd-section__title">操作系（エンコーダ / フットスイッチ / ペダル）</h2>
+        <div class="pd-summary pd-summary--spaced">
+          <p>
+            　ロータリーエンコーダは市販のUSBコントローラではなく、PL側の自作IPとして実装しています。接点入力を2段フリップフロップで同期したうえでデバウンスし、A/B相のクアドラチャ信号をデコードして符号付きの回転量として蓄積、PS側のPythonはそれをポーリングで読み出すだけの構成です。3つのフットスイッチも同様に専用IPで受けています。
+          </p>
+          <p>
+            　操作の流れは「GUIファースト」の一方向データフローに統一しました。エンコーダやフットスイッチの入力はまずGUI側の状態を更新し、その状態だけを実機のレジスタへ反映します（連続回転時は20 ms間隔に間引いて適用）。どの入力手段から操作しても、画面表示と実機の設定が食い違わないようにするための設計です。
+          </p>
+        </div>
+        <div class="pd-table-wrap" role="region" aria-label="エンコーダ操作マッピング">
+          <table class="pd-data-table">
+            <caption>エンコーダ操作マッピング</caption>
+            <thead>
+              <tr>
+                <th scope="col">操作</th>
+                <th scope="col">回転</th>
+                <th scope="col">短押し</th>
+                <th scope="col">長押し</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">エンコーダ1</th>
+                <td data-label="回転">エフェクト選択（10項目を巡回）</td>
+                <td data-label="短押し">選択エフェクトのON/OFF</td>
+                <td data-label="長押し">Safe Bypass（全エフェクトOFF）</td>
+              </tr>
+              <tr>
+                <th scope="row">エンコーダ2</th>
+                <td data-label="回転">ノブ／モデルの選択</td>
+                <td data-label="短押し">ペダル・アンプ・キャビのモデル切替モード</td>
+                <td data-label="長押し">—</td>
+              </tr>
+              <tr>
+                <th scope="row">エンコーダ3</th>
+                <td data-label="回転">選択中パラメータの値を増減</td>
+                <td data-label="短押し">即時反映（間引きのスキップ）</td>
+                <td data-label="長押し">ノブを初期値に戻す</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pd-summary">
+          <p>
+            　フットスイッチは、FS1が選択中エフェクトのON/OFF、FS2 / FS3がチェーンプリセットの順送り・逆送りに割り当てられており、演奏中に手を使わずに音色を切り替えられます。ワウ用のエクスプレッションペダル（ZOOM FP02M）はFPGA内蔵ADC（XADC）で直接読み取り、足元からリアルタイムに操作できます。
+          </p>
+        </div>
+      </div>
+    </section>
+
     <section class="pd-section" aria-labelledby="effects-title">
       <div class="container">
         <h2 id="effects-title" class="pd-section__title">各エフェクトの説明</h2>
+
+        <div class="pd-summary">
+          <p>
+            　多くのエフェクトは、実在のアンプ・ペダルを参考にした機種切替（モデルセレクト）に対応しています。回路のトポロジや乗算器の数は増やさず、機種ごとの係数だけで音を作り分けることで、FPGAの限られたリソースの中に多数のモデルを収めています。
+          </p>
+        </div>
+
+        <div class="pd-table-wrap" role="region" aria-label="選択できるモデル一覧">
+          <table class="pd-data-table">
+            <caption>選択できるモデル一覧</caption>
+            <thead>
+              <tr>
+                <th scope="col">エフェクト</th>
+                <th scope="col">モデル</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">ノイズサプレッサー</th>
+                <td>BOSS NS-2 / Electro-Harmonix The Silencer / MXR Smart Gate</td>
+              </tr>
+              <tr>
+                <th scope="row">コンプレッサー</th>
+                <td>MXR Dyna Comp / Ross Compressor / BOSS CS-3</td>
+              </tr>
+              <tr>
+                <th scope="row">オーバードライブ</th>
+                <td>Ibanez TS9 / BOSS OD-1 / BOSS BD-2 / Vemuram Jan Ray / Fulltone OCD / Klon Centaur</td>
+              </tr>
+              <tr>
+                <th scope="row">ディストーション系ペダル</th>
+                <td>Clean Boost / Tube Screamer / RAT / DS-1 / Big Muff / Fuzz Face / Metal（複数同時ON可）</td>
+              </tr>
+              <tr>
+                <th scope="row">アンプシミュレーター</th>
+                <td>Roland JC-120 / Fender Twin Reverb / Vox AC30 / Orange Rockerverb / Marshall JCM800 / Hughes &amp; Kettner TriAmp</td>
+              </tr>
+              <tr>
+                <th scope="row">キャビネット</th>
+                <td>1x12 Open Back / 2x12 British / 4x12 Closed</td>
+              </tr>
+              <tr>
+                <th scope="row">コーラス</th>
+                <td>BOSS CE-2 / Electro-Harmonix Small Clone / Roland Dimension D</td>
+              </tr>
+              <tr>
+                <th scope="row">リバーブ</th>
+                <td>MXR M300 / Keeley Omni / TC Electronic Hall of Fame / BOSS RV-6</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <article class="pd-effect">
           <h3 class="pd-effect__title">Noise Suppressor</h3>
@@ -252,6 +435,7 @@
               　入力信号のエンベロープ、つまり振幅の包絡線をサンプルごとに追跡し、設定した閾値と比較して出力ゲインを制御します。信号レベルが閾値を下回ると、ゲインを徐々に下げることで、弦を弾いていないときの環境ノイズやハムノイズを抑制します。
               DECAYパラメータでゲインが下がる速さを、DAMPパラメータで最大抑制量を調整できます。完全にミュートする設定から、自然に音量を下げる設定まで調整できるようにしています。
               単純なオン／オフ式のゲートではなく、平滑化されたゲイン制御として実装することで、音の切れ際が不自然になりにくい構成を目指しました。
+              NS-2 / The Silencer / Smart Gateの3機種のモデル切替に対応し、ゲートの閉じる深さや床の柔らかさといったキャラクターの違いを係数のみで作り分けています。
             </p>
           </div>
           <div class="pd-shots" data-gallery>
@@ -271,8 +455,8 @@
           <div class="pd-summary">
             <p>
               　入力信号のエンベロープをサンプルごとに追跡し、設定した閾値を超えた信号に対してゲインリダクションを行います。閾値を超えた分をRATIOパラメータに応じて圧縮することで、大きな音を抑え、音量差を整えます。
-              ATTACKパラメータでは圧縮がかかり始める速さを、RELEASEパラメータでは圧縮が戻る速さを制御します。これにより、ピッキングのアタック感を残しながら音量のばらつきを抑えたり、サステインを整えたりする調整が可能になります。
-              小さな音を直接大きくするのではなく、大きな音を抑えたうえで全体の音量バランスを整える処理として設計しています。
+              RESPONSEパラメータでは圧縮が戻る速さを制御します。実機のコンパクトコンプレッサーに合わせてアタックとリリースを非対称の時定数とし、アタックは機種ごとに約2.7〜5.3 ms、リリースはRESPONSEに応じて約80 ms〜1.4 sの範囲で変化します。これにより、ピッキングのアタック感を残しながら音量のばらつきを抑えたり、サステインを整えたりする調整が可能になります。
+              Dyna Comp / Ross / CS-3の3機種のモデル切替に対応し、深く潰れるスカッシュ感、ゆっくり戻るブルーム感、パンチのある現代的な音、と性格を変えています。
             </p>
           </div>
           <div class="pd-shots" data-gallery>
@@ -288,11 +472,32 @@
         </article>
 
         <article class="pd-effect">
+          <h3 class="pd-effect__title">Wah</h3>
+          <div class="pd-summary">
+            <p>
+              　ステート・バリアブル・フィルタ（SVF）によるレゾナントバンドパスフィルタで、通過帯域を上下にスイープさせて「ワウ」という音色変化を作ります。スイープ範囲は定番ワウペダルのCry Baby GCB-95を参考に約450 Hz〜2.2 kHzに調整し、Qパラメータでレゾナンスの強さを制御します。
+              ペダル位置はGUIやエンコーダからの操作に加えて、エクスプレッションペダル（ZOOM FP02M）をFPGA内蔵のADC（XADC）で読み取ることで足元からリアルタイムに操作できます。配置は歪みの前段で、クラシックなワウペダルと同じ構成です。
+            </p>
+          </div>
+                  <div class="pd-shots" data-gallery>
+            <figure class="pd-shot">
+              <img src="../assets/13_wah_frequency_response.jpg" alt="Wah ペダル位置による周波数特性" width="1120" height="720" loading="lazy" decoding="async">
+              <figcaption>Wah ペダル位置による周波数特性</figcaption>
+            </figure>
+            <figure class="pd-shot">
+              <img src="../assets/14_wah_resonance.jpg" alt="Wah Qによるレゾナンスの変化" width="1120" height="720" loading="lazy" decoding="async">
+              <figcaption>Wah Qによるレゾナンスの変化</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="pd-effect">
           <h3 class="pd-effect__title">Overdrive</h3>
           <div class="pd-summary">
             <p>
               　入力信号をDRIVEパラメータで増幅し、ソフトクリッピング処理を通すことで、波形の山と谷を緩やかに丸めます。ハードクリッピングのように急激に波形を切り落とすのではなく、入力レベルが大きくなるほど滑らかに圧縮されるため、比較的自然で扱いやすい歪みになります。
               強く弾いたときには歪みが増え、弱く弾いたときには原音のニュアンスが残りやすいため、ピッキングの強弱に反応する歪みを狙っています。
+              TS9 / OD-1 / BD-2 / Jan Ray / OCD / Centaurの6機種のモデル切替に対応し、クリップの硬さ・非対称性やクリップ前の周波数特性を機種ごとの係数で作り分けています。和音を弾いたときに濁りの原因となる偶数次の混変調歪みを抑えるため、クリップ特性は対称型を基本に調整しました。
             </p>
           </div>
           <div class="pd-shots" data-gallery>
@@ -313,6 +518,7 @@
             <p>
               　入力信号を大きく増幅したうえでハードクリッピングを適用し、波形の山と谷を一定レベルで切り落とします。これにより波形は矩形波に近づき、倍音成分が増加します。
               ソフトクリッピングを用いるオーバードライブに比べて波形の変化が急峻なため、より強く、輪郭の立った歪みになります。アタックを強く弾いたときにはクリッピング量が増え、ザラつきのある飽和感が得られるように設計しています。
+              ディストーション系は、Clean Boost / Tube Screamer / RAT / DS-1 / Big Muff / Fuzz Face / Metalの7種類をそれぞれ独立したFPGA回路の段として実装しています。単一の切替式ではなくマスク方式なので、複数のペダルを同時にONにできます。ハードクリッピング系のペダルでは4倍オーバーサンプリングとデシメーションFIRフィルタを組み合わせ、折り返し歪み（エイリアスノイズ）を抑制しています。
             </p>
           </div>
           <div class="pd-shots" data-gallery>
@@ -331,11 +537,13 @@
           <h3 class="pd-effect__title">Amp Simulator / Cab IR</h3>
           <div class="pd-summary">
             <p>
-              　アンプシミュレーターとキャビネットIRは、ギターアンプとスピーカーキャビネットを通したときの音色変化を簡易的に再現するための処理です。
-              　アンプシミュレーターでは、入力ゲインによって信号を増幅し、BASS / MIDDLE / TREBLE / PRESENCE の各トーンフィルタで周波数特性を調整します。RESONANCEでは低域の共鳴感を付加し、MASTERで最終的な出力レベルを制御します。
+              　アンプシミュレーターとキャビネットIRは、ギターアンプとスピーカーキャビネットを通したときの音色変化を再現するための処理です。
             </p>
             <p>
-              　続くCab IRでは、スピーカーキャビネットの周波数特性を短いタップ数のFIRフィルタとして近似し、信号に畳み込みます。ライン出力のフラットな信号に対して、キャビネット特有の高域減衰や中域のまとまりを加えることで、直接出力の硬さを抑え、アンプを通した音に近い質感を狙っています。
+              　アンプシミュレーターは、HPF → 増幅 → 波形整形 → 第2ステージ → トーンスタック → パワー段 → マスターという多段カスケードで構成しています。GAINで信号を増幅し、BASS / MIDDLE / TREBLE / PRESENCE の各トーンフィルタで周波数特性を調整します。RESONANCEでは低域の共鳴感を付加し、MASTERで最終的な出力レベルを制御します。DRVモードで、クリーン／ドライブの2チャンネルを切り替えられます。JC-120 / Twin Reverb / AC30 / Rockerverb / JCM800 / TriAmpの6機種は、係数のみで作り分けています。パワー管の電源電圧降下（サグ）による音の沈み込みも、エンベロープ追従でモデル化しました。
+            </p>
+            <p>
+              　続くCab IRでは、スピーカーキャビネットの周波数特性を47タップの対称FIRフィルタとレゾナンス用フィルタの組み合わせで近似し、信号に畳み込みます。ライン出力のフラットな信号に対して、キャビネット特有の高域減衰や中域のまとまり、コーン紙の共振によるプレゼンス帯域のピークを加えることで、直接出力の硬さを抑え、アンプを通した音に近い質感を狙っています。キャビネットは1x12オープンバック / 2x12ブリティッシュ / 4x12クローズドの3種類から選択できます。
             </p>
           </div>
           <div class="pd-shots" data-gallery>
@@ -351,10 +559,52 @@
         </article>
 
         <article class="pd-effect">
+          <h3 class="pd-effect__title">EQ</h3>
+          <div class="pd-summary">
+            <p>
+              　LOW / MID / HIGH の3バンドで全体の音色バランスを整えるイコライザーです。帯域分割は一次フィルタの出力の差分だけで構成しており、分割処理そのものには乗算器を使わないFPGA向けの軽量な実装になっています。3バンドすべてが中立設定のときは入力信号がビット単位でそのまま通過し、大きくブーストしたときも急激に歪まないようソフトに飽和させる設計です。
+            </p>
+          </div>
+                  <div class="pd-shots" data-gallery>
+            <figure class="pd-shot">
+              <img src="../assets/15_eq_band_split.jpg" alt="EQ 3バンドの分割特性" width="1120" height="720" loading="lazy" decoding="async">
+              <figcaption>EQ 3バンドの分割特性</figcaption>
+            </figure>
+            <figure class="pd-shot">
+              <img src="../assets/16_eq_frequency_response.jpg" alt="EQ ツマミ設定による周波数特性" width="1120" height="720" loading="lazy" decoding="async">
+              <figcaption>EQ ツマミ設定による周波数特性</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="pd-effect">
+          <h3 class="pd-effect__title">Chorus</h3>
+          <div class="pd-summary">
+            <p>
+              　原音にわずかに遅らせた音を重ね、その遅延時間をLFOで周期的に揺らすことで、音に広がりと揺らぎを加えるエフェクトです。FPGA内蔵のBRAMを、2048サンプル×2本の可変ディレイライン（最大約21 ms）として使っています。書き込み位置から「現在の遅延量」だけ遡った位置を読み出すことで、アナログBBDコーラス本来のピッチ揺れを再現しました。遅延量は16-bit分解能の三角波LFOで滑らかに動かし、読み出しは隣接2サンプルの線形補間で行うことで、遅延の階段状の変化によるジッパーノイズを抑えました。
+            </p>
+            <p>
+              　RATE / DEPTH / MIX のパラメータに加えて、CE-2 / Small Clone / Dimension Dの3機種のモデル切替に対応しています。遅延の中心値・揺れ幅・LFOの速さや波形・ウェット信号の高域特性を機種ごとに変えることで、CE-2の暗めで揺れの分かりやすい音から、Dimension Dのさりげなく明るい広がりまでを作り分けています。配置はEQの後段、リバーブの前段です。
+            </p>
+          </div>
+                  <div class="pd-shots" data-gallery>
+            <figure class="pd-shot">
+              <img src="../assets/17_chorus_lfo.jpg" alt="Chorus LFOによる遅延時間の変化" width="1120" height="720" loading="lazy" decoding="async">
+              <figcaption>Chorus LFOによる遅延時間の変化</figcaption>
+            </figure>
+            <figure class="pd-shot">
+              <img src="../assets/18_chorus_comb.jpg" alt="Chorus 原音と遅延音の合成による周波数特性" width="1120" height="720" loading="lazy" decoding="async">
+              <figcaption>Chorus 原音と遅延音の合成による周波数特性</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="pd-effect">
           <h3 class="pd-effect__title">Reverb</h3>
           <div class="pd-summary">
             <p>
-              　フィードバックループを持つディレイラインを組み合わせたアルゴリズムで残響を生成します。入力信号をループ内で繰り返し反射させながら徐々に減衰させることで、空間の響きを模擬します。DECAYで残響の長さ（減衰速度）を、TONEで残響成分の高域フィルタ特性を制御します。MIXで原音と残響の混合比を調整します。PYNQ-Z2のPLリソースを考慮して軽量なバッファ構成にしており、長い空間系よりも短め〜中程度の残響に向いています。音に少し距離感と奥行きが生まれ、ドライな音がまとまりのある空間の中に置かれているように聴こえます。
+              　フィードバックループを持つBRAMディレイラインを組み合わせたアルゴリズムで残響を生成します。入力信号をループ内で繰り返し反射させながら徐々に減衰させることで、空間の響きを模擬します。単一のディレイラインでは残響の尾が金属的な響きになりやすいため、フィードバック経路にオールパスフィルタによる拡散処理を加え、ディレイ長を伸ばさずに反射の密度を高めています。DECAYで残響の長さ（減衰速度）を、TONEで残響成分の高域フィルタ特性を制御します。MIXで原音と残響の混合比を調整します。
+              M300 / Keeley Omni / Hall of Fame / RV-6の4機種のモデル切替に対応し、暗めでドライな響きから明るくウェットな響きまでを作り分けています。音に少し距離感と奥行きが生まれ、ドライな音がまとまりのある空間の中に置かれているように聴こえます。
             </p>
           </div>
           <div class="pd-shots" data-gallery>
@@ -369,6 +619,82 @@
           </div>
         </article>
 
+      </div>
+    </section>
+
+    <section class="pd-section" aria-labelledby="presets-title">
+      <div class="container">
+        <h2 id="presets-title" class="pd-section__title">チェーンプリセット</h2>
+        <div class="pd-summary">
+          <p>
+            　複数エフェクトのON/OFFとパラメータをまとめて切り替えるチェーンプリセットを13種類用意しています。プリセットはPS側のPythonが各エフェクトの設定を一括で書き込む形で実装しており、GUIからの選択のほか、フットスイッチでの順送り・逆送りにも対応します。全エフェクトOFFの「Safe Bypass」も用意しており、どんな状態からでもワンアクションで素の音に戻せます。
+          </p>
+        </div>
+        <div class="pd-table-wrap" role="region" aria-label="チェーンプリセット一覧">
+          <table class="pd-data-table">
+            <caption>チェーンプリセット一覧（13種類）</caption>
+            <thead>
+              <tr>
+                <th scope="col">プリセット</th>
+                <th scope="col">狙い・主な構成</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Safe Bypass</th>
+                <td>全エフェクトOFFの完全パススルー</td>
+              </tr>
+              <tr>
+                <th scope="row">Basic Clean</th>
+                <td>軽いコンプ + アンプ + 1x12キャビ + 薄いリバーブのクリーン基本形</td>
+              </tr>
+              <tr>
+                <th scope="row">Clean Sustain</th>
+                <td>サステイン重視のコンプ設定によるクリーントーン</td>
+              </tr>
+              <tr>
+                <th scope="row">Light Crunch</th>
+                <td>弱めのオーバードライブを足した軽いクランチ</td>
+              </tr>
+              <tr>
+                <th scope="row">Tube Screamer Lead</th>
+                <td>TS系ドライブ + アンプ/キャビのリードトーン</td>
+              </tr>
+              <tr>
+                <th scope="row">RAT Rhythm</th>
+                <td>RAT系ディストーションのリズム用セッティング</td>
+              </tr>
+              <tr>
+                <th scope="row">Metal Tight</th>
+                <td>強めのノイズサプレッサー + Metal + 4x12キャビの刻み用ハイゲイン</td>
+              </tr>
+              <tr>
+                <th scope="row">Ambient Clean</th>
+                <td>コーラス + 深いリバーブ + EQによるアンビエント系クリーン</td>
+              </tr>
+              <tr>
+                <th scope="row">Solo Boost</th>
+                <td>コンプとTS系ドライブで音を前に出すソロ用設定</td>
+              </tr>
+              <tr>
+                <th scope="row">Noise Controlled High Gain</th>
+                <td>ノイズ管理を優先した高歪みセッティング</td>
+              </tr>
+              <tr>
+                <th scope="row">DS-1 Crunch</th>
+                <td>DS-1系の明るめクランチ</td>
+              </tr>
+              <tr>
+                <th scope="row">Big Muff Sustain</th>
+                <td>Big Muff系 + 4x12キャビのファズサステイン</td>
+              </tr>
+              <tr>
+                <th scope="row">Vintage Fuzz</th>
+                <td>Fuzz Face系のヴィンテージファズ</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -400,7 +726,7 @@
 
       <div class="pd-summary pd-summary--spaced">
         <p>
-          　FPGA上のDSPパイプラインがギター演奏に与える遅延を確認するため、入力信号、バイパス出力、全7エフェクト有効時の出力を比較しました。入力信号とバイパス出力でシステム経路の参考遅延を確認し、エフェクトなし基準信号と全7エフェクト有効時の出力を比較し、全エフェクト有効時の相対遅延を測定しました。
+          　FPGA上のDSPパイプラインがギター演奏に与える遅延を確認するため、入力信号、バイパス出力、全7エフェクト有効時の出力を比較しました。入力信号とバイパス出力の比較からシステム経路の参考遅延を、エフェクトなし基準信号と全7エフェクト有効時の出力の比較から全エフェクト有効時の相対遅延を測定しています。
         </p>
         <p>
           　遅延推定にはGCC-PHATと波形相互相関を併用しました。GCC-PHATは音量差や周波数特性差の影響を比較的受けにくいため、窓中央値を主な採用値としています。グラフ上段では、横軸が遅延サンプル数、鋭いピークの位置が推定遅延量です。
@@ -442,7 +768,7 @@
           この結果から、複数のDSPブロックをFPGA上に直列実装しても、十分に低い遅延を維持できることを確認しました。
         </p>
         <p>
-          各メーカーのマルチエフェクターの実測例と比べても、本機の約1.11 msは1 ms台前半の低遅延レンジに入ります。
+          　各メーカーのマルチエフェクターの実測例と比べても、本機の約1.11 msは1 ms台前半の低遅延レンジに入ります。
         </p>
       </div>
 
@@ -543,8 +869,8 @@
           <img
             src="../assets/fpga-fx-analysis-band-energy.jpg"
             alt="各エフェクト出力の周波数帯域ごとのエネルギー比率"
-            width="2000"
-            height="1120"
+            width="1920"
+            height="1075"
             loading="lazy"
             decoding="async"
           >
@@ -565,7 +891,7 @@
 
       <div class="pd-summary pd-summary--spaced">
         <p>
-          　正規化スペクトル比較では、各信号の最大スペクトルレベルを0 dBにそろえ、音量差の影響を除いた状態でスペクトル形状を比較しています。横軸は周波数、縦軸は相対的な強さで、線が高い帯域ほど目立つ成分が多いことを表します。横軸は周波数、縦軸は相対的な強さで、線が高い帯域ほど目立つ成分が多いことを表します。
+          　正規化スペクトル比較では、各信号の最大スペクトルレベルを0 dBにそろえ、音量差の影響を除いた状態でスペクトル形状を比較しています。横軸は周波数、縦軸は相対的な強さで、線が高い帯域ほど目立つ成分が多いことを表します。
         </p>
       </div>
 
@@ -574,8 +900,8 @@
           <img
             src="../assets/fpga-fx-analysis-spectrum-normalized.jpg"
             alt="各エフェクト出力の正規化スペクトル比較"
-            width="2000"
-            height="1200"
+            width="1920"
+            height="1152"
             loading="lazy"
             decoding="async"
           >
@@ -603,6 +929,7 @@
         </p>
         <p>
           　縦方向に明るい筋はピッキングの瞬間、音の後ろに残る色はサステインやリバーブ成分、高域に広く出続ける色は高域ノイズやfizzの候補として読み取れます。
+        </p>
       </div>
 
       <div class="pd-shots pd-shots--single" data-gallery>
@@ -610,8 +937,8 @@
           <img
             src="../assets/fpga-fx-analysis-spectrogram-grid.jpg"
             alt="各エフェクト出力のスペクトログラム一覧"
-            width="2880"
-            height="1248"
+            width="1920"
+            height="832"
             loading="lazy"
             decoding="async"
           >
@@ -642,8 +969,26 @@
   </div>
 </section>
 
+    <section class="pd-section" aria-labelledby="status-title">
+      <div class="container">
+        <h2 id="status-title" class="pd-section__title">開発状況と今後の予定</h2>
+        <div class="pd-summary pd-summary--spaced">
+          <p>
+            　現在も開発を継続中です。ビルドは「候補ビルドを実機で試聴し、問題がなければ採用版に昇格させる」2段階で運用しており、bitstreamとhwhの世代はハッシュ値で管理しています。現行の候補ビルドはコーラスを追加した世代で、前述のとおりタイミングは収束済みです。
+          </p>
+          <p>
+            　今後は、音響解析の結果を踏まえて、アンプシミュレーター後段の高域制御とキャビネットシミュレーターの周波数特性を調整します。あわせて、無音・ノイズ入力を使ったノイズサプレッサーの詳細評価と、各機種モデルのキャラクターの追い込みを進める予定です。
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+
   </main>
 
   <script src="../scripts/project-detail.js" type="module"></script>
+  <script src="../scripts/site-chrome.js" type="module"></script>
+  <script src="../scripts/site-theatre.js" type="module"></script>
 </body>
 </html>

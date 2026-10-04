@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>室内の温度・速度</title>
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #f5f7f9;
+    color: #182936;
+    font: 14px system-ui, sans-serif;
+  }
+
+  main {
+    height: 100vh;
+    min-height: 550px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  /* ---------- ヘッダー（操作パネル） ---------- */
+  header {
+    padding: 17px 22px;
+    border-bottom: 1px solid #dbe2e8;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    background: white;
+  }
+
+  h1 { font-size: 20px; margin: 4px 0; }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .group { display: flex; gap: 4px; }
+
+  button {
+    background: white;
+    color: #3b5263;
+    border: 1px solid #c6d2dc;
+    border-radius: 7px;
+    padding: 9px 13px;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  button[aria-pressed="true"] {
+    background: #173f57;
+    color: white;
+    border-color: #173f57;
+  }
+
+  label { display: flex; align-items: center; gap: 8px; }
+
+  input { accent-color: #175b7e; width: 120px; }
+  #position { width: 150px; }
+
+  output { font-variant-numeric: tabular-nums; min-width: 66px; }
+
+  button:focus-visible,
+  input:focus-visible { outline: 3px solid #318cbc; outline-offset: 3px; }
+
+  /* ---------- 描画領域 ---------- */
+  #stage {
+    position: relative;
+    min-height: 230px;
+    overflow: hidden;
+  }
+
+  canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    touch-action: none;   /* ブラウザのスクロール/ピンチを奪い、自前で処理する */
+    cursor: grab;
+  }
+
+  #notice {
+    position: absolute;
+    left: 20px;
+    top: 18px;
+    background: #ffffffdd;
+    border-radius: 6px;
+    padding: 8px 12px;
+    pointer-events: none;
+  }
+
+  #hint {
+    position: absolute;
+    left: 22px;
+    bottom: 13px;
+    color: #617786;
+    font-size: 12px;
+    line-height: 1.6;
+    pointer-events: none;
+  }
+
+  /* ---------- フッター（カラーバー） ---------- */
+  footer {
+    padding: 13px 22px 17px;
+    background: #fff;
+    border-top: 1px solid #dbe2e8;
+  }
+
+  .row { display: flex; justify-content: space-between; gap: 15px; }
+
+  .bar {
+    height: 8px;
+    background: linear-gradient(90deg, #1940ad, #08bacc, #7adb80, #ffcc38, #eb3b26);
+    border-radius: 5px;
+    margin: 8px 0;
+  }
+
+  .ticks {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #506979;
+  }
+
+  @media (max-width: 650px) {
+    header { padding: 12px; gap: 10px; }
+    h1 { font-size: 17px; }
+    nav { gap: 7px; font-size: 12px; }
+    button { padding: 8px 11px; }
+    #position { width: 115px; }
+    input { width: 80px; }
+    footer { padding: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <header>
+    <h1>室内の温度と速度</h1>
+
+    <nav aria-label="断面の表示設定">
+      <div class="group" aria-label="表示する物理量">
+        <button id="temperature" aria-pressed="true">温度</button>
+        <button id="speed" aria-pressed="false">速度</button>
+      </div>
+
+      <div class="group" aria-label="スライス軸">
+        <button id="x" aria-pressed="false">X</button>
+        <button id="y" aria-pressed="false">Y</button>
+        <button id="z" aria-pressed="true">Z</button>
+      </div>
+
+      <label>
+        位置
+        <input id="position" type="range" min="0" max="24" value="10" step="1" aria-label="スライス位置">
+        <output id="positionText">— m</output>
+      </label>
+
+      <label>
+        形状の濃さ
+        <input id="opacity" type="range" min="0" max="100" value="35" aria-label="背景メッシュの濃さ">
+      </label>
+
+      <button id="resetView" type="button">視点リセット</button>
+    </nav>
+  </header>
+
+  <div id="stage">
+    <canvas id="canvas" tabindex="0"
+      aria-label="半透明の室内メッシュと温度または速度の断面。ドラッグで回転、右ドラッグで移動、スクロールで拡大。矢印キーで回転、Shift+矢印キーで移動、0キーで視点リセット。"></canvas>
+    <div id="notice" role="status">計算結果を読み込み中…</div>
+    <div id="hint">
+      ドラッグ：回転　/　右ドラッグ・Shift+ドラッグ：移動　/　ホイール・ピンチ：拡大　/　ダブルクリック：リセット
+      <br>X・Y：鉛直断面　Z：水平断面
+    </div>
+  </div>
+
+  <footer>
+    <div class="row">
+      <strong id="legend">温度 [°C]</strong>
+      <span id="level">Z断面</span>
+    </div>
+    <div class="bar"></div>
+    <div class="ticks" id="ticks">
+      <span>18</span><span>21</span><span>24</span><span>27</span><span>30</span>
+    </div>
+  </footer>
+</main>
+
+<script>
+/* =========================================================
+   室内CFD結果ビューア（WebGL1・ライブラリ非依存）
+
+   データの流れ:
+     xyz-manifest.json
+       ├ bounds  : モデル全体のバウンディングボックス
+       ├ context : 部屋の外形メッシュ + 稜線（gzip JSON）
+       └ axes    : 軸ごとの断面一覧 [{ file, position }, ...]
+
+     断面ファイル（gzip JSON）
+       ├ positions / triangles : 断面のジオメトリ
+       └ temperature / speed   : 頂点ごとのスカラー値
+
+   描画は単一シェーダで3種類を描き分ける:
+     ・部屋の外形（半透明の面）   colored = 0
+     ・断面（カラーマップ）       colored = 1
+     ・稜線（線）                 colored = 0
+   ========================================================= */
+
+const $ = id => document.getElementById(id);
+
+/* 温度と速度で凡例とカラーバーの目盛りが変わる */
+const FIELDS = {
+  temperature: { legend: '温度 [°C]',          range: [18, 30], ticks: ['18', '21', '24', '27', '30'] },
+  speed:       { legend: '速度の大きさ [m/s]', range: [0, 2],   ticks: ['0', '0.5', '1', '1.5', '≥2'] },
+};
+
+const SLICE_CACHE_LIMIT = 8;   // 断面データを保持する最大数
+const SLIDER_DEBOUNCE_MS = 100;
+
+const ZOOM_MIN = 0.3;
+const ZOOM_MAX = 12;
+const TILT_LIMIT = Math.PI / 2;   // 0 = 真上からの平面図, ±π/2 = 真横からの立面図
+
+/* ---------------------------------------------------------
+   状態
+   --------------------------------------------------------- */
+const DEFAULT_VIEW = { yaw: -0.45, tilt: 0.85, zoom: 1.45, panX: 0, panY: 0 };
+const view = { ...DEFAULT_VIEW };
+
+let axis = 'z';
+let field = 'temperature';
+let index = 10;
+
+let manifest = null;      // xyz-manifest.json
+let currentSlice = null;  // 表示中の断面データ
+let requestToken = 0;     // 非同期読み込みの競合を捨てるための番号
+const sliceCache = new Map();
+
+/* WebGL 側のハンドル（start() で確定する） */
+const cv = $('canvas');
+const gl = cv.getContext('webgl', { antialias: true });
+let uniforms = {};
+let attribPosition = -1;
+let attribScalar = -1;
+let shellMesh = null;   // 部屋の外形（面）
+let lineMesh = null;    // 部屋の稜線（線）
+let sliceMesh = null;   // 断面
+
+/* ---------------------------------------------------------
+   データ読み込み
+   --------------------------------------------------------- */
+
+/* gzip 圧縮された JSON を、ブラウザ標準の DecompressionStream で展開する。
+   解凍ライブラリを持ち込まずに転送量を落とすための手段。 */
+async function readGzip(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw Error('データ取得エラー: ' + res.status);
+  const stream = res.body.pipeThrough(new DecompressionStream('gzip'));
+  return new Response(stream).json();
+}
+
+/* ---------------------------------------------------------
+   シェーダ
+   --------------------------------------------------------- */
+
+/* 行列ライブラリを使わず、頂点シェーダ内で直接カメラ変換する。
+   ヨー（Z軸まわりの回転）→ チルト（見下ろし角）→ 正射影 の順。 */
+const VERTEX_SHADER = `
+attribute vec3 position;   // モデル座標 [m]
+attribute float scalar;    // 頂点の温度 or 速度
+
+uniform vec3 center;       // モデル中心。ここを原点へ寄せる
+uniform vec3 camera;       // x: ヨー, y: チルト, z: ズーム
+uniform vec2 scale;        // キャンバスのアスペクト比補正
+uniform vec2 pan;          // 画面内での平行移動（NDC単位）
+
+varying float vValue;
+
+void main(){
+  vec3 q = position - center;
+
+  // ヨー: Z軸まわりに回す
+  float c = cos(camera.x), s = sin(camera.x);
+  vec2 turned = vec2(c * q.x - s * q.y, s * q.x + c * q.y);
+
+  // チルト: 奥行き成分と高さ成分に分解する
+  float height = cos(camera.y) * turned.y + sin(camera.y) * q.z;
+  float depth  = -sin(camera.y) * turned.y + cos(camera.y) * q.z;
+
+  // 正射影（w = 1）。z は前後関係を決めるためだけに使う。
+  // 平行移動は投影後に足すので、ズーム倍率の影響を受けない。
+  gl_Position = vec4(turned.x * scale.x * camera.z + pan.x,
+                     height   * scale.y * camera.z + pan.y,
+                     -depth / 20.0,
+                     1.0);
+  vValue = scalar;
+}`;
+
+/* 値を 0..1 に正規化し、青→水色→緑→黄→赤の5色を線形補間する。
+   colored = 0 なら baseColor をそのまま塗る（外形・稜線用）。 */
+const FRAGMENT_SHADER = `
+precision mediump float;
+
+varying float vValue;
+
+uniform vec2 range;       // 正規化の下限・上限
+uniform vec4 baseColor;   // 単色で塗るときの色
+uniform float colored;    // 1: カラーマップ / 0: baseColor
+
+void main(){
+  float t = clamp((vValue - range.x) / (range.y - range.x), 0.0, 1.0) * 4.0;
+
+  vec3 c0 = vec3(0.10, 0.25, 0.68);  // 青
+  vec3 c1 = vec3(0.03, 0.73, 0.80);  // 水色
+  vec3 c2 = vec3(0.48, 0.86, 0.50);  // 緑
+  vec3 c3 = vec3(1.00, 0.80, 0.22);  // 黄
+  vec3 c4 = vec3(0.92, 0.23, 0.15);  // 赤
+
+  vec3 mapped = t < 1.0 ? mix(c0, c1, t)
+              : t < 2.0 ? mix(c1, c2, t - 1.0)
+              : t < 3.0 ? mix(c2, c3, t - 2.0)
+                        : mix(c3, c4, t - 3.0);
+
+  gl_FragColor = vec4(mix(baseColor.rgb, mapped, colored), baseColor.a);
+}`;
+
+function compileShader(type, source) {
+  const sh = gl.createShader(type);
+  gl.shaderSource(sh, source);
+  gl.compileShader(sh);
+  if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) throw Error(gl.getShaderInfoLog(sh));
+  return sh;
+}
+
+function buildProgram() {
+  const program = gl.createProgram();
+  gl.attachShader(program, compileShader(gl.VERTEX_SHADER, VERTEX_SHADER));
+  gl.attachShader(program, compileShader(gl.FRAGMENT_SHADER, FRAGMENT_SHADER));
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw Error('描画の初期化に失敗しました。');
+  gl.useProgram(program);
+
+  for (const name of ['center', 'camera', 'scale', 'pan', 'range', 'baseColor', 'colored']) {
+    uniforms[name] = gl.getUniformLocation(program, name);
+  }
+  attribPosition = gl.getAttribLocation(program, 'position');
+  attribScalar = gl.getAttribLocation(program, 'scalar');
+
+  gl.enable(gl.BLEND);
+  gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+}
+
+/* ---------------------------------------------------------
+   メッシュ（GPUバッファ）
+   --------------------------------------------------------- */
+
+/* triangles があればインデックス描画、なければ positions をそのまま並べて描く。 */
+function createMesh(data) {
+  const mesh = { position: gl.createBuffer() };
+  gl.bindBuffer(gl.ARRAY_BUFFER, mesh.position);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data.positions), gl.STATIC_DRAW);
+
+  if (data.triangles) {
+    mesh.index = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.index);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(data.triangles), gl.STATIC_DRAW);
+    mesh.count = data.triangles.length;
+  } else {
+    mesh.count = data.positions.length / 3;
+  }
+  return mesh;
+}
+
+function deleteMesh(mesh) {
+  if (!mesh) return;
+  for (const key of ['position', 'index', 'scalar']) {
+    if (mesh[key]) gl.deleteBuffer(mesh[key]);
+  }
+}
+
+/* ---------------------------------------------------------
+   描画
+   --------------------------------------------------------- */
+function renderMesh(mesh, mode, baseColor, colored) {
+  gl.bindBuffer(gl.ARRAY_BUFFER, mesh.position);
+  gl.enableVertexAttribArray(attribPosition);
+  gl.vertexAttribPointer(attribPosition, 3, gl.FLOAT, false, 0, 0);
+
+  if (mesh.scalar) {
+    gl.bindBuffer(gl.ARRAY_BUFFER, mesh.scalar);
+    gl.enableVertexAttribArray(attribScalar);
+    gl.vertexAttribPointer(attribScalar, 1, gl.FLOAT, false, 0, 0);
+  } else {
+    // スカラーを持たないメッシュ（外形・稜線）は定数 0 を流す
+    gl.disableVertexAttribArray(attribScalar);
+    gl.vertexAttrib1f(attribScalar, 0);
+  }
+
+  gl.uniform4fv(uniforms.baseColor, baseColor);
+  gl.uniform1f(uniforms.colored, colored);
+
+  if (mesh.index) {
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.index);
+    gl.drawElements(mode, mesh.count, gl.UNSIGNED_INT, 0);
+  } else {
+    gl.drawArrays(mode, 0, mesh.count);
+  }
+}
+
+function draw() {
+  if (!manifest) return;
+
+  // CSS上のサイズに合わせて解像度を追従させる（DPRは2倍で打ち止め）
+  const rect = cv.getBoundingClientRect();
+  const dpr = Math.min(devicePixelRatio, 2);
+  const w = Math.round(rect.width * dpr);
+  const h = Math.round(rect.height * dpr);
+  if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
+
+  gl.viewport(0, 0, w, h);
+  gl.clearColor(0.961, 0.969, 0.977, 1);
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+  const b = manifest.bounds;
+  const span = Math.hypot(b[1] - b[0], b[3] - b[2]) * 1.1;
+
+  gl.uniform3f(uniforms.center, (b[0] + b[1]) / 2, (b[2] + b[3]) / 2, (b[4] + b[5]) / 2);
+  gl.uniform3f(uniforms.camera, view.yaw, view.tilt, view.zoom);
+  gl.uniform2f(uniforms.pan, view.panX, view.panY);
+  gl.uniform2f(uniforms.scale,
+    2 / span * Math.min(1, rect.height / rect.width),
+    2 / span * Math.min(1, rect.width / rect.height));
+
+  const [lo, hi] = FIELDS[field].range;
+  gl.uniform2f(uniforms.range, lo, hi);
+
+  // 半透明を重ねるので深度テストは使わず、奥→手前の描画順で見せる
+  const opacity = +$('opacity').value / 100;
+  gl.disable(gl.DEPTH_TEST);
+  gl.depthMask(false);
+
+  if (opacity > 0) renderMesh(shellMesh, gl.TRIANGLES, [0.43, 0.50, 0.56, 0.09 * opacity], 0);
+  if (sliceMesh)   renderMesh(sliceMesh, gl.TRIANGLES, [0, 0, 0, 0.94], 1);
+  if (opacity > 0) renderMesh(lineMesh, gl.LINES, [0.24, 0.32, 0.38, 0.55 * opacity], 0);
+
+  gl.depthMask(true);
+}
+
+/* 表示中の断面データを GPU に載せ直し、凡例とカラーバーを更新する */
+function uploadSlice() {
+  if (!currentSlice) return;
+
+  deleteMesh(sliceMesh);
+  sliceMesh = createMesh(currentSlice);
+  sliceMesh.scalar = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, sliceMesh.scalar);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(currentSlice[field]), gl.STATIC_DRAW);
+
+  const spec = FIELDS[field];
+  $('legend').textContent = spec.legend;
+  $('ticks').innerHTML = spec.ticks.map(t => '<span>' + t + '</span>').join('');
+
+  draw();
+}
+
+/* ---------------------------------------------------------
+   断面の切り替え
+   --------------------------------------------------------- */
+
+/* スライダーを速く動かすと複数の fetch が並走するため、
+   発行番号を控えておき、最後の要求以外は結果を捨てる。 */
+async function loadSlice() {
+  const request = ++requestToken;
+  const entry = manifest.axes[axis][index];
+
+  $('notice').hidden = false;
+  $('notice').textContent = '断面を読み込み中…';
+
+  currentSlice = null;
+  deleteMesh(sliceMesh);
+  sliceMesh = null;
+  draw();
+
+  try {
+    let data = sliceCache.get(entry.file);
+    if (!data) {
+      data = await readGzip(entry.file);
+      sliceCache.set(entry.file, data);
+      // 古いものから捨てる（Map は挿入順を保つ）
+      if (sliceCache.size > SLICE_CACHE_LIMIT) {
+        sliceCache.delete(sliceCache.keys().next().value);
+      }
+    }
+    if (request !== requestToken) return;
+
+    currentSlice = data;
+    uploadSlice();
+
+    const position = entry.position.toFixed(2);
+    $('positionText').textContent = position + ' m';
+    $('level').textContent = axis.toUpperCase() + ' = ' + position + ' m';
+    $('notice').hidden = true;
+  } catch (err) {
+    if (request === requestToken) $('notice').textContent = err.message;
+  }
+}
+
+/* ---------------------------------------------------------
+   カメラ操作
+   --------------------------------------------------------- */
+
+/* pointermove は高リフレッシュ端末だと毎秒120回以上飛んでくる。
+   そのつど描くと無駄なので、次のフレームまで1回にまとめる。
+
+   「予約済みフラグ」で弾く実装にすると、タブが隠れるなどして
+   コールバックが発火しないまま止まったときにフラグが立ちっぱなしになり、
+   以降の描画要求がすべて無視されて操作を受け付けなくなる。
+   そのため予約を取り消して入れ直す方式にしてある。 */
+let drawHandle = 0;
+function requestDraw() {
+  if (drawHandle) cancelAnimationFrame(drawHandle);
+  drawHandle = requestAnimationFrame(() => { drawHandle = 0; draw(); });
+}
+
+/* 復帰時に最新の状態で描き直す（隠れている間のフレームは捨てられるため） */
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) requestDraw();
+});
+
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+/* 画面座標 → NDC（-1..1）。ズーム中心の計算に使う */
+function toNDC(clientX, clientY) {
+  const r = cv.getBoundingClientRect();
+  return [
+    (clientX - r.left) / r.width * 2 - 1,
+    -((clientY - r.top) / r.height * 2 - 1),
+  ];
+}
+
+/* 指定した画面位置を固定したままズームする。
+   ズーム前後で同じ点が同じ場所に来るよう pan を補正する:
+     pan' = c(1 - k) + pan·k     （k = 新ズーム / 旧ズーム）
+   これがないと、拡大するたびに見たい場所が画面外へ逃げていく。 */
+function zoomAt(factor, clientX, clientY) {
+  const next = clamp(view.zoom * factor, ZOOM_MIN, ZOOM_MAX);
+  const k = next / view.zoom;
+  if (k === 1) return;
+
+  const [cx, cy] = toNDC(clientX, clientY);
+  view.panX = cx * (1 - k) + view.panX * k;
+  view.panY = cy * (1 - k) + view.panY * k;
+  view.zoom = next;
+  requestDraw();
+}
+
+function panBy(dxPx, dyPx) {
+  const r = cv.getBoundingClientRect();
+  view.panX += dxPx / r.width * 2;
+  view.panY -= dyPx / r.height * 2;   // 画面のYは下向き、NDCは上向き
+  requestDraw();
+}
+
+/* 回転量はキャンバスサイズで正規化する。
+   「横幅いっぱいのドラッグ = 1回転」なので、画面の大小で感度が変わらない。 */
+function rotateBy(dxPx, dyPx) {
+  const r = cv.getBoundingClientRect();
+  view.yaw += dxPx / r.width * Math.PI * 2;
+  view.tilt = clamp(view.tilt + dyPx / r.height * Math.PI, -TILT_LIMIT, TILT_LIMIT);
+  requestDraw();
+}
+
+function resetView() {
+  Object.assign(view, DEFAULT_VIEW);
+  requestDraw();
+}
+
+function bindCamera() {
+  // 触れている指／ボタンを全部覚えておく（2本指ジェスチャの判定に必要）
+  const pointers = new Map();
+  let mode = null;        // 'rotate' | 'pan' | 'pinch'
+  let last = null;        // 直前の1本指座標
+  let pinch = null;       // { distance, midX, midY }
+
+  const positions = () => [...pointers.values()];
+  const pinchState = () => {
+    const [a, b] = positions();
+    return {
+      distance: Math.hypot(a.x - b.x, a.y - b.y),
+      midX: (a.x + b.x) / 2,
+      midY: (a.y + b.y) / 2,
+    };
+  };
+
+  cv.addEventListener('pointerdown', e => {
+    // 先に登録する。setPointerCapture は環境によって例外を投げることがあり、
+    // 後回しにすると指が登録されないまま操作不能になる。
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+
+    if (pointers.size === 2) {
+      mode = 'pinch';
+      pinch = pinchState();
+    } else if (pointers.size === 1) {
+      // 右ボタン / 中ボタン / Shift は平行移動、それ以外は回転
+      mode = (e.button === 1 || e.button === 2 || e.shiftKey) ? 'pan' : 'rotate';
+      last = { x: e.clientX, y: e.clientY };
+    }
+    cv.style.cursor = mode === 'rotate' ? 'grabbing' : 'move';
+  });
+
+  cv.addEventListener('pointermove', e => {
+    if (!pointers.has(e.pointerId)) return;
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    if (mode === 'pinch' && pointers.size === 2) {
+      const now = pinchState();
+      // 指の間隔でズーム、中点の移動で平行移動（地図アプリと同じ操作感）
+      if (pinch.distance > 0) zoomAt(now.distance / pinch.distance, now.midX, now.midY);
+      panBy(now.midX - pinch.midX, now.midY - pinch.midY);
+      pinch = now;
+      return;
+    }
+
+    if (!last) return;
+    const dx = e.clientX - last.x;
+    const dy = e.clientY - last.y;
+    last = { x: e.clientX, y: e.clientY };
+
+    if (mode === 'pan') panBy(dx, dy);
+    else rotateBy(dx, dy);
+  });
+
+  const release = e => {
+    pointers.delete(e.pointerId);
+    if (pointers.size === 1) {
+      // ピンチの片手を離したら、残った指で回転を続ける
+      const [p] = positions();
+      mode = 'rotate';
+      last = { x: p.x, y: p.y };
+    } else if (pointers.size === 0) {
+      mode = null;
+      last = null;
+      pinch = null;
+    }
+    cv.style.cursor = '';
+  };
+  cv.addEventListener('pointerup', release);
+  cv.addEventListener('pointercancel', release);
+
+  // 平行移動に右ドラッグを使うのでコンテキストメニューは出さない
+  cv.addEventListener('contextmenu', e => e.preventDefault());
+
+  // ホイール: カーソル位置を中心に指数的ズーム
+  cv.addEventListener('wheel', e => {
+    e.preventDefault();
+    zoomAt(Math.exp(-e.deltaY * 0.0015), e.clientX, e.clientY);
+  }, { passive: false });
+
+  cv.addEventListener('dblclick', resetView);
+  $('resetView').addEventListener('click', () => { resetView(); cv.focus(); });
+
+  // キーボード操作（canvas を tabindex="0" でフォーカス可能にしてある）
+  cv.addEventListener('keydown', e => {
+    const step = e.shiftKey ? 4 : 1;
+    const r = cv.getBoundingClientRect();
+    const nudge = 18 * step;
+    const handlers = {
+      ArrowLeft:  () => e.shiftKey ? panBy(nudge, 0) : rotateBy(-r.width / 40, 0),
+      ArrowRight: () => e.shiftKey ? panBy(-nudge, 0) : rotateBy(r.width / 40, 0),
+      ArrowUp:    () => e.shiftKey ? panBy(0, nudge) : rotateBy(0, -r.height / 40),
+      ArrowDown:  () => e.shiftKey ? panBy(0, -nudge) : rotateBy(0, r.height / 40),
+      '+':        () => zoomAt(1.15, r.left + r.width / 2, r.top + r.height / 2),
+      '=':        () => zoomAt(1.15, r.left + r.width / 2, r.top + r.height / 2),
+      '-':        () => zoomAt(1 / 1.15, r.left + r.width / 2, r.top + r.height / 2),
+      '0':        resetView,
+      Home:       resetView,
+    };
+    const fn = handlers[e.key];
+    if (!fn) return;
+    e.preventDefault();
+    fn();
+  });
+
+  new ResizeObserver(requestDraw).observe(cv);
+}
+
+/* ---------------------------------------------------------
+   表示設定の操作
+   --------------------------------------------------------- */
+function setPressed(ids, active) {
+  for (const id of ids) $(id).setAttribute('aria-pressed', String(id === active));
+}
+
+function bindControls() {
+  // 物理量の切り替え（データは共通なので載せ直すだけ）
+  for (const name of Object.keys(FIELDS)) {
+    $(name).onclick = () => {
+      field = name;
+      setPressed(Object.keys(FIELDS), name);
+      uploadSlice();
+    };
+  }
+
+  // 軸の切り替え。軸ごとに断面数が違うのでスライダーの上限を張り替える
+  for (const name of ['x', 'y', 'z']) {
+    $(name).onclick = () => {
+      axis = name;
+      setPressed(['x', 'y', 'z'], name);
+      const last = manifest.axes[name].length - 1;
+      $('position').max = last;
+      index = Math.min(index, last);
+      $('position').value = index;
+      loadSlice();
+    };
+  }
+
+  // スライダーは動かすたびに fetch しないよう少し待つ
+  let timer;
+  $('position').oninput = e => {
+    index = +e.target.value;
+    clearTimeout(timer);
+    timer = setTimeout(loadSlice, SLIDER_DEBOUNCE_MS);
+  };
+
+  $('opacity').oninput = requestDraw;
+}
+
+/* ---------------------------------------------------------
+   起動
+   --------------------------------------------------------- */
+async function start() {
+  // 断面のインデックスが 65536 を超えるため 32bit インデックスが必須
+  if (!gl || !gl.getExtension('OES_element_index_uint')) {
+    throw Error('WebGL対応ブラウザで表示してください。');
+  }
+
+  buildProgram();
+
+  const res = await fetch('xyz-manifest.json');
+  if (!res.ok) throw Error('断面情報を読み込めません。');
+  manifest = await res.json();
+
+  const context = await readGzip(manifest.context);
+  shellMesh = createMesh(context);
+  lineMesh = createMesh({ positions: context.lines });
+
+  bindControls();
+  bindCamera();
+  loadSlice();
+}
+
+start().catch(err => {
+  $('notice').textContent = err.message;
+  console.error(err);
+});
+</script>
+</body>
+</html>

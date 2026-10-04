@@ -15,12 +15,29 @@ export const ICON_MAP = {
   Python: ICON_BASE + "Python.jpg",
   HDL: ICON_BASE + "HDL.jpg",
   "C++": ICON_BASE + "Cpurapura.jpg",
-  Processing: ICON_BASE + "Processing.jpg"
+  Processing: ICON_BASE + "Processing.jpg",
+  CFD: ICON_BASE + "CFD.jpg",
+  "3DGS": ICON_BASE + "3DGS.jpg",
+  Postshot: ICON_BASE + "Postshot.jpg",
+  Blender: ICON_BASE + "Blender.jpg",
+  OpenFOAM: ICON_BASE + "OpenFOAM.jpg",
+  SimScale: ICON_BASE + "SimScale.jpg",
+  Go: ICON_BASE + "Go.jpg",
+  Java: ICON_BASE + "Java.jpg"
 };
 
 // Projects shown in carousel/list (ordered newest -> old)
 export const PROJECTS = [
   // 2026
+  {
+    id: "gs-cfd-airflow",
+    title: "3DGS × CFD 室内気流解析",
+    desc: "実空間を3DGSで再現し、タワーファンの設置位置を気流解析で検討",
+    img: "./assets/CFD_ScreenShot0.jpg",
+    tags: ["3DGS", "Blender", "CFD", "CAE"],
+    links: [{ label: "詳細", href: "./projects/gs-cfd-airflow.html" }],
+    year: 2026
+  },
   {
     id: "fpga-fx",
     title: "FPGAギターエフェクター(開発中)",
@@ -58,12 +75,21 @@ export const PROJECTS = [
     links: [{ label: "詳細", href: "./projects/retro-lumen.html" }],
     year: 2025
   },
+  {
+    id: "vr-nameplate",
+    title: "リアルVRネームプレート",
+    desc: "VR空間のネームプレートを現実で再現した、オフ会・イベント用の着脱式グッズ",
+    img: "./assets/nameplate.jpg",
+    tags: ["CAE", "HTML", "CSS", "JavaScript", "Three.js"],
+    links: [{ label: "詳細", href: "./projects/vr-nameplate.html" }],
+    year: 2025
+  },
 
   // 2024
   {
     id: "strat",
     title: "ストラトキャスタータイプギター",
-    desc: "桐材を使用したストラトキャスタータイプギター",
+    desc: "桐材ボディを3DモデリングからCNC加工まで一貫して製作した自作ギター",
     img: "./assets/work_strat.jpg",
     tags: ["CAD", "electronic circuit"],
     links: [{ label: "詳細", href: "./projects/stratocaster-build.html" }],
@@ -72,7 +98,7 @@ export const PROJECTS = [
   {
     id: "tube-booster",
     title: "真空管クリーンブースター",
-    desc: "真空管を用いたアナログギターエフェクター",
+    desc: "真空管を9Vで駆動するアナログのクリーンブースター",
     img: "./assets/work_tube_booster.jpg",
     tags: ["electronic circuit"],
     links: [{ label: "詳細", href: "./projects/tube-clean-booster.html" }],
@@ -103,7 +129,7 @@ export const PROJECTS = [
   {
     id: "jazzmaster",
     title: "ジャズマスタータイプギター",
-    desc: "LEDポジションとタッチ式キルスイッチを備えた自作ジャズマスター",
+    desc: "タッチ式キルスイッチを備え、3段階の改良を重ねた自作ジャズマスター",
     img: "./assets/JM_1.jpg",
     tags: ["electronic circuit"],
     links: [{ label: "詳細", href: "./projects/jazzmaster.html" }],
@@ -119,6 +145,16 @@ export const PROJECTS = [
     year: 2022
   },
 
+  // 2021
+  {
+    id: "shooting-edu",
+    title: "学習用シューティングゲーム",
+    desc: "中学生向けプログラミング学習用Processing製シューティングゲーム",
+    img: "./assets/IMG_1072.jpg",
+    tags: ["Processing"],
+    links: [{ label: "詳細", href: "./projects/shooting.html" }],
+    year: 2021
+  },
 
   // 2019
   {
@@ -143,6 +179,7 @@ export const PROJECTS = [
 
 // Home carousel only
 export const HOME_FEATURED_IDS = [
+  "gs-cfd-airflow",
   "fpga-fx",
   "web-nenga",
   "web-cae",

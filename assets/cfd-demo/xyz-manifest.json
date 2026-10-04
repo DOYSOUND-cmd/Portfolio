@@ -1,0 +1,323 @@
+{
+  "case": "Candidate A",
+  "run": 24,
+  "iteration": 1000,
+  "bounds": [
+    -0.11151999980211258,
+    7.070010185241699,
+    -1.2225099802017212,
+    2.034329891204834,
+    0.0,
+    2.549999952316284
+  ],
+  "axes": {
+    "x": [
+      {
+        "position": -0.0915,
+        "file": "slices/x0.json.gz"
+      },
+      {
+        "position": 0.206,
+        "file": "slices/x1.json.gz"
+      },
+      {
+        "position": 0.5036,
+        "file": "slices/x2.json.gz"
+      },
+      {
+        "position": 0.8012,
+        "file": "slices/x3.json.gz"
+      },
+      {
+        "position": 1.0987,
+        "file": "slices/x4.json.gz"
+      },
+      {
+        "position": 1.3963,
+        "file": "slices/x5.json.gz"
+      },
+      {
+        "position": 1.6939,
+        "file": "slices/x6.json.gz"
+      },
+      {
+        "position": 1.9914,
+        "file": "slices/x7.json.gz"
+      },
+      {
+        "position": 2.289,
+        "file": "slices/x8.json.gz"
+      },
+      {
+        "position": 2.5866,
+        "file": "slices/x9.json.gz"
+      },
+      {
+        "position": 2.8841,
+        "file": "slices/x10.json.gz"
+      },
+      {
+        "position": 3.1817,
+        "file": "slices/x11.json.gz"
+      },
+      {
+        "position": 3.4792,
+        "file": "slices/x12.json.gz"
+      },
+      {
+        "position": 3.7768,
+        "file": "slices/x13.json.gz"
+      },
+      {
+        "position": 4.0744,
+        "file": "slices/x14.json.gz"
+      },
+      {
+        "position": 4.3719,
+        "file": "slices/x15.json.gz"
+      },
+      {
+        "position": 4.6695,
+        "file": "slices/x16.json.gz"
+      },
+      {
+        "position": 4.9671,
+        "file": "slices/x17.json.gz"
+      },
+      {
+        "position": 5.2646,
+        "file": "slices/x18.json.gz"
+      },
+      {
+        "position": 5.5622,
+        "file": "slices/x19.json.gz"
+      },
+      {
+        "position": 5.8598,
+        "file": "slices/x20.json.gz"
+      },
+      {
+        "position": 6.1573,
+        "file": "slices/x21.json.gz"
+      },
+      {
+        "position": 6.4549,
+        "file": "slices/x22.json.gz"
+      },
+      {
+        "position": 6.7524,
+        "file": "slices/x23.json.gz"
+      },
+      {
+        "position": 7.05,
+        "file": "slices/x24.json.gz"
+      }
+    ],
+    "y": [
+      {
+        "position": -1.2025,
+        "file": "slices/y0.json.gz"
+      },
+      {
+        "position": -1.0685,
+        "file": "slices/y1.json.gz"
+      },
+      {
+        "position": -0.9344,
+        "file": "slices/y2.json.gz"
+      },
+      {
+        "position": -0.8004,
+        "file": "slices/y3.json.gz"
+      },
+      {
+        "position": -0.6664,
+        "file": "slices/y4.json.gz"
+      },
+      {
+        "position": -0.5323,
+        "file": "slices/y5.json.gz"
+      },
+      {
+        "position": -0.3983,
+        "file": "slices/y6.json.gz"
+      },
+      {
+        "position": -0.2643,
+        "file": "slices/y7.json.gz"
+      },
+      {
+        "position": -0.1302,
+        "file": "slices/y8.json.gz"
+      },
+      {
+        "position": 0.0038,
+        "file": "slices/y9.json.gz"
+      },
+      {
+        "position": 0.1378,
+        "file": "slices/y10.json.gz"
+      },
+      {
+        "position": 0.2719,
+        "file": "slices/y11.json.gz"
+      },
+      {
+        "position": 0.4059,
+        "file": "slices/y12.json.gz"
+      },
+      {
+        "position": 0.5399,
+        "file": "slices/y13.json.gz"
+      },
+      {
+        "position": 0.674,
+        "file": "slices/y14.json.gz"
+      },
+      {
+        "position": 0.808,
+        "file": "slices/y15.json.gz"
+      },
+      {
+        "position": 0.942,
+        "file": "slices/y16.json.gz"
+      },
+      {
+        "position": 1.0761,
+        "file": "slices/y17.json.gz"
+      },
+      {
+        "position": 1.2101,
+        "file": "slices/y18.json.gz"
+      },
+      {
+        "position": 1.3442,
+        "file": "slices/y19.json.gz"
+      },
+      {
+        "position": 1.4782,
+        "file": "slices/y20.json.gz"
+      },
+      {
+        "position": 1.6122,
+        "file": "slices/y21.json.gz"
+      },
+      {
+        "position": 1.7463,
+        "file": "slices/y22.json.gz"
+      },
+      {
+        "position": 1.8803,
+        "file": "slices/y23.json.gz"
+      },
+      {
+        "position": 2.0143,
+        "file": "slices/y24.json.gz"
+      }
+    ],
+    "z": [
+      {
+        "position": 0.02,
+        "file": "slices/z0.json.gz"
+      },
+      {
+        "position": 0.1246,
+        "file": "slices/z1.json.gz"
+      },
+      {
+        "position": 0.2292,
+        "file": "slices/z2.json.gz"
+      },
+      {
+        "position": 0.3337,
+        "file": "slices/z3.json.gz"
+      },
+      {
+        "position": 0.4383,
+        "file": "slices/z4.json.gz"
+      },
+      {
+        "position": 0.5429,
+        "file": "slices/z5.json.gz"
+      },
+      {
+        "position": 0.6475,
+        "file": "slices/z6.json.gz"
+      },
+      {
+        "position": 0.7521,
+        "file": "slices/z7.json.gz"
+      },
+      {
+        "position": 0.8567,
+        "file": "slices/z8.json.gz"
+      },
+      {
+        "position": 0.9612,
+        "file": "slices/z9.json.gz"
+      },
+      {
+        "position": 1.0658,
+        "file": "slices/z10.json.gz"
+      },
+      {
+        "position": 1.1704,
+        "file": "slices/z11.json.gz"
+      },
+      {
+        "position": 1.275,
+        "file": "slices/z12.json.gz"
+      },
+      {
+        "position": 1.3796,
+        "file": "slices/z13.json.gz"
+      },
+      {
+        "position": 1.4842,
+        "file": "slices/z14.json.gz"
+      },
+      {
+        "position": 1.5887,
+        "file": "slices/z15.json.gz"
+      },
+      {
+        "position": 1.6933,
+        "file": "slices/z16.json.gz"
+      },
+      {
+        "position": 1.7979,
+        "file": "slices/z17.json.gz"
+      },
+      {
+        "position": 1.9025,
+        "file": "slices/z18.json.gz"
+      },
+      {
+        "position": 2.0071,
+        "file": "slices/z19.json.gz"
+      },
+      {
+        "position": 2.1117,
+        "file": "slices/z20.json.gz"
+      },
+      {
+        "position": 2.2162,
+        "file": "slices/z21.json.gz"
+      },
+      {
+        "position": 2.3208,
+        "file": "slices/z22.json.gz"
+      },
+      {
+        "position": 2.4254,
+        "file": "slices/z23.json.gz"
+      },
+      {
+        "position": 2.53,
+        "file": "slices/z24.json.gz"
+      }
+    ]
+  },
+  "context": "context.json.gz",
+  "note": "1000反復時点。収束・メッシュ依存性は検証中。表示形状のみ軽量化。断面は元の計算メッシュから抽出。"
+}

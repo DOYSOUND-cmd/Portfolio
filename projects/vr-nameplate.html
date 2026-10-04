@@ -2,15 +2,31 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>リアルVRネームプレート | Product Detail</title>
+
+  <!-- OGP / Twitter Card（SNSやチャットでの共有プレビュー用） -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DOYSOUND — Portfolio" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="リアルVRネームプレート | DOYSOUND" />
+  <meta property="og:description" content="VR空間のネームプレートを現実世界で再現した、オフ会やイベント用グッズ" />
+  <meta property="og:url" content="https://doysound-cmd.github.io/Portfolio/projects/vr-nameplate.html" />
+  <link rel="canonical" href="https://doysound-cmd.github.io/Portfolio/projects/vr-nameplate.html" />
+  <meta property="og:image" content="https://doysound-cmd.github.io/Portfolio/assets/nameplate.jpg" />
+  <meta property="og:image:alt" content="リアルVRネームプレート | DOYSOUND" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="リアルVRネームプレート | DOYSOUND" />
+  <meta name="twitter:description" content="VR空間のネームプレートを現実世界で再現した、オフ会やイベント用グッズ" />
+  <meta name="twitter:image" content="https://doysound-cmd.github.io/Portfolio/assets/nameplate.jpg" />
   <meta name="description" content="VR空間のネームプレートを現実世界で再現した、オフ会やイベント用グッズの紹介ページ。" />
   <!-- 共通スタイル -->
+  <link rel="stylesheet" href="../styles/liftkitvars.css" />
   <link rel="stylesheet" href="../styles/site-core.css" />
   <!-- プロダクト詳細 共通スタイル -->
   <link rel="stylesheet" href="../styles/project-detail.css" />
   <style>
-    /* 3Dビューア用の小さな補助。project-detail.cssに干渉しないように調整 */
+    /* 3Dビューア用の補助スタイル（project-detail.css に干渉しない範囲で上書き） */
     .pd-3d { display: grid; gap: clamp(12px, 2vw, 16px); }
     .pd-3d__stage {
       position: relative; width: 100%; aspect-ratio: 16/9;
@@ -19,188 +35,237 @@
     .pd-3d__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; border: 0; }
     .pd-3d__hint { color: var(--muted); font-size: .95rem; }
     .pd-3d__toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .pd-3d__loading{
+      position:absolute; inset:0;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap: clamp(6px, 1vw, 12px);
+      background: rgba(10, 15, 24, 0.82);
+      color:#f5f7fb; font-weight:700; text-transform:uppercase; letter-spacing:.08em;
+      font-size:.9rem;
+      opacity:0; pointer-events:none;
+      transition: opacity .35s ease;
+    }
+    .pd-3d__loading.is-active{ opacity:1; }
+    .pd-3d__spinner{
+      width:42px; height:42px;
+      border-radius:50%;
+      border:3px solid rgba(255,255,255,.18);
+      border-top-color:#6be7ff;
+      animation: pd-3d-spin 1s linear infinite;
+    }
+    .pd-3d__text{ font-size:.8rem; }
+    @keyframes pd-3d-spin{
+      to{ transform: rotate(360deg); }
+    }
   </style>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-Y39NSDYY9J');
-</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Y39NSDYY9J');
+  </script>
+
+  <!-- Site chrome: theme / 共通ナビ（site-chrome.js とペア） -->
+  <link rel="icon" href="data:," />
+  <meta name="theme-color" content="#f4f4f4" />
+  <link rel="stylesheet" href="../styles/site-chrome.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;family=Zen+Kaku+Gothic+New:wght@500;700;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/site-theatre.css" />
+  <script src="../scripts/theme-init.js"></script>
 </head>
 <body>
 
-<header class="pd-hero">
-  <div class="container">
-    <div class="pd-hero__eyebrow">Product Detail</div>
-    <h1 class="pd-hero__title">リアルVRネームプレート</h1>
-    <p class="pd-hero__lede">
-      VRChatなどで見慣れた“ネームプレート”を現実でもそのまま再現できるカスタムグッズ。イベントやオフ会での自己表現・識別性を高める、軽量・着脱式のデザインです。
-    </p>
-    <ul class="pd-badges pd-badges--icons" aria-label="使用技術">
-      <li class="badge">
-        <img class="badge__icon" src="../assets/icons/CAE.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
-        <span>CAE</span>
-      </li>
-      <li class="badge">
-        <img class="badge__icon" src="../assets/icons/HTML.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
-        <span>HTML</span>
-      </li>
-      <li class="badge">
-        <img class="badge__icon" src="../assets/icons/CSS.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
-        <span>CSS</span>
-      </li>
-      <li class="badge">
-        <img class="badge__icon" src="../assets/icons/JS.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
-        <span>JavaScript</span>
-      </li>
-      <li class="badge">
-        <img class="badge__icon" src="../assets/icons/Threejs.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
-        <span>Three.js</span>
-      </li>
-    </ul>
-    <div class="pd-cta">
-      <a class="btn" href="../index.html">Topへ戻る</a>
-    </div>
-  </div>
-</header>
-
-<main id="main">
-
-  <section class="pd-section" aria-labelledby="about-title">
+  <!-- Product Hero -->
+  <header class="pd-hero">
     <div class="container">
-      <h2 id="about-title" class="pd-section__title">概要</h2>
-      <div class="pd-summary">
-        <p>
-          VR世界での名前表示を現実に持ち出すためのネームプレートです。イベントなどで頭上に装着し、いつものVR名・ハンドルネームを表示することで、フレンドとの再会や会場での遭遇性を高めます。
-        </p>
-        <p>
-          取り外ししやすいモジュール構造と、長時間装着しても疲れにくい重量バランスを重視。素材選定と強度解析を繰り返し、屋内外イベントで安心して使える設計にしました。
-        </p>
+      <div class="pd-hero__eyebrow">Product Detail</div>
+      <h1 class="pd-hero__title">リアルVRネームプレート</h1>
+      <p class="pd-hero__lede">
+        VRChatなどで見慣れた“ネームプレート”を現実でもそのまま再現できるカスタムグッズ。<br>
+        イベントやオフ会での自己表現・識別性を高める、軽量・着脱式のデザインです。
+      </p>
+
+      <!-- アイコン付きタグ -->
+      <ul class="pd-badges pd-badges--icons" aria-label="使用技術">
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/CAE.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>CAE</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/HTML.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>HTML</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/CSS.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>CSS</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/JS.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>JavaScript</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/Threejs.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>Three.js</span>
+        </li>
+      </ul>
+
+      <div class="pd-cta">
+        <a class="btn" href="../index.html">Topへ戻る</a>
       </div>
     </div>
-  </section>
+  </header>
 
-  <section class="pd-section" aria-labelledby="shots-title">
-    <div class="container">
-      <h2 id="shots-title" class="pd-section__title">宣伝POP</h2>
-      <div class="pd-shots pd-shots--single" data-gallery>
-        <figure class="pd-shot">
-          <img src="../assets/nameplate.jpg" alt="リアルVRネームプレートのポスター" width="1080" height="1440" loading="lazy" decoding="async">
-          <figcaption>VketReal 2025 Summer 出展用ポスター</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
+  <!-- ===== Main ===== -->
+  <main id="main">
 
-  <!-- 3D Scan Viewer -->
-  <section class="pd-section" aria-labelledby="scan-title">
-    <div class="container">
-      <h2 id="scan-title" class="pd-section__title">3D Scan Viewer</h2>
-      <div class="pd-summary" style="margin-bottom:10px">
-        <p>実物をスキャンしたモデル。回転・ズームして質感や形状を確認できます。</p>
-      </div>
-
-      <div class="pd-3d">
-        <div class="pd-3d__stage" id="scan-stage">
-          <canvas
-            id="scan-canvas"
-            class="pd-3d__canvas"
-            data-type="glb"
-            data-src="../assets/Nameplate/Nameplate.glb"
-            data-autoRotate="true"
-            data-rotationSpeed="0.4"
-            data-initialDistance="fit"
-            data-exposure="1.72"
-            data-yaw="30"
-            data-pitch="20"
-            aria-label="3Dスキャンモデル"
-          ></canvas>
-        </div>
-        <div class="pd-3d__toolbar">
-          <button class="btn" data-role="toggle-rotate" data-target="#scan-canvas">再生/停止</button>
-          <button class="btn" data-role="reset-view"  data-target="#scan-canvas">リセット</button>
-          <span class="pd-3d__hint">ドラッグで回転・ピンチ/ホイールで拡大縮小</span>
+    <!-- 概要 -->
+    <section class="pd-section" aria-labelledby="about-title">
+      <div class="container">
+        <h2 id="about-title" class="pd-section__title">概要</h2>
+        <div class="pd-summary">
+          <p>
+            　VR世界での名前表示を現実に持ち出すためのネームプレートです。イベントなどで頭上に装着し、いつものVR名・ハンドルネームを表示することで、フレンドとの再会や会場での遭遇性を高めます。
+          </p>
+          <p>
+            　取り外ししやすいモジュール構造と、長時間装着しても疲れにくい重量バランスを重視。素材選定と強度解析を繰り返し、屋内外イベントで安心して使える設計にしました。
+          </p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CAD設計 + 説明 -->
-  <section class="pd-section" aria-labelledby="cad-title">
-    <div class="container">
-      <h2 id="cad-title" class="pd-section__title">ハードウェア設計</h2>
-      <div class="pd-summary">
-        <p>
-          主に本体の素材選定（独立気泡ポリエチレンフォーム）と構造解析を並行して実施。たわみ・応力のバランスを見ながら軽量化と装着強度を両立させています。
-        </p>
+    <!-- 宣伝POP（1枚を中央寄せ） -->
+    <section class="pd-section" aria-labelledby="pop-title">
+      <div class="container">
+        <h2 id="pop-title" class="pd-section__title">宣伝POP</h2>
+        <div class="pd-shots pd-shots--single" data-gallery>
+          <figure class="pd-shot">
+            <img src="../assets/nameplate.jpg" alt="リアルVRネームプレートのポスター" width="1748" height="1240" loading="lazy" decoding="async">
+            <figcaption>VketReal 2025 Summer 出展用ポスター</figcaption>
+          </figure>
+        </div>
       </div>
+    </section>
 
-      <div class="pd-shots" data-gallery>
-        <figure class="pd-shot">
-          <img src="../assets/sanperuka0.jpg" alt="肉厚違いによるたわみシミュレーション" width="1280" height="720" loading="lazy" decoding="async">
-          <figcaption>たわみの大きさと肉厚違いの比較</figcaption>
-        </figure>
-        <figure class="pd-shot">
-          <img src="../assets/sanperuka1.jpg" alt="ポケット付近の形状検討" width="1280" height="720" loading="lazy" decoding="async">
-          <figcaption>ポケット周りの形状検討</figcaption>
-        </figure>
-        <figure class="pd-shot">
-          <img src="../assets/bottom0.jpg" alt="応力計算結果の可視化" width="1280" height="720" loading="lazy" decoding="async">
-          <figcaption>応力計算結果</figcaption>
-        </figure>
-        <figure class="pd-shot">
-          <img src="../assets/bottom1.jpg" alt="ブリッジ周りの検討と形状の比較" width="1280" height="720" loading="lazy" decoding="async">
-          <figcaption>ブリッジ周りの検討</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <section class="pd-section" aria-labelledby="video-title">
-    <div class="container">
-      <h2 id="video-title" class="pd-section__title">制作の様子</h2>
-      <div class="pd-shots pd-shots--single">
-        <figure class="pd-shot">
-          <div style="position:relative; width:100%; aspect-ratio:16/9; background:#000; border-radius:8px; overflow:hidden;">
-            <iframe
-              src="https://www.youtube.com/embed/A0VrSljr9gI"
-              title="VRネームプレート紹介動画"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              style="position:absolute; inset:0; width:100%; height:100%; border:0;">
-            </iframe>
+    <!-- 3D Scan Viewer（実物スキャンGLB） -->
+    <section class="pd-section" aria-labelledby="viewer-title">
+      <div class="container">
+        <h2 id="viewer-title" class="pd-section__title">3D Scan Viewer</h2>
+        <div class="pd-summary">
+          <p>
+            　実物をスキャンした3Dモデルです。回転・ズームして質感や形状を確認できます。
+          </p>
+        </div>
+        <div class="pd-3d">
+          <div class="pd-3d__stage" id="scan-stage">
+            <canvas
+              id="scan-canvas"
+              class="pd-3d__canvas"
+              data-type="glb"
+              data-src="../assets/Nameplate/Nameplate.glb"
+              data-autoRotate="true"
+              data-rotationSpeed="0.4"
+              data-initialDistance="fit"
+              data-exposure="1.72"
+              data-yaw="30"
+              data-pitch="20"
+              aria-label="3Dモデルビューア（ネームプレートのスキャンGLB）"
+            ></canvas>
           </div>
-          <figcaption>レーザー加工機でポリエチレンフォームをカットする様子</figcaption>
-        </figure>
+          <div class="pd-3d__toolbar">
+            <button class="btn" data-role="toggle-rotate" data-target="#scan-canvas">再生/停止</button>
+            <button class="btn" data-role="reset-view"  data-target="#scan-canvas">リセット</button>
+            <span class="pd-3d__hint">ドラッグで回転・ピンチ/ホイールで拡大縮小</span>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="pd-section" aria-labelledby="link-title">
-    <div class="container">
-      <h2 id="link-title" class="pd-section__title">リンク</h2>
-      <div class="pd-links">
-        <a class="btn btn--primary" href="https://real-name-plate-system-with-tag-marker-mby2dyxh0-nisshi.vercel.app/" target="_blank" rel="noopener">Web 入稿フォーム</a>
-        <a class="btn" href="https://x.com/nisshi_dev" target="_blank" rel="noopener">nisshi-dev工房</a>
+    <!-- ハードウェア設計 -->
+    <section class="pd-section" aria-labelledby="cad-title">
+      <div class="container">
+        <h2 id="cad-title" class="pd-section__title">ハードウェア設計</h2>
+        <div class="pd-summary">
+          <p>
+            　主に本体の素材選定（独立気泡ポリエチレンフォーム）と構造解析を並行して実施。たわみ・応力のバランスを見ながら軽量化と装着強度を両立させています。
+          </p>
+        </div>
+        <div class="pd-shots" data-gallery>
+          <figure class="pd-shot">
+            <img src="../assets/sanperuka0.jpg" alt="肉厚違いによるたわみシミュレーション" width="1920" height="1032" loading="lazy" decoding="async">
+            <figcaption>たわみの大きさと肉厚違いの比較</figcaption>
+          </figure>
+          <figure class="pd-shot">
+            <img src="../assets/sanperuka1.jpg" alt="ポケット付近の形状検討" width="1920" height="1032" loading="lazy" decoding="async">
+            <figcaption>ポケット周りの形状検討</figcaption>
+          </figure>
+          <figure class="pd-shot">
+            <img src="../assets/bottom0.jpg" alt="応力計算結果の可視化" width="1920" height="1032" loading="lazy" decoding="async">
+            <figcaption>応力計算結果</figcaption>
+          </figure>
+          <figure class="pd-shot">
+            <img src="../assets/bottom1.jpg" alt="ブリッジ周りの検討と形状の比較" width="1920" height="1032" loading="lazy" decoding="async">
+            <figcaption>ブリッジ周りの検討</figcaption>
+          </figure>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-</main>
+    <!-- 制作の様子 -->
+    <section class="pd-section" aria-labelledby="video-title">
+      <div class="container">
+        <h2 id="video-title" class="pd-section__title">制作の様子</h2>
+        <div class="pd-shots pd-shots--single">
+          <figure class="pd-shot">
+            <div style="position:relative; width:100%; aspect-ratio:16/9; background:#0f141d; border-radius:8px; overflow:hidden; border:1px solid #00000055;">
+              <iframe
+                src="https://www.youtube.com/embed/A0VrSljr9gI"
+                title="VRネームプレート紹介動画"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                style="position:absolute; inset:0; width:100%; height:100%; border:0;"
+              ></iframe>
+            </div>
+            <figcaption>レーザー加工機でポリエチレンフォームをカットする様子</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
 
-  <!-- 共通の詳細ページ用スクリプト -->
+    <section class="pd-section" aria-labelledby="link-title">
+      <div class="container">
+        <h2 id="link-title" class="pd-section__title">リンク</h2>
+        <div class="pd-links">
+          <a class="btn btn--primary" href="https://real-name-plate-system-with-tag-marker-mby2dyxh0-nisshi.vercel.app/" target="_blank" rel="noopener">Web 入稿フォーム</a>
+          <a class="btn" href="https://x.com/nisshi_dev" target="_blank" rel="noopener">nisshi-dev工房</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 詳細ページ用スクリプト -->
   <script src="../scripts/project-detail.js" type="module"></script>
 
-  <!-- Three.jsは同一バージョンで揃える -->
-  <script src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
-  <script src="https://unpkg.com/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
-  <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/STLLoader.js"></script>
-  <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>
+  <!-- Three.js（同一バージョンを使用） -->
+  <script src="https://unpkg.com/three@0.147.0/build/three.min.js"
+          integrity="sha384-vV17nr/rMaJqmeZkFUzXLpHdQ+ME5QHKdydaqqN+3Ga39RJlNrTatJxHwGV4ml2C"
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/three@0.147.0/examples/js/controls/OrbitControls.js"
+          integrity="sha384-I0DMsfimAPIqWT8lF+oA997gRgdUi3jhidoTq3fN0zmn35smXZukD01FLnsPRU9i"
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js"
+          integrity="sha384-FassWWYNEPQsuRQm+59KIMcDetEc30bNyE9yfx16Ok8lvoowyH81LtrPmLWltJMh"
+          crossorigin="anonymous"></script>
 
-  <!-- 共通3D 初期化 -->
+  <!-- 共通 3D 初期化 -->
   <script src="../scripts/project-3d-viewer.js" type="module"></script>
+  <script src="../scripts/site-chrome.js" type="module"></script>
+  <script src="../scripts/site-theatre.js" type="module"></script>
 </body>
 </html>

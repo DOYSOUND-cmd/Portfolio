@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>3DGS × CFD 室内気流解析 — Product Detail</title>
+
+  <!-- OGP / Twitter Card（SNSやチャットでの共有プレビュー用） -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DOYSOUND — Portfolio" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="3DGS × CFD 室内気流解析 | DOYSOUND" />
+  <meta property="og:description" content="実空間を3DGSで再現し、タワーファンの設置位置を気流解析で検討" />
+  <meta property="og:url" content="https://doysound-cmd.github.io/Portfolio/projects/gs-cfd-airflow.html" />
+  <link rel="canonical" href="https://doysound-cmd.github.io/Portfolio/projects/gs-cfd-airflow.html" />
+  <meta property="og:image" content="https://doysound-cmd.github.io/Portfolio/assets/CFD_ScreenShot0.jpg" />
+  <meta property="og:image:alt" content="3DGS × CFD 室内気流解析 | DOYSOUND" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="3DGS × CFD 室内気流解析 | DOYSOUND" />
+  <meta name="twitter:description" content="実空間を3DGSで再現し、タワーファンの設置位置を気流解析で検討" />
+  <meta name="twitter:image" content="https://doysound-cmd.github.io/Portfolio/assets/CFD_ScreenShot0.jpg" />
+  <meta name="description" content="新居の実空間を3D Gaussian Splattingで再現して室内CFDモデルを作成し、タワーファンの設置位置と吹出方向を比較して室内全体の気流を均一化する検討。候補Aの計算結果をインタラクティブな断面デモで公開。比較条件と妥当性を検証中。">
+  <link rel="stylesheet" href="../styles/liftkitvars.css" />
+  <link rel="stylesheet" href="../styles/site-core.css" />
+  <link rel="stylesheet" href="../styles/project-detail.css" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Y39NSDYY9J');
+  </script>
+
+  <!-- Site chrome: theme / 共通ナビ（site-chrome.js とペア） -->
+  <link rel="icon" href="data:," />
+  <meta name="theme-color" content="#f4f4f4" />
+  <link rel="stylesheet" href="../styles/site-chrome.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;family=Zen+Kaku+Gothic+New:wght@500;700;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/site-theatre.css" />
+  <script src="../scripts/theme-init.js"></script>
+</head>
+<body>
+
+  <header class="pd-hero">
+    <div class="container">
+      <div class="pd-hero__eyebrow">Product Detail</div>
+      <h1 class="pd-hero__title">3DGS×CFDによる室内気流解析</h1>
+      <p class="pd-hero__lede">
+        新居の実空間を3D Gaussian Splattingで再現し、そのまま室内CFDモデルへ変換した気流解析プロジェクトです。<br>
+        エアコン・換気口・家具配置を含んだ実際の間取りの中でタワーファンの設置位置と吹出方向を比較し、室内全体の気流を均一化して温度ムラを減らすことを目的にしています。
+      </p>
+
+      <ul class="pd-badges pd-badges--icons" aria-label="使用技術">
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/3DGS.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>3DGS</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/Blender.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>Blender</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/CFD.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>CFD</span>
+        </li>
+        <li class="badge">
+          <img class="badge__icon" src="../assets/icons/CAE.jpg" alt="" width="18" height="18" loading="lazy" decoding="async">
+          <span>CAE</span>
+        </li>
+      </ul>
+
+      <div class="pd-cta">
+        <a class="btn" href="../index.html">Topへ戻る</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- 概要 -->
+    <section class="pd-section" aria-labelledby="overview-title">
+      <div class="container">
+        <h2 id="overview-title" class="pd-section__title">概要</h2>
+        <div class="pd-summary pd-summary--spaced">
+          <p>
+            　新居の室内をスマートフォンで撮影し、3D Gaussian Splatting（3DGS）でカラー点群として再構成しました。その点群を実寸に合わせたうえでCFD用のソリッドモデルへ作り直し、SimScale上で室内の気流と温度分布を計算しています。
+          </p>
+          <p>
+            　狙いは、間取りと家具配置を実物どおりに保ったまま、タワーファンをどこに置きどちらへ向けると室内全体の空気がよく回るかを、数値で比較できるようにすることです。
+          </p>
+        </div>
+        <div class="pd-shots pd-shots--single" data-gallery>
+          <figure class="pd-shot">
+            <div class="pd-shot__link">
+              <img src="../assets/CFD_ScreenShot0.jpg" alt="新居の室内を3D Gaussian Splattingで再構成したカラー点群" width="1920" height="1237" loading="eager" decoding="async">
+            </div>
+            <figcaption>タワーファンを起動した場合の速度分布</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 課題と目的 -->
+    <section class="pd-section" aria-labelledby="issue-title">
+      <div class="container">
+        <h2 id="issue-title" class="pd-section__title">課題と目的</h2>
+        <div class="pd-summary pd-summary--spaced">
+          <p>
+            　エアコンの吹出口と吸込口、窓脇の丸型換気口、天井の排気グリル、いずれも位置が決まっています。そこへ冷蔵庫や仕切り戸、下がり梁が加わって気流の通り道が区切られ、冷えすぎる場所と空気が動かない場所ができます。
+          </p>
+          <p>
+            　タワーファンで解消しようにも、家具を動かさずに置ける場所は限られます。置き換えて試すのは手間がかかり、体感では良し悪しも判断できません。そこで実空間をそのままCFDモデル化しました。目的は、<strong>室内の気流と温度の状態を可視化すること</strong>、そして<strong>タワーファンの設置位置と吹出方向を最適化すること</strong>の2つです。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 実空間を点群にする -->
+    <section class="pd-section" aria-labelledby="capture-title">
+      <div class="container">
+        <h2 id="capture-title" class="pd-section__title">3DGSによる室内の再現</h2>
+
+
+        <div class="pd-summary pd-summary--spaced">
+          <p>
+            　室内を多方向から撮った542枚の写真を入力に、Postshotで3DGSを学習させ、約50万個のスプラットからなるカラー点群を得ました。家具や家電の位置関係を含め、実際の部屋の状態がそのまま3Dデータとして残ります。
+          </p>
+        </div>
+
+        <div class="pd-shots pd-shots--even" data-gallery>
+          <figure class="pd-shot">
+            <div class="pd-shot__link">
+              <img src="../assets/gs-cfd-photos.jpg" alt="3DGSの入力に使った室内の撮影画像（一部）" width="1280" height="720" loading="lazy" decoding="async">
+            </div>
+            <figcaption>入力に使った室内の撮影画像（全542枚から抜粋）</figcaption>
+          </figure>
+          <figure class="pd-shot">
+            <div class="pd-shot__link">
+              <img src="../assets/gs-cfd-postshot.jpg" alt="Postshotで3DGSを再構成している画面" width="1920" height="1044" loading="lazy" decoding="async">
+            </div>
+            <figcaption>Postshotでの再構成（白線は推定された撮影カメラ位置）</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 点群からCFDモデルをつくる -->
+    <section class="pd-section" aria-labelledby="modeling-title">
+      <div class="container">
+        <h2 id="modeling-title" class="pd-section__title">CFDモデルの作成</h2>
+        <div class="pd-summary pd-summary--spaced">
+          <p>
+            　CFDでは流体の入れ物になる面が閉じている必要がありますが、点群は面を持ちません。そのため点群をそのまま解析に渡すことはできず、壁・床・天井・梁・窓・家具・家電・エアコン・タワーファンを、閉じたソリッド形状として作り直しています。
+          </p>
+        </div>
+
+        <div class="pd-shots pd-shots--even" data-gallery>
+          <figure class="pd-shot">
+            <div class="pd-shot__link">
+              <img src="../assets/gs-cfd-cloud-slices.jpg" alt="点群を3つの高さで水平スライスした平面図" width="1280" height="1200" loading="lazy" decoding="async">
+            </div>
+            <figcaption>点群の水平スライス（高さ別の平面）</figcaption>
+          </figure>
+          <figure class="pd-shot">
+            <div class="pd-shot__link">
+              <img src="../assets/gs-cfd-furniture-elevations.jpg" alt="家具ごとの点群の正面投影" width="1280" height="1040" loading="lazy" decoding="async">
+            </div>
+            <figcaption>家具ごとの正面投影：高さと幅を決める根拠にする</figcaption>
+          </figure>
+          <figure class="pd-shot">
+            <div class="pd-shot__link">
+              <img src="../assets/gs-cfd-wall-sections.jpg" alt="壁と天井まわりの点群断面" width="1280" height="711" loading="lazy" decoding="async">
+            </div>
+            <figcaption>壁・天井まわりの断面：下がり天井と梁の高さを読み取る</figcaption>
+          </figure>
+          <figure class="pd-shot">
+            <div class="pd-shot__link">
+              <img src="../assets/gs-cfd-beam-plan.jpg" alt="梁と天井の点群を高さで色分けした平面図" width="1280" height="480" loading="lazy" decoding="async">
+            </div>
+            <figcaption>梁と天井：高さで色分けし、下がっている範囲を切り出す</figcaption>
+          </figure>
+        </div>
+
+        <div class="pd-summary">
+          <p>
+            　形を直したあとは、同じ断面に修正前後の輪郭を重ねて確かめています。下は冷蔵庫横の収納まわりで、修正後のソリッド外形（赤線）が点群に合っているか、下がり天井の高さが以前の値（青破線）からどう変わったかを見ているところです。
+          </p>
+        </div>
+        <div class="pd-shots pd-shots--even" data-gallery>
+          <figure class="pd-shot">
+            <div class="pd-shot__link">
+              <img src="../assets/gs-cfd-correction.jpg" alt="点群に修正後のソリッド外形を重ねた確認図" width="1280" height="590" loading="lazy" decoding="async">
+            </div>
+            <figcaption>修正の確認：修正後の外形（赤）と修正前の高さ（青破線）を重ねる</figcaption>
+          </figure>
+          <figure class="pd-shot">
+            <div class="pd-shot__link">
+              <img src="../assets/3dgs_CFD.jpg" alt="点群に修正後のソリッド外形を重ねた確認図" width="1920" height="1044" loading="lazy" decoding="async">
+            </div>
+            <figcaption>点群とCFD用ソリッドモデルを重ねた図</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3Dビュアー -->
+    <section class="pd-section" aria-labelledby="viewer-title">
+      <div class="container">
+        <h2 id="viewer-title" class="pd-section__title">3Dビューア</h2>
+        <div class="pd-summary">
+        </div>
+
+        <h3 class="pd-effect__title pd-effect__subtitle">3DGS点群</h3>
+        <div class="pd-summary">
+        </div>
+        <div class="pd-video">
+          <iframe
+            src="../assets/ldk-viewer.html?mode=splat"
+            title="3DGS点群ビューア（LDK）"
+            allow="fullscreen"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="pd-links pd-links--inline">
+          <a class="btn btn--primary" href="../assets/ldk-viewer.html?mode=splat" target="_blank" rel="noopener">別タブで開く</a>
+        </div>
+        <p class="pd-note">
+          ドラッグで見回し、W/A/S/Dで移動、Space/Shiftで上下。ホイールでズーム、ダブルクリックでその地点へ寄ります。Hキーで初期視点に戻り、左上の「?」で全操作を表示できます。
+        </p>
+
+        <h3 class="pd-effect__title pd-effect__subtitle">CFD用ソリッドモデル</h3>
+        <div class="pd-summary">
+        </div>
+        <div class="pd-video">
+          <iframe
+            src="../assets/ldk-viewer.html?mode=solid"
+            title="CFD用ソリッドモデルのビューア"
+            allow="fullscreen"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="pd-links pd-links--inline">
+          <a class="btn btn--primary" href="../assets/ldk-viewer.html?mode=solid" target="_blank" rel="noopener">別タブで開く</a>
+        </div>
+        <p class="pd-note">
+          ドラッグで見回し、W/A/S/Dで移動、Space/Shiftで上下。ホイールでズーム、ダブルクリックでその地点へ寄ります。Hキーで初期視点に戻り、左上の「?」で全操作を表示できます。
+        </p>
+
+      </div>
+    </section>
+
+    <!-- 解析条件 -->
+    <section class="pd-section" aria-labelledby="analysis-title">
+      <div class="container">
+        <h2 id="analysis-title" class="pd-section__title">解析条件</h2>
+        <div class="pd-summary pd-summary--spaced">
+          <p>
+            　SimScale上で、室温と気流を同時に解く設定にしています。空気の出入りは、窓脇の丸型換気口2か所から入り、天井の排気グリル2か所から抜ける経路です。給気と排気は、設定上どちらも合計30&nbsp;m³/hで釣り合わせています。レンジフードは今回のケースでは停止させた状態として扱い、閉じた壁にしました。
+          </p>
+        </div>
+        <div class="pd-table-wrap" role="region" aria-label="ソルバー設定とメッシュ">
+          <table class="pd-data-table">
+            <caption>ソルバー設定とメッシュ</caption>
+            <thead>
+              <tr>
+                <th scope="col">項目</th>
+                <th scope="col">設定</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">解析種別</th>
+                <td>Convective Heat Transfer Compressible（圧縮性を考慮した対流熱伝達）</td>
+              </tr>
+              <tr>
+                <th scope="row">乱流モデル</th>
+                <td>k-omega SST</td>
+              </tr>
+              <tr>
+                <th scope="row">時間依存性</th>
+                <td>定常解析（end time 1000 / Δt 1 / 書き出し間隔 100）</td>
+              </tr>
+              <tr>
+                <th scope="row">メッシュ</th>
+                <td>4,063,479セル</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="pd-effect__title pd-effect__subtitle">空気の出入り</h3>
+        <div class="pd-table-wrap" role="region" aria-label="給気・排気の境界条件">
+          <table class="pd-data-table">
+            <caption>給気・排気の境界条件</caption>
+            <thead>
+              <tr>
+                <th scope="col">面</th>
+                <th scope="col">種別</th>
+                <th scope="col">設定値</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">エアコン 吹出口</th>
+                <td data-label="種別">速度入口</td>
+                <td data-label="設定値">18&nbsp;℃ / 速度ベクトル (2.0, 0, &minus;0.5)&nbsp;m/s　<span class="pd-data-table__highlight"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">エアコン 吸込口</th>
+                <td data-label="種別">圧力出口</td>
+                <td data-label="設定値">ゲージ圧 0&nbsp;Pa　<span class="pd-data-table__highlight"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">丸型換気口 左</th>
+                <td data-label="種別">速度入口</td>
+                <td data-label="設定値">30&nbsp;℃ / 15&nbsp;m³/h（0.9569&nbsp;m/s）　<span class="pd-data-table__highlight"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">丸型換気口 右</th>
+                <td data-label="種別">速度入口</td>
+                <td data-label="設定値">30&nbsp;℃ / 15&nbsp;m³/h（0.9569&nbsp;m/s）　<span class="pd-data-table__highlight"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">天井グリル 収納側</th>
+                <td data-label="種別">速度出口</td>
+                <td data-label="設定値">15&nbsp;m³/h（0.0641&nbsp;m/s、+Z方向）　<span class="pd-data-table__highlight"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">天井グリル 間仕切り側</th>
+                <td data-label="種別">速度出口</td>
+                <td data-label="設定値">15&nbsp;m³/h（0.1292&nbsp;m/s、+Z方向）　<span class="pd-data-table__highlight"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">レンジフード</th>
+                <td data-label="種別">壁（断熱）</td>
+                <td data-label="設定値">停止状態</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="pd-effect__title pd-effect__subtitle">熱の条件</h3>
+        <div class="pd-table-wrap" role="region" aria-label="壁面・床・天井の熱条件">
+          <table class="pd-data-table">
+            <caption>壁面・床・天井の熱条件</caption>
+            <thead>
+              <tr>
+                <th scope="col">面</th>
+                <th scope="col">種別</th>
+                <th scope="col">設定値</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">窓</th>
+                <td data-label="種別">熱伝達</td>
+                <td data-label="設定値">外気 30&nbsp;℃ / 熱伝達率 15&nbsp;W/(m²·K)　<span class="pd-data-table__highlight"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">壁</th>
+                <td data-label="種別">熱伝達</td>
+                <td data-label="設定値">外気 30&nbsp;℃ / 熱伝達率 8&nbsp;W/(m²·K)　<span class="pd-data-table__highlight"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">床</th>
+                <td data-label="種別">温度固定</td>
+                <td data-label="設定値">26&nbsp;℃　<span class="pd-data-table__highlight"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">天井・下がり天井</th>
+                <td data-label="種別">温度固定</td>
+                <td data-label="設定値">29&nbsp;℃　<span class="pd-data-table__highlight"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">家具・室内機器</th>
+                <td data-label="種別">断熱</td>
+                <td data-label="設定値">熱の出入りなし</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="pd-effect__title pd-effect__subtitle">送風源</h3>
+        <div class="pd-summary">
+          <p>
+            　タワーファンは、羽根の形を再現する代わりに、本体内部の通風路へ平均速度を与える「運動量ソース」として扱っています。形状を作り込まずに送風の効果を与えられるので、設置位置や向きを差し替える比較に向いた方法です。
+          </p>
+        </div>
+        <div class="pd-table-wrap" role="region" aria-label="送風源の設定">
+          <table class="pd-data-table">
+            <caption>送風源の設定</caption>
+            <thead>
+              <tr>
+                <th scope="col">対象</th>
+                <th scope="col">種別</th>
+                <th scope="col">設定値</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">タワーファン</th>
+                <td data-label="種別">運動量ソース</td>
+                <td data-label="設定値">平均速度 (0, 8.0, 0)&nbsp;m/s　<span class="pd-data-table__highlight"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- タワーファンの比較方法 -->
+    <section class="pd-section" aria-labelledby="compare-title">
+      <div class="container">
+        <h2 id="compare-title" class="pd-section__title">タワーファン位置の比較方法</h2>
+        <div class="pd-summary pd-summary--spaced">
+        </div>
+
+        <div class="pd-table-wrap" role="region" aria-label="比較する4つの観点">
+          <table class="pd-data-table">
+            <caption>比較する4つの観点</caption>
+            <thead>
+              <tr>
+                <th scope="col">観点</th>
+                <th scope="col">見るところ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">風速分布</th>
+                <td>室内各所の風速が偏っていないか。</td>
+              </tr>
+              <tr>
+                <th scope="row">温度ムラ</th>
+                <td>室内の温度差の大きさ。</td>
+              </tr>
+              <tr>
+                <th scope="row">滞留域</th>
+                <td>空気がほとんど動かない領域の位置と広さ。</td>
+              </tr>
+              <tr>
+                <th scope="row">家具との干渉</th>
+                <td>送風が家具に正面から当たって止まっていないか。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 計算結果（候補A） -->
+    <section class="pd-section" aria-labelledby="cfd-demo-title">
+      <div class="container">
+        <h2 id="cfd-demo-title" class="pd-section__title">計算結果</h2>
+        <div class="pd-summary pd-summary--spaced">
+        </div>
+
+        <div class="pd-video pd-video--tall">
+          <iframe
+            src="../assets/cfd-demo/index.html"
+            title="候補Aの気流・温度断面デモ"
+            loading="lazy"
+            allow="fullscreen"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="pd-links pd-links--inline">
+          <a class="btn btn--primary" href="../assets/cfd-demo/index.html" target="_blank" rel="noopener">デモを大きく開く</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="../scripts/project-detail.js" type="module"></script>
+
+  <!-- 3Dビューア（クリックされたときだけ iframe を差し込む） -->
+  <script src="../scripts/project-embed-viewer.js" type="module"></script>
+
+  <script src="../scripts/site-chrome.js" type="module"></script>
+  <script src="../scripts/site-theatre.js" type="module"></script>
+</body>
+</html>

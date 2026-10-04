@@ -4,26 +4,54 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Productions | DOYSOUND</title>
+
+  <!-- OGP / Twitter Card（SNSやチャットでの共有プレビュー用） -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="DOYSOUND — Portfolio" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="Productions | DOYSOUND" />
+  <meta property="og:description" content="DOYSOUND の制作物一覧ページ。各作品の概要と詳細ページへのリンクをまとめています。" />
+  <meta property="og:url" content="https://doysound-cmd.github.io/Portfolio/productions.html" />
+  <link rel="canonical" href="https://doysound-cmd.github.io/Portfolio/productions.html" />
+  <meta property="og:image" content="https://doysound-cmd.github.io/Portfolio/assets/ogp.jpg" />
+  <meta property="og:image:alt" content="Productions | DOYSOUND" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Productions | DOYSOUND" />
+  <meta name="twitter:description" content="DOYSOUND の制作物一覧ページ。各作品の概要と詳細ページへのリンクをまとめています。" />
+  <meta name="twitter:image" content="https://doysound-cmd.github.io/Portfolio/assets/ogp.jpg" />
   <meta name="description" content="DOYSOUND の制作物一覧ページ。各作品の概要と詳細ページへのリンクをまとめています。" />
+  <link rel="stylesheet" href="./styles/liftkitvars.css" />
   <link rel="stylesheet" href="./styles/site-core.css" />
   <link rel="stylesheet" href="./styles/project-highlight.css" />
   <link rel="stylesheet" href="./styles/productions-list.css" />
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-Y39NSDYY9J');
-</script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
+      gtag('config', 'G-Y39NSDYY9J');
+    </script>
+
+
+  <!-- Site chrome: theme / 共通ナビ（site-chrome.js とペア） -->
+  <link rel="icon" href="data:," />
+  <meta name="theme-color" content="#f4f4f4" />
+  <link rel="stylesheet" href="./styles/site-chrome.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;family=Zen+Kaku+Gothic+New:wght@500;700;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles/site-theatre.css" />
+  <script src="./scripts/theme-init.js"></script>
 </head>
 <body>
   <header class="list-hero">
     <div class="container">
-      <h1 class="title">Productions</h1>
-      <div class="pd-cta"><a class="btn" href="./index.html">Topへ戻る</a></div>
+      <p class="thx-listhero__eyebrow"><span class="thx-rec"></span>Index of Works — DOYSOUND</p>
+      <h1 class="thx-listhero__title"><span data-split>Productions</span><span class="thx-count" aria-hidden="true">(<span data-works-count>13</span>)</span></h1>
+      <p class="thx-listhero__lede">2019年から現在までの制作物。キーワード検索とタグの組み合わせで絞り込めます。</p>
     </div>
   </header>
 
@@ -37,5 +65,7 @@
 
   <script src="./scripts/site-core.js" type="module"></script>
   <script src="./scripts/project-listing.js" type="module"></script>
+  <script src="./scripts/site-chrome.js" type="module"></script>
+  <script src="./scripts/site-theatre.js" type="module"></script>
 </body>
 </html>

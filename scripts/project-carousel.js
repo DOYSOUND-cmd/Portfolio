@@ -1,4 +1,5 @@
-import { PROJECTS, HOME_FEATURED, ICON_MAP } from './projects-data.js';
+import { PROJECTS, HOME_FEATURED } from './projects-data.js';
+import { cardInnerHtml, hasLinks, bindCardActivation, escapeHtml } from './project-card.js';
 
 // ===============================
 // Infinite loop + center emphasis + autoplay + tag wrapping + icons
@@ -11,82 +12,22 @@ function createCard(p) {
   li.setAttribute("aria-selected", "false");
   li.id = `prod-${p.id}`;
 
-  const tags = Array.isArray(p.tags) ? p.tags : [];
-  const links = Array.isArray(p.links) ? p.links : [];
-  const hasLinks = links.length > 0;
-  const cardAttrs = hasLinks
-    ? ` tabindex="0" role="link" data-card-link="true" aria-label="${p.title}の詳細ページを開く"`
+  const linked = hasLinks(p);
+  const cardAttrs = linked
+    ? ` tabindex="0" role="link" data-card-link="true" aria-label="${escapeHtml(p.title)}の詳細ページを開く"`
     : "";
-  const cardClass = `product-card${hasLinks ? " product-card--interactive" : ""}`;
-  const tagParts = [];
-  tags.forEach((t, i) => {
-    const icon = ICON_MAP[t];
-    const item = icon
-      ? `<li class="tag"><img src="${icon}" alt="${t} アイコン" />${t}</li>`
-      : `<li class="tag">${t}</li>`;
-    tagParts.push(item);
-    if (tags.length >= 4 && i === 2) {
-      tagParts.push(`<li class="br" aria-hidden="true"></li>`);
-    }
-  });
-  const tagHtml = tagParts.join("");
-  const actionsHtml = hasLinks
-    ? `
-        <div class="actions">
-          ${links
-            .map((l, idx) => {
-              const external = /^https?:/i.test(l.href);
-              const targetAttr = external ? ` target="_blank" rel="noopener"` : "";
-              const isPrimary = l.primary ?? idx === 0;
-              const variant = isPrimary ? "btn--primary" : "btn--ghost";
-              return `<a class="btn ${variant}" href="${l.href}"${targetAttr}>${l.label}</a>`;
-            })
-            .join("")}
-        </div>`
-    : "";
+  const cardClass = `product-card${linked ? " product-card--interactive" : ""}`;
 
   li.innerHTML = `
     <article class="${cardClass}"${cardAttrs}>
-      <figure class="product-media">
-        <img src="${p.img}" alt="${p.title}" loading="lazy" />
-      </figure>
-      <div class="product-body">
-        <h3 class="product-title clamp-1">${p.title}</h3>
-        ${p.subtitle ? `<p class="product-sub clamp-1">${p.subtitle}</p>` : ""}
-        <p class="product-desc clamp-3">${p.desc}</p>
-        ${tagHtml ? `<ul class="tags">${tagHtml}</ul>` : ""}
-        ${actionsHtml}
-      </div>
+      ${cardInnerHtml(p, { titleTag: "h3" })}
     </article>
   `;
   return li;
 }
 
-function activateCardLink(card) {
-  if (!card) return;
-  const primaryBtn = card.querySelector(".btn--primary") || card.querySelector(".btn");
-  if (!primaryBtn) return;
-  primaryBtn.click();
-}
-
 function bindCardInteractions(track) {
-  const CARD_SELECTOR = '.product-card[data-card-link="true"]';
-
-  track.addEventListener("click", evt => {
-    const target = evt.target;
-    if (!(target instanceof Element)) return;
-    if (!target.closest(CARD_SELECTOR) || target.closest(".btn")) return;
-    activateCardLink(target.closest(CARD_SELECTOR));
-  });
-
-  track.addEventListener("keydown", evt => {
-    if (evt.key !== "Enter" && evt.key !== " ") return;
-    const target = evt.target;
-    if (!(target instanceof Element)) return;
-    if (!target.closest(CARD_SELECTOR) || target.closest(".btn")) return;
-    evt.preventDefault();
-    activateCardLink(target.closest(CARD_SELECTOR));
-  });
+  bindCardActivation(track, '.product-card[data-card-link="true"]');
 }
 
 function equalizeCardHeights(track) {
@@ -149,13 +90,24 @@ function nearestCenterIndex(viewport, slides) {
   return best.i;
 }
 
-// build loop clones
+/* 無限ループ用の複製。id はページ内で一意でなければならないため、
+   複製側では id を剥がし、支援技術からも二重に見えないようにする。 */
+function cloneSlide(slide) {
+  const copy = slide.cloneNode(true);
+  copy.removeAttribute("id");
+  copy.dataset.clone = "true";
+  copy.setAttribute("aria-hidden", "true");
+  copy.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
+  copy.querySelectorAll('[tabindex="0"]').forEach(el => el.setAttribute("tabindex", "-1"));
+  return copy;
+}
+
 function buildLoop(track, items, cloneCount) {
   items.forEach(p => track.appendChild(createCard(p)));
   const realSlides = Array.from(track.children);
   for (let i = 0; i < cloneCount; i++) {
-    track.appendChild(realSlides[i].cloneNode(true)); // append tail
-    track.insertBefore(realSlides[realSlides.length - 1 - i].cloneNode(true), track.firstChild); // prepend head
+    track.appendChild(cloneSlide(realSlides[i])); // append tail
+    track.insertBefore(cloneSlide(realSlides[realSlides.length - 1 - i]), track.firstChild); // prepend head
   }
 }
 
@@ -202,7 +154,12 @@ function initCarousel(rootEl) {
     if (live) live.textContent = `スライド${((idx - startReal + realLen) % realLen) + 1} / ${realLen}`;
   }
   function setCenterByIndex(i) {
-    slides.forEach((li, j) => li.classList.toggle("is-center", j === i));
+    slides.forEach((li, j) => {
+      const isCenter = j === i;
+      li.classList.toggle("is-center", isCenter);
+      // 複製スライドは aria-hidden なので選択状態を持たせない
+      if (!li.dataset.clone) li.setAttribute("aria-selected", isCenter ? "true" : "false");
+    });
   }
   function updateDots() {
     const realIndex = (idx - startReal + realLen) % realLen;
@@ -338,6 +295,12 @@ function initCarousel(rootEl) {
   });
   ["mouseleave", "focusout"].forEach(evt => {
     rootEl.addEventListener(evt, () => startAutoplay(), { passive: true });
+  });
+
+  // 非表示タブで自動送りを回し続けない
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stopAutoplay();
+    else startAutoplay();
   });
 
   // initial position

@@ -9,7 +9,6 @@
    Global Script (site-wide)
    - スムーススクロール / フェードイン / 外部リンク
    - フォーカスリング制御 / 画像の遅延読み込み
-   - Welcome オーバーレイ（毎回表示）
    - Certifications：行一括アコーディオン & 行ごとの高さ統一
    ========================================================= */
 
@@ -96,72 +95,7 @@
   });
 })();
 
-/* 6) Welcome overlay – only once */
-(function(){
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const KEY = 'welcomeSeen';
-
-  const cameFromProjects = (()=> {
-    try{
-      if (!document.referrer) return false;
-      const ref = new URL(document.referrer);
-      return ref.origin === location.origin && ref.pathname.startsWith('/projects/');
-    }catch(_){ return false; }
-  })();
-
-  const markSeen = ()=>{ try{ sessionStorage.setItem(KEY, '1'); }catch(_){} };
-  const hasSeen = ()=> {
-    try{ return sessionStorage.getItem(KEY) === '1'; }
-    catch(_){ return false; }
-  };
-
-  const removeOverlay = ()=>{
-    const wrap = document.getElementById('welcome');
-    if (wrap) wrap.remove();
-  };
-
-  function open(){
-    const wrap = document.getElementById('welcome');
-    if (!wrap) return;
-    if (cameFromProjects || hasSeen()){
-      removeOverlay();
-      return;
-    }
-
-    wrap.style.display = '';
-    wrap.style.opacity = '';
-
-    if (prefersReduced) { markSeen(); close(60); return; }
-
-    const title = wrap.querySelector('.w-title');
-    if (title) {
-      title.animate(
-        [
-          { opacity: 0, transform: 'translateY(12px) scale(.98)' },
-          { opacity: 1, transform: 'translateY(0) scale(1)' }
-        ],
-        { duration: 680, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'forwards' }
-      );
-    }
-    markSeen();
-    close(2200);
-  }
-
-  function close(delay = 0){
-    const wrap = document.getElementById('welcome');
-    if (!wrap) return;
-    setTimeout(()=> {
-      const anim = wrap.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 460, easing: 'ease' });
-      anim.onfinish = ()=>{ wrap.style.display = 'none'; };
-    }, delay);
-  }
-
-  window.addEventListener('load', open, { once:true });
-  window.addEventListener('pageshow', (e)=>{ if (e.persisted) open(); });
-})();
-
-
-/* 7) Certifications accordion
+/* 6) Certifications accordion
       - Toggle all cards on the same row together
       - Smooth height animation per card */
 (function(){
@@ -285,7 +219,7 @@
   }, { once:true });
 })();
 
-/* 8) Scroll hint visibility */
+/* 7) Scroll hint visibility */
 (function(){
   const hint = document.querySelector('.scroll-hint');
   const anchor = document.getElementById('Productions');

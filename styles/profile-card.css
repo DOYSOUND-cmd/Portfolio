@@ -82,9 +82,10 @@
     min-height: auto;
     padding: 8px 0 4px;
   }
+  /* スキルバッジ（22個）が収まるよう、狭い画面ほどカードを縦長にする */
   #cord .card{
     width: min(98vw, 560px);
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 3 / 2;
     --card-font-base: clamp(14px, 3.1cqw, 18px);
   }
   #cord .content{
@@ -108,9 +109,15 @@
   }
 }
 
-@media (max-width: 420px){
+@media (max-width: 540px){
   #cord .card{
     aspect-ratio: 1 / 1;
+  }
+}
+
+@media (max-width: 420px){
+  #cord .card{
+    aspect-ratio: 9 / 10;
   }
   #cord .content{
     grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
@@ -124,7 +131,7 @@
 
 @media (max-width: 360px){
   #cord .card{
-    aspect-ratio: 10 / 11;
+    aspect-ratio: 3 / 4;
   }
   #cord .content{
     grid-template-columns: minmax(0, 1.18fr) minmax(0, .82fr);
@@ -139,6 +146,12 @@
     gap: 3px;
     font-size: .74rem;
     line-height: 1.1;
+  }
+}
+
+@media (max-width: 340px){
+  #cord .card{
+    aspect-ratio: 2 / 3;
   }
 }
 
@@ -377,7 +390,7 @@ html.is-ios #cord .facts td:nth-child(1){
   margin-top:auto;
   padding:0; list-style:none;
   display:flex; flex-wrap:wrap;
-  gap: clamp(6px, 1cqw, 10px);
+  gap: clamp(5px, .8cqw, 8px);
   justify-content:center;
   overflow:auto;
   -webkit-overflow-scrolling: touch;
@@ -385,13 +398,13 @@ html.is-ios #cord .facts td:nth-child(1){
 #cord .skill{
   position: relative;
   isolation: isolate;
-  display:inline-flex; align-items:center; gap:6px;
-  padding: clamp(6px, .9cqw, 10px) clamp(8px, 1.1cqw, 12px);
+  display:inline-flex; align-items:center; gap:5px;
+  padding: clamp(3px, .5cqw, 6px) clamp(6px, .9cqw, 10px);
   border-radius:999px;
   border:1px solid var(--line);
   background: #ffffff;
   color:#1f252f; font-weight:800;
-  font-size: 0.95em; /* ベースに追従して可変（レイアウトは不変） */
+  font-size: 0.86em; /* 22個がカード内に収まる大きさ。ベースに追従して可変 */
   white-space: nowrap;
   box-shadow:none;
   overflow: hidden;
@@ -400,7 +413,7 @@ html.is-ios #cord .facts td:nth-child(1){
   #cord .skills{
     align-self:start;
     margin-top: 0;
-    gap: 4px 6px;
+    gap: 4px 5px;
     justify-content: flex-start;
   }
   #cord .skill{

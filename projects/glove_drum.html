@@ -4,21 +4,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>手袋型電子ドラム | Product Detail</title>
+
+  <!-- OGP / Twitter Card（SNSやチャットでの共有プレビュー用） -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DOYSOUND — Portfolio" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="手袋型電子ドラム | DOYSOUND" />
+  <meta property="og:description" content="指先のピエゾをトリガーにした省スペース電子ドラム" />
+  <meta property="og:url" content="https://doysound-cmd.github.io/Portfolio/projects/glove_drum.html" />
+  <link rel="canonical" href="https://doysound-cmd.github.io/Portfolio/projects/glove_drum.html" />
+  <meta property="og:image" content="https://doysound-cmd.github.io/Portfolio/assets/drams1.jpg" />
+  <meta property="og:image:alt" content="手袋型電子ドラム | DOYSOUND" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="手袋型電子ドラム | DOYSOUND" />
+  <meta name="twitter:description" content="指先のピエゾをトリガーにした省スペース電子ドラム" />
+  <meta name="twitter:image" content="https://doysound-cmd.github.io/Portfolio/assets/drams1.jpg" />
   <meta
     name="description"
     content="手袋にピエゾ素子を取り付け、壁や床を叩くだけで演奏できる省スペースな電子ドラム。指先のトリガーから音声を鳴らす仕組みを持つ電子楽器。"
   />
+  <link rel="stylesheet" href="../styles/liftkitvars.css" />
   <link rel="stylesheet" href="../styles/site-core.css" />
   <link rel="stylesheet" href="../styles/project-detail.css" />
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  gtag('config', 'G-Y39NSDYY9J');
-</script>
+    gtag('config', 'G-Y39NSDYY9J');
+  </script>
+
+  <!-- Site chrome: theme / 共通ナビ（site-chrome.js とペア） -->
+  <link rel="icon" href="data:," />
+  <meta name="theme-color" content="#f4f4f4" />
+  <link rel="stylesheet" href="../styles/site-chrome.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;family=Zen+Kaku+Gothic+New:wght@500;700;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/site-theatre.css" />
+  <script src="../scripts/theme-init.js"></script>
 </head>
 <body>
 
@@ -28,7 +54,7 @@
       <div class="pd-hero__eyebrow">Product Detail</div>
       <h1 class="pd-hero__title">手袋型電子ドラム</h1>
       <p class="pd-hero__lede">
-        ユーザビリティに優れ、直感的で省スペースなドラムセットを目指して制作した楽器。<br>
+        直感的に演奏できる省スペースなドラムセットを目指して制作した楽器。<br>
         指先にピエゾ素子を取り付け、壁や床など身近な場所を叩くだけでドラム演奏ができる手袋型デバイスです。
       </p>
       <ul class="pd-badges pd-badges--icons" aria-label="使用技術">
@@ -55,7 +81,7 @@
         <h2 id="about-title" class="pd-section__title">概要</h2>
         <div class="pd-summary">
           <p>
-            　各指のピエゾ素子が叩いた振動をアナログ信号として検出し、マイコン側でトリガーに変換して対応する音声データを再生する仕組みです。
+            　叩いたときの振動を各指先のピエゾ素子でアナログ信号として検出し、マイコン側でトリガーへ変換して対応する音声データを再生する仕組みです。
             直感的に叩けて持ち運びやすく、練習やパフォーマンス用途で使えるコンパクトな電子ドラムを目指しました。
           </p>
         </div>
@@ -71,8 +97,8 @@
             <img
               src="../assets/drams1.jpg"
               alt="手袋型電子ドラムの外観"
-              width="1280"
-              height="720"
+              width="480"
+              height="346"
               loading="lazy"
               decoding="async"
             >
@@ -82,8 +108,8 @@
             <img
               src="../assets/drams2.jpg"
               alt="手袋型電子ドラムの回路や構成"
-              width="1280"
-              height="720"
+              width="493"
+              height="308"
               loading="lazy"
               decoding="async"
             >
@@ -96,5 +122,7 @@
   </main>
 
   <script src="../scripts/project-detail.js" type="module"></script>
+  <script src="../scripts/site-chrome.js" type="module"></script>
+  <script src="../scripts/site-theatre.js" type="module"></script>
 </body>
 </html>

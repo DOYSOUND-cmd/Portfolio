@@ -1,0 +1,1399 @@
+/* =========================================================
+   Site Theatre — 2026-07 リデザインレイヤー
+   コンセプト: PRECISION × CINEMA
+   - Canon的な精密さ（赤 #cc0000 / ヘアライン / グリッド / mono ラベル）
+   - 参考サイト由来のシネマティック演出（大型タイポ / マーキー /
+     ゴーストテキスト / スクロール連動 / ビューファインダー枠）
+   - ライト・ダーク両テーマを同じ熱量で設計
+   ※ site-chrome.css より後に読み込むこと（上書きレイヤー）。
+   ※ scripts/site-theatre.js とペア。
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   0) Tokens
+   --------------------------------------------------------- */
+:root{
+  --thx-display: "Space Grotesk", "Zen Kaku Gothic New", "Helvetica Neue", sans-serif;
+  --thx-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --thx-body: "Zen Kaku Gothic New", "Helvetica Neue", "Noto Sans JP", sans-serif;
+
+  --thx-ease: cubic-bezier(.16, 1, .3, 1);
+  --thx-ease-io: cubic-bezier(.65, 0, .35, 1);
+
+  /* light = STUDIO（白スタジオ / Canon） */
+  --bg: #f4f4f4;
+  --bg-2: #f4f4f4;
+  --panel: #ffffff;
+  --text: #101114;
+  --muted: #575c65;
+  --line: #d7dae0;
+  --brand: #cc0000;
+  --accent: #e7362d;
+
+  --thx-ink: 16, 17, 20;            /* text の RGB（アルファ合成用） */
+  --thx-ghost: rgba(16, 17, 20, .075);
+  --thx-ghost-stroke: rgba(16, 17, 20, .16);
+  --thx-grid: rgba(16, 17, 20, .045);
+  --thx-grid2: rgba(16, 17, 20, .07);
+  --thx-scrim: 244, 244, 244;       /* ページ背景の RGB（ヒーローのなじませ用） */
+
+  /* 背景レイヤー（STUDIO: 紙のような繊細な陰影） */
+  --thx-glow1: 7%;                  /* 赤の舞台照明の強さ */
+  --thx-glow2: 5%;                  /* 寒色の対向光の強さ */
+  --thx-cool: #56749e;
+  --thx-vig: rgba(12, 13, 16, .05);
+  --thx-radar: 9%;                  /* レーダースイープの強さ */
+  --thx-blob-op: .4;                /* オーロラブロブの濃さ */
+  --thx-dust: rgba(16, 17, 20, .34);/* 塵パーティクルの色 */
+  --thx-cross: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cpath d='M6 0v12M0 6h12' fill='none' stroke='%23cc0000' stroke-opacity='.16'/%3E%3C/svg%3E");
+  /* 等高線の形状は共通。色/濃度は --thx-ink と --thx-topo-a で テーマ別に指定 */
+  --thx-topo-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='620' fill='none' stroke='%23ffffff'%3E%3Cpath d='M310 96c96 4 178 68 196 158 18 92-40 190-128 222-90 33-200 6-252-72-52-79-38-190 26-252 46-45 100-59 158-56Z'/%3E%3Cpath d='M310 148c76 3 140 55 155 126 15 74-32 152-102 178-72 26-160 4-201-58-42-63-31-152 20-202 37-36 80-47 128-44Z'/%3E%3Cpath d='M310 200c56 2 102 41 113 93 11 55-23 112-75 131-53 19-118 3-148-43-31-46-23-112 15-148 27-27 59-35 95-33Z'/%3E%3Cpath d='M310 252c36 1 64 26 71 59 7 35-15 71-47 83-34 12-75 2-94-27-20-30-15-71 9-94 17-17 38-22 61-21Z'/%3E%3Cpath d='M310 304c16 0 28 12 31 26 3 16-7 31-21 36-15 5-33 1-41-12-9-13-7-31 4-41 7-7 17-10 27-9Z'/%3E%3Cpath d='M18 560c84-36 156-8 224 20 70 29 138 44 214 8 52-24 92-62 146-70'/%3E%3Cpath d='M-8 508c92-42 172-16 244 14 72 31 142 48 222 10 56-27 98-68 156-78'/%3E%3C/svg%3E");
+  --thx-topo-a: .048;
+
+  --radius: 6px;
+}
+
+:root[data-theme="dark"]{
+  /* dark = CINEMA（映画館 / 星街すいせい・S5） */
+  --bg: #0f1115;
+  --bg-2: #0f1115;
+  --panel: #16181e;
+  --text: #eceef2;
+  --muted: #9aa1ad;
+  --line: #2a2f38;
+  --brand: #ff4b3e;
+  --accent: #ff6f64;
+
+  --thx-ink: 236, 238, 242;
+  --thx-ghost: rgba(236, 238, 242, .06);
+  --thx-ghost-stroke: rgba(236, 238, 242, .17);
+  --thx-grid: rgba(236, 238, 242, .05);
+  --thx-grid2: rgba(236, 238, 242, .08);
+  --thx-scrim: 15, 17, 21;
+
+  /* 背景レイヤー（CINEMA: 舞台照明 + 深いビネット） */
+  --thx-glow1: 12%;
+  --thx-glow2: 8%;
+  --thx-cool: #7c9cd8;
+  --thx-vig: rgba(0, 0, 0, .4);
+  --thx-radar: 15%;
+  --thx-blob-op: .6;
+  --thx-dust: rgba(236, 238, 242, .5);
+  --thx-cross: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cpath d='M6 0v12M0 6h12' fill='none' stroke='%23ff4b3e' stroke-opacity='.2'/%3E%3C/svg%3E");
+  --thx-topo-a: .07;
+}
+
+/* ---------------------------------------------------------
+   1) Base 上書き（タイポ / 背景の精密グリッド / 選択色）
+   --------------------------------------------------------- */
+body{
+  font-family: var(--thx-body);
+  letter-spacing: .01em;
+  overflow-x: clip; /* 傾きマーキーのはみ出し対策 */
+}
+
+/* フィルムグレイン（全ページ・最前面／操作は透過） */
+body::after{
+  content: "";
+  position: fixed;
+  inset: -120px;
+  z-index: 250; /* ライトボックス(300)より下・通常コンテンツより上 */
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: .035;
+}
+:root[data-theme="dark"] body::after{ opacity: .06; }
+@media (prefers-reduced-motion: no-preference){
+  body::after{ animation: thx-grain 1.6s steps(4) infinite; }
+}
+@keyframes thx-grain{
+  0%{ transform: translate(0, 0); }
+  25%{ transform: translate(-46px, 30px); }
+  50%{ transform: translate(28px, -52px); }
+  75%{ transform: translate(-24px, -18px); }
+  100%{ transform: translate(0, 0); }
+}
+
+/* 赤ワイプ導入（トップページ / JSが .thx-wipe を注入） */
+.thx-wipe{
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  pointer-events: none;
+  display: none;
+}
+@media (prefers-reduced-motion: no-preference){
+  .thx-wipe{ display: block; }
+  .thx-wipe::before,
+  .thx-wipe::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform-origin: top;
+  }
+  /* カーテン(→.5s)から途切れなく赤→背景色の順で開く */
+  .thx-wipe::before{ background: var(--bg); animation: thx-wipe .7s var(--thx-ease-io) .6s both; }
+  .thx-wipe::after{ background: var(--brand); animation: thx-wipe .55s var(--thx-ease-io) .45s both; }
+}
+@keyframes thx-wipe{ to{ transform: scaleY(0); } }
+
+/* ロード直後のカーテン（FOUC対策）
+   JS注入(ヘッダー/背景レイヤー)やフォント切替が済むまでの一瞬、
+   背景色で覆って「旧デザインのチラ見え」を防ぐ。CSSのみで自動的に
+   開くため、JSが失敗しても隠れたままにはならない。 */
+@media screen and (prefers-reduced-motion: no-preference){
+  html.sc-js::after{
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 600;
+    background: var(--bg);
+    pointer-events: none;
+    animation: thx-curtain .45s ease .5s both;
+  }
+}
+@keyframes thx-curtain{
+  from{ opacity: 1; visibility: visible; }
+  to{ opacity: 0; visibility: hidden; }
+}
+
+/* テーマ切替の円形リビール（setupThemeReveal が発火。対応ブラウザのみ） */
+html.thx-vt-theme::view-transition-old(root){ animation: none; }
+html.thx-vt-theme::view-transition-new(root){
+  animation: thx-theme-circle .55s var(--thx-ease-io) both;
+}
+@keyframes thx-theme-circle{
+  from{ clip-path: circle(0px at var(--thx-vt-x, 50%) var(--thx-vt-y, 50%)); }
+  to{ clip-path: circle(150vmax at var(--thx-vt-x, 50%) var(--thx-vt-y, 50%)); }
+}
+
+/* クリックリップル（fine pointer のみ。setupClickRipple が生成） */
+.thx-ripple{
+  position: fixed;
+  z-index: 455;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  border: 2px solid var(--brand);
+  pointer-events: none;
+  animation: thx-ripple .5s var(--thx-ease) both;
+}
+@keyframes thx-ripple{
+  from{ opacity: .85; scale: .4; }
+  to{ opacity: 0; scale: 4; }
+}
+
+::selection{ background: var(--brand); color: #fff; }
+
+/* 精密グリッド（2階層 + 交点のレジストレーションマーク）。コンテンツの背後 */
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    var(--thx-cross),
+    linear-gradient(to right, var(--thx-grid2) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--thx-grid2) 1px, transparent 1px),
+    linear-gradient(to right, var(--thx-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--thx-grid) 1px, transparent 1px);
+  background-size:
+    360px 360px,
+    360px 360px,
+    360px 360px,
+    72px 72px,
+    72px 72px;
+  background-position:
+    -6px -6px,
+    0 0,
+    0 0,
+    0 0,
+    0 0;
+  -webkit-mask-image: radial-gradient(120% 90% at 50% 0%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(120% 90% at 50% 0%, #000 40%, transparent 100%);
+}
+
+/* 照明・等高線・ビネット（.thx-bg は JS が全ページへ注入） */
+.thx-bg{
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.thx-bg::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(52% 44% at 12% -6%, color-mix(in srgb, var(--brand) var(--thx-glow1), transparent), transparent 70%),
+    radial-gradient(50% 42% at 90% 108%, color-mix(in srgb, var(--thx-cool) var(--thx-glow2), transparent), transparent 70%),
+    radial-gradient(130% 100% at 50% 50%, transparent 62%, var(--thx-vig) 100%);
+}
+/* オーロラブロブ（動く照明。buildBgFx が <i> を2つ注入） */
+.thx-bg i{
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: var(--thx-blob-op);
+  transform: translateZ(0);
+  will-change: transform;
+}
+.thx-bg i:nth-of-type(1){
+  width: 46vmax;
+  height: 46vmax;
+  left: -14vmax;
+  top: -18vmax;
+  background: radial-gradient(circle at 32% 32%, color-mix(in srgb, var(--brand) 36%, transparent), transparent 70%);
+}
+.thx-bg i:nth-of-type(2){
+  width: 42vmax;
+  height: 42vmax;
+  right: -16vmax;
+  bottom: -20vmax;
+  background: radial-gradient(circle at 62% 62%, color-mix(in srgb, var(--thx-cool) 32%, transparent), transparent 70%);
+}
+@media (prefers-reduced-motion: no-preference){
+  .thx-bg i:nth-of-type(1){ animation: thx-blob-a 26s ease-in-out infinite alternate; }
+  .thx-bg i:nth-of-type(2){ animation: thx-blob-b 34s ease-in-out infinite alternate; }
+}
+@keyframes thx-blob-a{
+  to{ transform: translate3d(11vmax, 9vmax, 0) scale(1.18); }
+}
+@keyframes thx-blob-b{
+  to{ transform: translate3d(-9vmax, -11vmax, 0) scale(1.1); }
+}
+@media (max-width: 768px){
+  .thx-bg i{ filter: blur(60px); }
+}
+
+/* 塵パーティクル（setupParticles が canvas を注入） */
+.thx-bg__dust{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 等高線（CFDの解析等値線モチーフ）。ゆっくり漂う */
+.thx-bg::after{
+  content: "";
+  position: absolute;
+  inset: -60px;
+  background-color: rgba(var(--thx-ink), var(--thx-topo-a));
+  -webkit-mask-image: var(--thx-topo-shape), var(--thx-topo-shape);
+  mask-image: var(--thx-topo-shape), var(--thx-topo-shape);
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-size: min(52vw, 660px) auto, min(46vw, 580px) auto;
+  mask-size: min(52vw, 660px) auto, min(46vw, 580px) auto;
+  -webkit-mask-position: right -12% top -14%, left -14% bottom -16%;
+  mask-position: right -12% top -14%, left -14% bottom -16%;
+}
+@media (prefers-reduced-motion: no-preference){
+  .thx-bg::after{ animation: thx-topo-drift 70s ease-in-out infinite alternate; }
+}
+@keyframes thx-topo-drift{
+  from{ transform: translate(0, 0) rotate(0deg); }
+  to{ transform: translate(-26px, 30px) rotate(.6deg); }
+}
+@media (max-width: 768px){
+  .thx-bg::after{
+    -webkit-mask-size: 120vw auto, 0 0;
+    mask-size: 120vw auto, 0 0;
+    -webkit-mask-position: right -30% top -10%, 0 0;
+    mask-position: right -30% top -10%, 0 0;
+  }
+}
+
+/* ページ間トランジション（対応ブラウザのみ / 控えめなフェード） */
+@view-transition{ navigation: auto; }
+@media (prefers-reduced-motion: no-preference){
+  ::view-transition-old(root){ animation: thx-vt-out .22s ease both; }
+  ::view-transition-new(root){ animation: thx-vt-in .3s ease both; }
+}
+@keyframes thx-vt-out{ to{ opacity: 0; } }
+@keyframes thx-vt-in{ from{ opacity: 0; } }
+
+/* ---------------------------------------------------------
+   2) 共通チューニング（ヘッダー / ボタン / チップ / フォーカス）
+   --------------------------------------------------------- */
+/* スキップリンク：フォーカス時のみ表示 */
+.thx-skip{
+  position: fixed;
+  left: 12px;
+  top: 12px;
+  z-index: 200;
+  padding: 10px 16px;
+  border-radius: 4px;
+  background: var(--brand);
+  color: #fff;
+  font-family: var(--thx-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  transform: translateY(-64px);
+  opacity: 0;
+  pointer-events: none;
+}
+.thx-skip:focus-visible{
+  transform: none;
+  opacity: 1;
+  pointer-events: auto;
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  text-decoration: none;
+}
+
+.sc-brand__name{ font-family: var(--thx-display); letter-spacing: .04em; }
+.sc-nav a{
+  font-family: var(--thx-mono);
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+.sc-progress span{ background: var(--brand); }
+
+.btn{
+  border-radius: 4px;
+  font-family: var(--thx-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  box-shadow: none;
+  background: var(--panel);
+  color: var(--text);
+  border-color: var(--line);
+}
+.btn::after{
+  content: "→";
+  display: inline-block;
+  transition: transform .3s var(--thx-ease);
+}
+.btn:hover{ box-shadow: none; border-color: var(--brand); color: var(--brand); }
+.btn:hover::after{ transform: translateX(4px); }
+.btn--primary,
+.product-card .btn--primary,
+[data-theme="dark"] .btn--primary,
+[data-theme="dark"] .product-card .btn--primary,
+[data-theme="dark"] .pd-cta .btn{
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+  box-shadow: none;
+}
+.btn--primary:hover{ color: #fff; filter: brightness(1.08); }
+.btn--ghost,
+.product-card .btn--ghost{
+  background: transparent;
+  border-color: var(--brand);
+  color: var(--brand);
+  box-shadow: none;
+}
+.tag, .plist-tag{
+  border-radius: 4px;
+  font-family: var(--thx-mono);
+  font-weight: 600;
+  letter-spacing: .06em;
+  font-size: .78rem;
+}
+
+/* ---------------------------------------------------------
+   3) Hero（トップ）— ビューファインダー
+   --------------------------------------------------------- */
+#cord .container{ position: relative; }
+
+/* 回転レティクル（レンズ絞りのモチーフ） */
+.thx-reticle{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 0;
+  width: min(74vmin, 720px);
+  aspect-ratio: 1;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  border: 1px dashed color-mix(in srgb, var(--brand) 34%, transparent);
+  border-radius: 50%;
+  opacity: .5;
+  pointer-events: none;
+  animation: thx-spin 90s linear infinite;
+}
+.thx-reticle::before{
+  content: "";
+  position: absolute;
+  inset: 10%;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+}
+/* レーダースイープ（回転する赤いビーム） */
+@media (prefers-reduced-motion: no-preference){
+  .thx-reticle::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg,
+      color-mix(in srgb, var(--brand) var(--thx-radar), transparent) 0deg,
+      transparent 70deg);
+    animation: thx-radar 8s linear infinite;
+  }
+}
+@keyframes thx-radar{ to{ transform: rotate(360deg); } }
+@keyframes thx-spin{ to{ transform: translate(-50%, -50%) rotate(360deg); } }
+
+
+/* ビューファインダー四隅 + mono メタラベル */
+.thx-frame{
+  position: absolute;
+  inset: clamp(10px, 2.6vw, 28px);
+  z-index: 2;
+  pointer-events: none;
+  transform: translate(calc(var(--px, 0) * 7px), calc(var(--py, 0) * 5px));
+  transition: transform .55s cubic-bezier(.2, .7, .3, 1);
+}
+/* スキャンライン（ビューファインダー内を周期的に走査） */
+@media (prefers-reduced-motion: no-preference){
+  .thx-frame::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--brand) 30%, var(--brand) 70%, transparent);
+    animation: thx-scan 7s linear infinite;
+  }
+}
+@keyframes thx-scan{
+  0%{ top: 0%; opacity: 0; }
+  6%{ opacity: .55; }
+  94%{ opacity: .55; }
+  100%{ top: 100%; opacity: 0; }
+}
+.thx-frame i{
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 0 solid var(--brand);
+}
+.thx-frame i:nth-child(1){ left: 0; top: 0; border-left-width: 2px; border-top-width: 2px; }
+.thx-frame i:nth-child(2){ right: 0; top: 0; border-right-width: 2px; border-top-width: 2px; }
+.thx-frame i:nth-child(3){ left: 0; bottom: 0; border-left-width: 2px; border-bottom-width: 2px; }
+.thx-frame i:nth-child(4){ right: 0; bottom: 0; border-right-width: 2px; border-bottom-width: 2px; }
+.thx-frame b{
+  position: absolute;
+  font-family: var(--thx-mono);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.thx-frame b:nth-of-type(1){ left: 36px; top: 4px; }
+.thx-frame b:nth-of-type(2){ right: 36px; top: 4px; text-align: right; }
+.thx-frame b:nth-of-type(3){ left: 36px; bottom: 4px; }
+.thx-frame b:nth-of-type(4){ right: 36px; bottom: 4px; }
+.thx-rec{
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--brand);
+  vertical-align: 1px;
+  animation: thx-blink 1.6s steps(1) infinite;
+}
+@keyframes thx-blink{ 50%{ opacity: .15; } }
+@media (max-width: 700px){
+  .thx-frame b:nth-of-type(2), .thx-frame b:nth-of-type(3){ display: none; }
+}
+/* モバイルはヒーローがコンパクトなため装飾を畳む */
+@media (max-width: 768px){
+  .thx-frame, .thx-reticle{ display: none; }
+}
+
+/* カードは演出の手前へ */
+#cord .card{ z-index: 3; }
+
+/* 待機フロート（JSのtransformと干渉しない translate プロパティ） */
+@media (prefers-reduced-motion: no-preference){
+  #cord .card{ animation: thx-card-float 7s ease-in-out 2.4s infinite; }
+}
+@keyframes thx-card-float{
+  0%, 100%{ translate: 0 0; }
+  50%{ translate: 0 -9px; }
+}
+
+/* スクロール退場: ヒーロー全体が奥へ縮みながらフェード（対応環境のみ） */
+@supports (animation-timeline: scroll()){
+  @media (prefers-reduced-motion: no-preference){
+    #cord .container{
+      animation: thx-hero-exit linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 90vh;
+    }
+  }
+}
+@keyframes thx-hero-exit{
+  to{ scale: .93; opacity: .2; }
+}
+
+/* スクロールヒント：mono ミニマルに再構成 */
+.scroll-hint__circle{ display: none; }
+.scroll-hint{ width: auto; animation: none; }
+.scroll-hint__label{
+  font-family: var(--thx-mono);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.scroll-hint__body::after{
+  content: "";
+  display: block;
+  width: 1px;
+  height: 44px;
+  margin: 10px auto 0;
+  background: linear-gradient(var(--brand), transparent);
+  animation: thx-drip 1.8s var(--thx-ease-io) infinite;
+}
+@keyframes thx-drip{
+  0%{ transform: scaleY(0); transform-origin: top; }
+  45%{ transform: scaleY(1); transform-origin: top; }
+  55%{ transform: scaleY(1); transform-origin: bottom; }
+  100%{ transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ---------------------------------------------------------
+   5) セクション見出し（番号 + 大型タイポ / arkreis・S5）
+   --------------------------------------------------------- */
+.thx-sechead{
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(14px, 3vw, 28px);
+  margin-bottom: clamp(22px, 4vw, 44px);
+}
+/* 見出し背後の巨大ゴースト番号（data-no 属性から描画） */
+.thx-sechead[data-no]::before{
+  content: attr(data-no);
+  position: absolute;
+  left: clamp(-20px, -2vw, -8px);
+  bottom: -18%;
+  z-index: -1;
+  font-family: var(--thx-display);
+  font-weight: 700;
+  font-size: clamp(120px, 20vw, 300px);
+  line-height: 1;
+  letter-spacing: -.04em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--thx-ghost-stroke);
+  pointer-events: none;
+  user-select: none;
+}
+.thx-sechead__no{
+  font-family: var(--thx-mono);
+  font-weight: 600;
+  font-size: clamp(12px, 1.4vw, 14px);
+  letter-spacing: .18em;
+  color: var(--brand);
+  padding-bottom: clamp(8px, 1.2vw, 14px);
+  white-space: nowrap;
+}
+.thx-sechead__no::before{
+  content: "";
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 8px;
+  background: var(--brand);
+}
+.thx-sechead__title{
+  font-family: var(--thx-display);
+  font-weight: 700;
+  font-size: clamp(42px, 8.6vw, 110px);
+  line-height: .95;
+  letter-spacing: -.02em;
+  text-transform: uppercase;
+  margin: 0;
+  color: var(--text);
+}
+.thx-sechead__sub{
+  margin: 10px 0 0;
+  font-family: var(--thx-mono);
+  font-size: clamp(11px, 1.3vw, 13px);
+  letter-spacing: .12em;
+  color: var(--muted);
+}
+.thx-sechead__cta{ margin-left: auto; padding-bottom: 6px; }
+@media (max-width: 640px){
+  .thx-sechead{ flex-wrap: wrap; }
+  .thx-sechead__cta{ margin-left: 0; flex-basis: 100%; }
+}
+
+/* 見出しのキネティックスライド（視界に入る際に横から滑り込む） */
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .thx-sechead__title{
+      animation: thx-title-slide linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 32%;
+    }
+  }
+}
+@keyframes thx-title-slide{
+  from{ translate: 6vw 0; }
+  to{ translate: 0 0; }
+}
+
+/* 文字ばらしリビール（[data-split] は JS が span 化） */
+.thx-split{ overflow: hidden; }
+span.thx-split{ display: inline-block; vertical-align: bottom; }
+.thx-split .thx-ch{
+  display: inline-block;
+  transform: translateY(112%);
+  will-change: transform;
+  transition: transform .8s var(--thx-ease);
+  transition-delay: calc(var(--i, 0) * 26ms);
+}
+.thx-split .thx-ch--sp{ white-space: pre; }
+.thx-split.is-in .thx-ch{ transform: none; }
+/* リビール後、文字が赤くフラッシュして定着 */
+@media (prefers-reduced-motion: no-preference){
+  .thx-split.is-in .thx-ch{
+    animation: thx-ch-flash .6s both;
+    animation-delay: calc(var(--i, 0) * 26ms + .3s);
+  }
+}
+@keyframes thx-ch-flash{
+  0%, 55%{ color: var(--brand); }
+  100%{ color: inherit; }
+}
+@media (prefers-reduced-motion: reduce){
+  .thx-split .thx-ch{ transform: none; transition: none; }
+}
+
+/* 汎用リビール */
+html.sc-js [data-reveal]{
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .8s var(--thx-ease), transform .8s var(--thx-ease);
+  transition-delay: calc(var(--d, 0) * 90ms);
+}
+html.sc-js [data-reveal].is-in{ opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce){
+  html.sc-js [data-reveal]{ opacity: 1; transform: none; transition: none; }
+}
+
+/* ---------------------------------------------------------
+   6) 数字バンド（Apple Watch 風カウント）
+   --------------------------------------------------------- */
+
+/* ---------------------------------------------------------
+   7) セクション透かし（巨大アウトラインタイポ）
+   --------------------------------------------------------- */
+#Productions,
+#qualifications{
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+#Productions::before,
+#qualifications::before{
+  position: absolute;
+  z-index: -1;
+  font-family: var(--thx-display);
+  font-weight: 700;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--thx-ghost-stroke);
+  pointer-events: none;
+  user-select: none;
+}
+#Productions::before{
+  content: "WORKS";
+  right: -2vw;
+  top: -3vw;
+  font-size: clamp(110px, 21vw, 320px);
+  letter-spacing: -.02em;
+}
+#qualifications::before{
+  content: "資格";
+  left: -3vw;
+  bottom: -5vw;
+  font-size: clamp(150px, 27vw, 400px);
+  font-family: var(--thx-body);
+  font-weight: 900;
+}
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    #Productions::before,
+    #qualifications::before{
+      animation: thx-wm-drift linear both;
+      animation-timeline: view();
+    }
+    @keyframes thx-wm-drift{
+      from{ translate: 3vw 0; }
+      to{ translate: -3vw 0; }
+    }
+  }
+}
+
+/* ---------------------------------------------------------
+   8) カルーセル / 作品カード（精密トーンへ）
+   --------------------------------------------------------- */
+.car-viewport,
+[data-theme="dark"] .car-viewport{
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.product-card{
+  border-radius: var(--radius);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: none;
+  transition: transform .5s var(--thx-ease), border-color .3s ease, box-shadow .5s var(--thx-ease);
+}
+.product-slide.is-center .product-card{
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .14);
+}
+/* 中央カードはゆっくり浮遊（transformのscaleとは独立のtranslate） */
+@media (prefers-reduced-motion: no-preference){
+  .product-slide.is-center .product-card{ animation: thx-card-float 5.5s ease-in-out infinite; }
+}
+[data-theme="dark"] .product-slide.is-center .product-card{
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .55);
+}
+.product-card--interactive:hover{
+  border-color: var(--brand);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .12);
+}
+[data-theme="dark"] .product-card--interactive:hover{
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .5);
+}
+.product-media{ position: relative; overflow: hidden; }
+.product-media::after{
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2px;
+  background: var(--brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .5s var(--thx-ease);
+}
+.product-card--interactive:hover .product-media::after{ transform: none; }
+.product-media img{
+  transition: transform .8s var(--thx-ease), filter .8s var(--thx-ease);
+}
+.product-card--interactive:hover .product-media img{ transform: scale(1.05); }
+.product-title{ font-family: var(--thx-body); font-weight: 900; }
+/* ホバー時のRGB分離グリッチ */
+@media (prefers-reduced-motion: no-preference){
+  .product-card--interactive:hover .product-title{
+    animation: thx-txt-glitch .32s steps(2) 1;
+  }
+}
+@keyframes thx-txt-glitch{
+  0%{ text-shadow: 3px 0 var(--brand), -3px 0 var(--thx-cool); translate: -2px 0; }
+  50%{ text-shadow: -3px 0 var(--brand), 3px 0 var(--thx-cool); translate: 2px 0; }
+  100%{ text-shadow: none; translate: 0 0; }
+}
+.car-btn{
+  border-radius: 4px;
+  background: var(--panel);
+  border-color: var(--line);
+  box-shadow: none;
+}
+.car-btn:hover:not([disabled]){ border-color: var(--brand); color: var(--brand); box-shadow: none; }
+.car-dot{ border-radius: 0; width: 22px; height: 3px; border: 0; background: var(--line); }
+.car-dot[aria-selected="true"]{ background: var(--brand); }
+
+/* ---------------------------------------------------------
+   9) Certifications（番号付きの精密アコーディオン）
+   --------------------------------------------------------- */
+#qualifications .qualification-item,
+[data-theme="dark"] #qualifications .qualification-item{
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: none;
+}
+#qualifications .qualification-item:hover{
+  border-color: var(--brand);
+  box-shadow: none;
+  transform: none;
+}
+#qualifications .q-index,
+[data-theme="dark"] #qualifications .q-index{
+  background: transparent;
+  border: 1px solid var(--brand);
+  color: var(--brand);
+  border-radius: 4px;
+  font-family: var(--thx-mono);
+}
+
+/* ---------------------------------------------------------
+   10) Productions 一覧
+   --------------------------------------------------------- */
+.list-hero,
+[data-theme="dark"] .list-hero{
+  background: transparent;
+  border-bottom: 0;
+  padding: clamp(40px, 8vw, 90px) 0 clamp(10px, 2vw, 18px);
+}
+.thx-listhero__eyebrow{
+  font-family: var(--thx-mono);
+  font-size: 12px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--brand);
+  margin: 0 0 14px;
+}
+.thx-listhero__title{
+  font-family: var(--thx-display);
+  font-weight: 700;
+  font-size: clamp(50px, 12vw, 164px);
+  line-height: .9;
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0;
+}
+.thx-listhero__title .thx-count{
+  font-size: .32em;
+  color: var(--brand);
+  -webkit-text-stroke: 0;
+  vertical-align: super;
+  letter-spacing: 0;
+  font-family: var(--thx-mono);
+  font-weight: 600;
+}
+.thx-listhero__lede{
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-weight: 700;
+  max-width: 46em;
+}
+
+/* フィルタバー：スティッキーなガラス帯 */
+.plist-tools{
+  position: sticky;
+  top: calc(var(--sc-header-h) + 10px);
+  z-index: 40;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  backdrop-filter: blur(14px) saturate(1.1);
+}
+.plist-search input{ border-radius: 4px; box-shadow: none; font-family: var(--thx-body); }
+.plist-tag{ border-radius: 4px; }
+
+/* 年グループ：巨大ゴースト年号 */
+.year-section{
+  position: relative;
+  border-top: 1px solid var(--line);
+  padding-top: clamp(18px, 3vw, 30px);
+}
+.year-title{
+  position: relative;
+  z-index: 1;
+  font-family: var(--thx-display);
+  font-weight: 700;
+  font-size: clamp(40px, 8vw, 96px);
+  line-height: .9;
+  letter-spacing: -.03em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--thx-ghost-stroke);
+  margin: 0 0 4px;
+}
+.year-title::before{
+  content: "YEAR /";
+  display: block;
+  font-family: var(--thx-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  color: var(--brand);
+  -webkit-text-stroke: 0;
+  margin-bottom: 8px;
+}
+.product-card.product-card--list{
+  border-radius: var(--radius);
+  box-shadow: none;
+}
+/* 一覧カード: スクロールで浮かび上がる入場（対応環境のみ） */
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .prod-grid .product-card{
+      animation: thx-card-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
+@keyframes thx-card-rise{
+  from{ opacity: .15; translate: 0 34px; }
+  to{ opacity: 1; translate: 0 0; }
+}
+.product-card--list .btn{ border-radius: 4px; }
+
+/* ---------------------------------------------------------
+   11) 詳細ページ：シネマティックヒーロー
+   （site-theatre.js が .pd-hero--theatre と背景を注入）
+   --------------------------------------------------------- */
+.pd-hero{
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(430px, 72svh, 780px);
+  background: var(--bg);
+}
+.thx-pdbg{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.thx-pdbg img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.06);
+}
+@supports (animation-timeline: scroll()){
+  .thx-pdbg img{
+    animation: thx-pdbg-drift linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 100vh;
+  }
+  @keyframes thx-pdbg-drift{
+    from{ transform: scale(1.06) translateY(0); }
+    to{ transform: scale(1.12) translateY(6%); }
+  }
+}
+.thx-pdbg::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg,
+      rgba(var(--thx-scrim), .44) 0%,
+      rgba(var(--thx-scrim), .16) 30%,
+      rgba(var(--thx-scrim), .82) 56%,
+      rgba(var(--thx-scrim), .97) 76%,
+      rgb(var(--thx-scrim)) 100%);
+}
+.pd-hero .container{
+  position: relative;
+  z-index: 1;
+  width: min(94vw, 1080px);
+  padding-block: clamp(24px, 4vw, 44px) clamp(22px, 3.4vw, 40px);
+}
+/* モバイルは画像上の文字の可読性を優先してスクリムを強める */
+@media (max-width: 640px){
+  .thx-pdbg::after{
+    background:
+      linear-gradient(180deg,
+        rgba(var(--thx-scrim), .55) 0%,
+        rgba(var(--thx-scrim), .3) 26%,
+        rgba(var(--thx-scrim), .9) 52%,
+        rgba(var(--thx-scrim), .98) 72%,
+        rgb(var(--thx-scrim)) 100%);
+  }
+  .pd-hero{ min-height: clamp(380px, 62svh, 560px); }
+}
+.thx-pdmeta{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  margin-bottom: clamp(12px, 2vw, 20px);
+  font-family: var(--thx-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.thx-pdmeta a{ color: inherit; }
+.thx-pdmeta a:hover{ color: var(--brand); text-decoration: none; }
+.thx-pdmeta .thx-pdmeta__no{ color: var(--brand); }
+.thx-pdmeta .thx-pdmeta__sep{ opacity: .5; }
+.pd-hero .pd-hero__eyebrow{ display: none; }
+.pd-hero .pd-hero__title{
+  font-family: var(--thx-body);
+  font-weight: 900;
+  font-size: clamp(34px, 6.4vw, 76px);
+  line-height: 1.06;
+  letter-spacing: -.01em;
+  color: var(--text);
+}
+.pd-hero .pd-hero__lede{
+  max-width: 44em;
+  font-weight: 700;
+}
+.pd-hero .pd-badges .badge,
+[data-theme="dark"] .pd-hero .pd-badges .badge{
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--panel) 72%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-color: var(--line);
+  font-family: var(--thx-mono);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: .06em;
+}
+
+/* ヒーロー登場アニメーション
+   ※ 本文テキストはプリペイントで即表示し、背景画像のみ演出する
+   （JS実行前に「旧デザイン」が見える FOUC 対策） */
+@media (prefers-reduced-motion: no-preference){
+  .pd-hero--theatre .thx-pdbg{ animation: thx-hero-bg 1.6s var(--thx-ease) both; }
+  .pd-hero--theatre .thx-pdmeta{ animation: thx-hero-up .7s var(--thx-ease) both; }
+}
+@keyframes thx-hero-bg{
+  from{ opacity: 0; transform: scale(1.09); filter: saturate(.35) brightness(.75) blur(8px); }
+  60%{ opacity: 1; }
+  to{ opacity: 1; transform: none; filter: none; }
+}
+@keyframes thx-hero-up{
+  from{ opacity: 0; transform: translateY(26px); }
+  to{ opacity: 1; transform: none; }
+}
+
+/* ---------------------------------------------------------
+   12) 詳細ページ：セクション演出
+   --------------------------------------------------------- */
+.pd-section .container{ position: relative; }
+.pd-section__title{
+  font-family: var(--thx-body);
+  font-weight: 900;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.pd-section__title::before{
+  content: "";
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  background: var(--brand);
+  transform: translateY(-1px) rotate(45deg);
+}
+.pd-shot,
+[data-theme="dark"] .pd-shot{
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: none;
+}
+.pd-shot figcaption{
+  font-family: var(--thx-mono);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: .08em;
+}
+.pd-shot figcaption::before{ content: "▸ "; color: var(--brand); }
+
+/* スクロール連動：画像がゆっくり持ち上がる + 赤パネルワイプ（対応環境のみ） */
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .pd-shot{
+      position: relative;
+      animation: thx-shot-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 68%;
+    }
+    @keyframes thx-shot-in{
+      from{ opacity: .25; transform: translateY(34px); }
+      to{ opacity: 1; transform: none; }
+    }
+    .pd-shot::after{
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: var(--brand);
+      border-radius: inherit;
+      transform-origin: right;
+      pointer-events: none;
+      animation: thx-shot-wipe linear both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 62%;
+    }
+    @keyframes thx-shot-wipe{
+      from{ transform: scaleX(1); }
+      to{ transform: scaleX(0); }
+    }
+    /* 年号ゴーストのスクロールドリフト（一覧） */
+    .year-title{
+      animation: thx-year-drift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+    @keyframes thx-year-drift{
+      from{ transform: translateX(-28px); }
+      to{ transform: translateX(34px); }
+    }
+  }
+}
+
+/* リビール距離をわずかに拡大（既存 .sc-reveal を強化） */
+html.sc-js .sc-reveal{ transform: translateY(24px); }
+html.sc-js .sc-reveal.is-in{ transform: none; }
+
+/* ---------------------------------------------------------
+   13) フッター
+   --------------------------------------------------------- */
+.sc-footer{ background: var(--panel); }
+[data-theme="dark"] .sc-footer{ background: var(--panel); }
+.sc-footer__title{ font-family: var(--thx-mono); }
+.sc-footer__links a{ font-family: var(--thx-body); }
+.sc-footer__bottom small{ font-family: var(--thx-mono); letter-spacing: .04em; font-size: 11.5px; }
+
+/* ---------------------------------------------------------
+   14) 名刺カード周辺の微調整（カードは白のまま維持）
+   --------------------------------------------------------- */
+[data-theme="dark"] #cord .front,
+[data-theme="dark"] #cord .back{
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .6), inset 0 0 0 1px rgba(217, 220, 226, .9);
+}
+
+/* ---------------------------------------------------------
+   15) カスタムカーソル（fine pointer のみ / JSが .thx-cursor-on を付与）
+   --------------------------------------------------------- */
+@media (pointer: fine){
+  html.thx-cursor-on *{ cursor: none !important; }
+  html.thx-cursor-on input,
+  html.thx-cursor-on textarea,
+  html.thx-cursor-on select{ cursor: text !important; }
+}
+.thx-cursor{
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 460;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+html.thx-cursor-on .thx-cursor{ opacity: 1; }
+.thx-cursor__dot,
+.thx-cursor__ring{
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  will-change: transform;
+}
+.thx-cursor__dot{
+  width: 6px;
+  height: 6px;
+  background: var(--brand);
+}
+.thx-cursor__ring{
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid color-mix(in srgb, var(--brand) 65%, transparent);
+  transition: width .25s var(--thx-ease), height .25s var(--thx-ease), border-color .25s ease;
+}
+html.thx-cursor-hover .thx-cursor__ring{
+  width: 54px;
+  height: 54px;
+  border-color: var(--brand);
+}
+
+/* ---------------------------------------------------------
+   16) 画像ライトボックス（詳細ページ）
+   --------------------------------------------------------- */
+.thx-zoomable{ cursor: zoom-in; }
+.thx-lightbox{
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(14px, 4vw, 56px);
+  background: rgba(var(--thx-scrim), .93);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+.thx-lightbox.is-open{ display: flex; }
+.thx-lightbox__fig{
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  max-width: 100%;
+  min-width: 0;
+}
+.thx-lightbox__fig img{
+  max-width: min(1400px, 100%);
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+}
+.thx-lightbox__cap{
+  font-family: var(--thx-mono);
+  font-size: 12.5px;
+  letter-spacing: .08em;
+  color: var(--muted);
+  text-align: center;
+}
+.thx-lightbox__cap::before{ content: "▸ "; color: var(--brand); }
+.thx-lightbox__count{
+  position: absolute;
+  top: 22px;
+  left: 22px;
+  margin: 0;
+  font-family: var(--thx-mono);
+  font-size: 12px;
+  letter-spacing: .18em;
+  color: var(--muted);
+}
+.thx-lightbox__btn{
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 4px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color .2s ease, color .2s ease, transform .2s ease;
+}
+.thx-lightbox__btn:hover{ border-color: var(--brand); color: var(--brand); }
+.thx-lightbox__close{ top: 16px; right: 16px; }
+.thx-lightbox__prev{ left: 14px; top: 50%; transform: translateY(-50%); }
+.thx-lightbox__next{ right: 14px; top: 50%; transform: translateY(-50%); }
+@media (prefers-reduced-motion: no-preference){
+  .thx-lightbox.is-open .thx-lightbox__fig{ animation: thx-lb-in .35s var(--thx-ease); }
+}
+@keyframes thx-lb-in{ from{ opacity: 0; transform: scale(.97); } }
+@media (max-width: 640px){
+  /* ナビボタンは画像に被せず、下部中央の親指位置へ */
+  .thx-lightbox{ padding: 12px 12px 88px; }
+  .thx-lightbox__prev,
+  .thx-lightbox__next{ top: auto; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: none; }
+  .thx-lightbox__prev{ left: calc(50% - 56px); }
+  .thx-lightbox__next{ right: calc(50% - 56px); }
+  .thx-lightbox__close{ top: 12px; right: 12px; }
+  .thx-lightbox__count{ top: 20px; left: 14px; }
+  .thx-lightbox__fig img{ max-height: 64vh; }
+}
+
+/* ---------------------------------------------------------
+   17) ページ内目次（セクションの多い詳細ページ）
+   --------------------------------------------------------- */
+.thx-secnav{
+  position: sticky;
+  top: var(--sc-header-h);
+  z-index: 90;
+  border-block: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  backdrop-filter: blur(14px) saturate(1.1);
+}
+.thx-secnav__inner{
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-block: 10px;
+}
+.thx-secnav__inner::-webkit-scrollbar{ display: none; }
+.thx-secnav a{
+  flex: 0 0 auto;
+  padding: 7px 12px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  font-family: var(--thx-mono);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: .06em;
+  color: var(--muted);
+  white-space: nowrap;
+  max-width: 30ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color .18s ease, border-color .18s ease, background .18s ease;
+}
+.thx-secnav a:hover{ color: var(--brand); text-decoration: none; }
+.thx-secnav a.is-active{
+  color: var(--brand);
+  border-color: var(--brand);
+  background: color-mix(in srgb, var(--brand) 8%, transparent);
+}
+/* 目次バーの分だけアンカー位置を下げる */
+html.thx-has-secnav [id]{ scroll-margin-top: calc(var(--sc-header-h) + 66px); }
+
+/* ---------------------------------------------------------
+   18) モバイルUX調整（UIと内容の重なり対策）
+   --------------------------------------------------------- */
+@media (max-width: 768px){
+  /* ヒーローが画面を占有しないモバイルでは、固定スクロールヒントが
+     コンテンツに被るため非表示 */
+  .scroll-hint{ display: none !important; }
+
+  /* 一覧のフィルタパネル: 追従をやめて画面を覆わない */
+  .plist-tools{
+    position: static;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: var(--panel);
+  }
+  /* タグは横スクロールの1行にして高さを圧縮 */
+  .plist-tags{
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .plist-tags::-webkit-scrollbar{ display: none; }
+  .plist-tag{ white-space: nowrap; }
+}
+
+@media (max-width: 640px){
+  /* カルーセルの矢印はカードに被るので非表示（スワイプ + ドットで操作） */
+  .car-btn{ display: none; }
+
+  /* ページ内目次を少しコンパクトに */
+  .thx-secnav__inner{ padding-block: 8px; }
+  .thx-secnav a{ font-size: 11.5px; padding: 6px 10px; }
+}
+
+@media (max-width: 520px){
+  /* ヘッダーnavを3項目とも収める（見切れ・重なり対策） */
+  .sc-nav{ gap: 0; }
+  .sc-nav a{ font-size: 10.5px; letter-spacing: .06em; padding: 7px 6px; }
+}
+
+/* ---------------------------------------------------------
+   19) 印刷
+   --------------------------------------------------------- */
+@media print{
+  body::before, .thx-reticle, .thx-frame,
+  .thx-lightbox, .thx-secnav, .thx-skip{ display: none !important; }
+}

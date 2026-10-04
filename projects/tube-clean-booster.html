@@ -4,8 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Tube Clean Booster — Product Detail</title>
+
+  <!-- OGP / Twitter Card（SNSやチャットでの共有プレビュー用） -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DOYSOUND — Portfolio" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="真空管クリーンブースター | DOYSOUND" />
+  <meta property="og:description" content="真空管を9Vで駆動するアナログのクリーンブースター" />
+  <meta property="og:url" content="https://doysound-cmd.github.io/Portfolio/projects/tube-clean-booster.html" />
+  <link rel="canonical" href="https://doysound-cmd.github.io/Portfolio/projects/tube-clean-booster.html" />
+  <meta property="og:image" content="https://doysound-cmd.github.io/Portfolio/assets/work_tube_booster.jpg" />
+  <meta property="og:image:alt" content="真空管クリーンブースター | DOYSOUND" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="真空管クリーンブースター | DOYSOUND" />
+  <meta name="twitter:description" content="真空管を9Vで駆動するアナログのクリーンブースター" />
+  <meta name="twitter:image" content="https://doysound-cmd.github.io/Portfolio/assets/work_tube_booster.jpg" />
   <meta name="description" content="9V駆動でボードに載せやすい真空管クリーンブースターの紹介。" />
   <!-- 共通スタイル -->
+  <link rel="stylesheet" href="../styles/liftkitvars.css" />
   <link rel="stylesheet" href="../styles/site-core.css" />
   <!-- プロダクト詳細 共通スタイル -->
   <link rel="stylesheet" href="../styles/project-detail.css" />
@@ -42,15 +58,26 @@
       to{ transform: rotate(360deg); }
     }
   </style>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-Y39NSDYY9J');
-</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Y39NSDYY9J');
+  </script>
+
+  <!-- Site chrome: theme / 共通ナビ（site-chrome.js とペア） -->
+  <link rel="icon" href="data:," />
+  <meta name="theme-color" content="#f4f4f4" />
+  <link rel="stylesheet" href="../styles/site-chrome.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;family=Zen+Kaku+Gothic+New:wght@500;700;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/site-theatre.css" />
+  <script src="../scripts/theme-init.js"></script>
 </head>
 <body>
 
@@ -61,7 +88,7 @@
       <h1 class="pd-hero__title">真空管クリーンブースター</h1>
       <p class="pd-hero__lede">
         真空管ならではの自然な倍音とレンジ感を、エフェクトボード前提の<strong>9V駆動</strong>で実現。<br>
-        回路はKiCadで設計し、アルミケースを穴あけ加工・フェイクレザーで外装仕上げ。プリント基板も発注して組み上げました。
+        回路はKiCadで設計。アルミケースは穴あけ加工とフェイクレザーの外装で仕上げ、プリント基板も発注して組み上げました。
       </p>
 
       <!-- アイコン付きタグ -->
@@ -102,9 +129,14 @@
     <section class="pd-section" aria-labelledby="ex-title">
       <div class="container">
         <h2 id="ex-title" class="pd-section__title">外観</h2>
+        <div class="pd-summary">
+          <p>
+            　完成した筐体です。アルミケースにフェイクレザーを貼った外装で、9V駆動のためペダルボードにそのまま組み込めるサイズと電源仕様に収めています。
+          </p>
+        </div>
         <div class="pd-shots pd-shots--single" data-gallery>
           <figure class="pd-shot">
-            <img src="../assets/work_tube_booster.jpg" alt="真空管クリーンブースターの外観" width="1280" height="720" loading="lazy" decoding="async">
+            <img src="../assets/work_tube_booster.jpg" alt="真空管クリーンブースターの外観" width="959" height="720" loading="lazy" decoding="async">
             <figcaption>9V駆動・ペダルボード前提の筐体設計</figcaption>
           </figure>
         </div>
@@ -115,6 +147,11 @@
     <section class="pd-section" aria-labelledby="viewer-title">
       <div class="container">
         <h2 id="viewer-title" class="pd-section__title">3D Scan Viewer</h2>
+        <div class="pd-summary">
+          <p>
+            　完成品をスキャンした3Dモデルです。ドラッグで回転させて、外装の質感やノブ・スイッチの配置を立体のまま確認できます。
+          </p>
+        </div>
         <div class="pd-3d">
           <div class="pd-3d__stage" id="glb-stage">
             <canvas
@@ -143,10 +180,15 @@
     <section class="pd-section" aria-labelledby="circuit-title">
       <div class="container">
         <h2 id="circuit-title" class="pd-section__title">回路設計</h2>
+        <div class="pd-summary">
+          <p>
+            　回路はKiCadで設計しました。真空管を9Vの低電圧で動作させる構成で、クリーンブーストを主眼に、位相やノイズへの影響を抑えたシンプルな回路にまとめています。下の3Dモデルでは基板と部品配置を立体で確認できます。
+          </p>
+        </div>
 
         <div class="pd-shots pd-shots--single">
           <figure class="pd-shot">
-            <img src="../assets/TubeEffector_circuit.jpg" alt="回路図（KiCad）" width="1280" height="720" loading="lazy" decoding="async">
+            <img src="../assets/TubeEffector_circuit.jpg" alt="回路図（KiCad）" width="699" height="402" loading="lazy" decoding="async">
             <figcaption>KiCadで回路図作成</figcaption>
           </figure>
         </div>
@@ -180,13 +222,18 @@
     <section class="pd-section" aria-labelledby="case-title">
       <div class="container">
         <h2 id="case-title" class="pd-section__title">ケース製作</h2>
+        <div class="pd-summary">
+          <p>
+            　アルミケースの穴あけはドリル盤で行い、仮組みでジャックやポット類の干渉を確認しながら位置を追い込みました。
+          </p>
+        </div>
         <div class="pd-shots" data-gallery>
           <figure class="pd-shot">
-            <img src="../assets/TubeEffector_Process1.jpg" alt="ケース加工：穴あけ" width="1280" height="720" loading="lazy" decoding="async">
+            <img src="../assets/TubeEffector_Process1.jpg" alt="ケース加工：穴あけ" width="540" height="720" loading="lazy" decoding="async">
             <figcaption>アルミケースをドリル盤で加工</figcaption>
           </figure>
           <figure class="pd-shot">
-            <img src="../assets/TubeEffector_Process2.jpg" alt="外装仕上げ：フェイクレザー" width="1280" height="720" loading="lazy" decoding="async">
+            <img src="../assets/TubeEffector_Process2.jpg" alt="外装仕上げ：フェイクレザー" width="540" height="720" loading="lazy" decoding="async">
             <figcaption>仮組み</figcaption>
           </figure>
         </div>
@@ -197,13 +244,18 @@
     <section class="pd-section" aria-labelledby="wiring-title">
       <div class="container">
         <h2 id="wiring-title" class="pd-section__title">配線</h2>
+        <div class="pd-summary">
+          <p>
+            　基板は設計データからプリント基板を発注して実装しました。筐体内では配線を整えて固定し、ノイズの混入と断線のリスクを抑えています。
+          </p>
+        </div>
         <div class="pd-shots" data-gallery>
           <figure class="pd-shot">
-            <img src="../assets/TubeEffector_substrate.jpg" alt="基板実装" width="1280" height="720" loading="lazy" decoding="async">
+            <img src="../assets/TubeEffector_substrate.jpg" alt="基板実装" width="959" height="720" loading="lazy" decoding="async">
             <figcaption>プリント基板を発注・実装</figcaption>
           </figure>
           <figure class="pd-shot">
-            <img src="../assets/TubeEffector_wiring.jpg" alt="筐体への配線" width="1280" height="720" loading="lazy" decoding="async">
+            <img src="../assets/TubeEffector_wiring.jpg" alt="筐体への配線" width="959" height="720" loading="lazy" decoding="async">
             <figcaption>筐体への配線：整線と固定</figcaption>
           </figure>
         </div>
@@ -214,6 +266,11 @@
     <section class="pd-section" aria-labelledby="video-title">
       <div class="container">
         <h2 id="video-title" class="pd-section__title">試奏動画</h2>
+        <div class="pd-summary">
+          <p>
+            　ブースターON/OFFを切り替えながらの試奏です。音量の持ち上がりに加えて、中域がぐっと前に出る変化を確認できます。
+          </p>
+        </div>
         <div class="pd-shots pd-shots--single">
           <figure class="pd-shot">
             <div style="position:relative; width:100%; aspect-ratio:16/9; background:#0f141d; border-radius:8px; overflow:hidden; border:1px solid #00000055;">
@@ -235,13 +292,18 @@
     <section class="pd-section" aria-labelledby="spectrum-title">
       <div class="container">
         <h2 id="spectrum-title" class="pd-section__title">スペクトル解析</h2>
+        <div class="pd-summary">
+          <p>
+            　直アンプ時とブースター有効時の周波数スペクトルの比較です。有効時は中域が前に出る傾向がはっきり現れており、耳で感じる「厚みが増す」変化をデータでも確認できます。
+          </p>
+        </div>
         <div class="pd-shots" data-gallery>
           <figure class="pd-shot">
-            <img src="../assets/tube_off.jpg" alt="直アンプ時のスペクトル" width="1280" height="720" loading="lazy" decoding="async">
+            <img src="../assets/tube_off.jpg" alt="直アンプ時のスペクトル" width="1280" height="688" loading="lazy" decoding="async">
             <figcaption>直アンプ時のスペクトル</figcaption>
           </figure>
           <figure class="pd-shot">
-            <img src="../assets/tube_on.jpg" alt="ブースター有効時のスペクトル" width="1280" height="720" loading="lazy" decoding="async">
+            <img src="../assets/tube_on.jpg" alt="ブースター有効時のスペクトル" width="1280" height="688" loading="lazy" decoding="async">
             <figcaption>ブースター有効時：中域が前に出る傾向</figcaption>
           </figure>
         </div>
@@ -254,11 +316,19 @@
   <script src="../scripts/project-detail.js" type="module"></script>
 
   <!-- Three.js（同一バージョンを使用） -->
-  <script src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
-  <script src="https://unpkg.com/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
-  <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://unpkg.com/three@0.147.0/build/three.min.js"
+          integrity="sha384-vV17nr/rMaJqmeZkFUzXLpHdQ+ME5QHKdydaqqN+3Ga39RJlNrTatJxHwGV4ml2C"
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/three@0.147.0/examples/js/controls/OrbitControls.js"
+          integrity="sha384-I0DMsfimAPIqWT8lF+oA997gRgdUi3jhidoTq3fN0zmn35smXZukD01FLnsPRU9i"
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js"
+          integrity="sha384-FassWWYNEPQsuRQm+59KIMcDetEc30bNyE9yfx16Ok8lvoowyH81LtrPmLWltJMh"
+          crossorigin="anonymous"></script>
 
   <!-- 共通 3D 初期化 -->
   <script src="../scripts/project-3d-viewer.js" type="module"></script>
+  <script src="../scripts/site-chrome.js" type="module"></script>
+  <script src="../scripts/site-theatre.js" type="module"></script>
 </body>
 </html>

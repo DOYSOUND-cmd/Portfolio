@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# エディタ
+.vscode/
+.idea/
+*.swp
+
+# 作業用・中間生成物
+*.log
+/tmp/
+/scratch/
+
+# ローカル開発設定（Claude のプレビュー設定など）
+.claude/

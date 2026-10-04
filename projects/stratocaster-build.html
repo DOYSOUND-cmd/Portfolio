@@ -4,8 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Stratocaster Type Guitar — Product Detail</title>
+
+  <!-- OGP / Twitter Card（SNSやチャットでの共有プレビュー用） -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DOYSOUND — Portfolio" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="ストラトキャスタータイプギター | DOYSOUND" />
+  <meta property="og:description" content="桐材ボディを3DモデリングからCNC加工まで一貫して製作した自作ギター" />
+  <meta property="og:url" content="https://doysound-cmd.github.io/Portfolio/projects/stratocaster-build.html" />
+  <link rel="canonical" href="https://doysound-cmd.github.io/Portfolio/projects/stratocaster-build.html" />
+  <meta property="og:image" content="https://doysound-cmd.github.io/Portfolio/assets/work_strat.jpg" />
+  <meta property="og:image:alt" content="ストラトキャスタータイプギター | DOYSOUND" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ストラトキャスタータイプギター | DOYSOUND" />
+  <meta name="twitter:description" content="桐材ボディを3DモデリングからCNC加工まで一貫して製作した自作ギター" />
+  <meta name="twitter:image" content="https://doysound-cmd.github.io/Portfolio/assets/work_strat.jpg" />
   <meta name="description" content="桐材を使用したストラトキャスタータイプギターの紹介。">
   <!-- 共通スタイル -->
+  <link rel="stylesheet" href="../styles/liftkitvars.css" />
   <link rel="stylesheet" href="../styles/site-core.css" />
   <!-- プロダクト詳細 共通スタイル -->
   <link rel="stylesheet" href="../styles/project-detail.css" />
@@ -42,15 +58,26 @@
       to{ transform: rotate(360deg); }
     }
   </style>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-Y39NSDYY9J');
-</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Y39NSDYY9J');
+  </script>
+
+  <!-- Site chrome: theme / 共通ナビ（site-chrome.js とペア） -->
+  <link rel="icon" href="data:," />
+  <meta name="theme-color" content="#f4f4f4" />
+  <link rel="stylesheet" href="../styles/site-chrome.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;family=Zen+Kaku+Gothic+New:wght@500;700;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/site-theatre.css" />
+  <script src="../scripts/theme-init.js"></script>
 </head>
 <body>
 
@@ -63,7 +90,7 @@
 
       <p class="pd-hero__lede">
         桐材ボディのストラトキャスタータイプ。3DモデリングからCNC加工、配線まで一貫して製作。<br>
-        スイッチポッド採用で演奏時の誤操作を抑え、明瞭なトーンを狙った設計です。
+        スイッチポット採用で演奏時の誤操作を抑え、明瞭なトーンを狙った設計です。
       </p>
 
       <!-- アイコン付きタグ -->
@@ -104,9 +131,14 @@
     <section class="pd-section" aria-labelledby="shots-title">
       <div class="container">
         <h2 id="shots-title" class="pd-section__title">外観</h2>
+        <div class="pd-summary">
+          <p>
+            　完成した本体です。桐材ならではの軽さで長時間の演奏でも扱いやすく、木目を活かしたナチュラルな仕上げにしています。
+          </p>
+        </div>
         <div class="pd-shots pd-shots--single" data-gallery>
           <figure class="pd-shot">
-            <img src="../assets/MyST_verticality.jpg" alt="完成品：ストラトキャスタータイプギター" width="1080" height="1440" loading="lazy" decoding="async">
+            <img src="../assets/MyST_verticality.jpg" alt="完成品：ストラトキャスタータイプギター" width="1080" height="1439" loading="lazy" decoding="async">
             <figcaption>完成：桐材ボディのストラトタイプ</figcaption>
           </figure>
         </div>
@@ -118,6 +150,9 @@
       <div class="container">
         <h2 id="scan-title" class="pd-section__title">3D Scan Viewer</h2>
         <div class="pd-summary" style="margin-bottom:10px">
+          <p>
+            　完成品を3Dスキャンしたモデルです。ドラッグで回転、ピンチ/ホイールで拡大でき、ボディの曲面や仕上がりを立体のまま確認できます。
+          </p>
         </div>
 
         <div class="pd-3d">
@@ -151,6 +186,9 @@
       <div class="container">
         <h2 id="cad-title" class="pd-section__title">CAD（3Dモデリング）</h2>
         <div class="pd-summary">
+          <p>
+            　Fusion 360でボディ外形からキャビティ、ネックポケットまでを設計しました。加工前に部品の収まりや配線経路を3Dモデル上で検証できるため、木材を無駄にせず削り出しに進めます。
+          </p>
         </div>
 
         <div class="pd-shots" data-gallery>
@@ -169,6 +207,11 @@
     <section class="pd-section" aria-labelledby="viewer-title">
       <div class="container">
         <h2 id="viewer-title" class="pd-section__title">3D Model Viewer</h2>
+        <div class="pd-summary">
+          <p>
+            　CADで設計したSTLモデルをブラウザ上でそのまま閲覧できます。上の3Dスキャン（完成品）と見比べると、設計どおりに削り出せていることが分かります。
+          </p>
+        </div>
         <div class="pd-3d">
           <div class="pd-3d__stage" id="stl-stage">
             <canvas
@@ -198,9 +241,14 @@
     <section class="pd-section" aria-labelledby="cnc-title">
       <div class="container">
         <h2 id="cnc-title" class="pd-section__title">CNC加工</h2>
+        <div class="pd-summary">
+          <p>
+            　3Dモデルからツールパスを生成し、桐材のボディをCNCで削り出しました。外形とキャビティを機械加工にすることで、手加工では出しにくい精度を確保しています。
+          </p>
+        </div>
         <div class="pd-shots pd-shots--single">
           <figure class="pd-shot">
-            <img src="../assets/CNC.jpg" alt="CNC加工中の様子" width="1280" height="720" loading="lazy" decoding="async">
+            <img src="../assets/CNC.jpg" alt="CNC加工中の様子" width="575" height="222" loading="lazy" decoding="async">
             <figcaption>CNC：削り出し工程(イメージ)</figcaption>
           </figure>
         </div>
@@ -211,10 +259,15 @@
     <section class="pd-section" aria-labelledby="wire-title">
       <div class="container">
         <h2 id="wire-title" class="pd-section__title">配線</h2>
+        <div class="pd-summary">
+          <p>
+            　ピックアップとコントロール類の配線です。ボリュームには押し込み式のスイッチポットを採用し、演奏中に誤って音量を絞ってしまう操作ミスを防いでいます。
+          </p>
+        </div>
         <div class="pd-shots pd-shots--single">
           <figure class="pd-shot">
-            <img src="../assets/MyST_wire.jpg" alt="配線の様子（スイッチポッド採用）" width="1280" height="720" loading="lazy" decoding="async">
-            <figcaption>配線：スイッチポッド採用でボリューム誤操作対策</figcaption>
+            <img src="../assets/MyST_wire.jpg" alt="配線の様子（スイッチポット採用）" width="959" height="720" loading="lazy" decoding="async">
+            <figcaption>配線：スイッチポット採用でボリューム誤操作対策</figcaption>
           </figure>
         </div>
       </div>
@@ -224,6 +277,11 @@
     <section class="pd-section" aria-labelledby="video-title">
       <div class="container">
         <h2 id="video-title" class="pd-section__title">試奏動画</h2>
+        <div class="pd-summary">
+          <p>
+            　組み上げ後の試奏です。ピッキングのニュアンスの出方、ノイズの少なさ、サスティンの伸びを実際の演奏で確認しています。
+          </p>
+        </div>
         <div class="pd-shots pd-shots--single">
           <figure class="pd-shot">
             <div style="position:relative; width:100%; aspect-ratio:16/9; background:#0f141d; border-radius:8px; overflow:hidden; border:1px solid #00000055;">
@@ -245,13 +303,18 @@
     <section class="pd-section" aria-labelledby="spectrum-title">
       <div class="container">
         <h2 id="spectrum-title" class="pd-section__title">スペクトル解析</h2>
+        <div class="pd-summary">
+          <p>
+            　市販のFender Japan製ストラトキャスターと同条件で録音し、周波数スペクトルを比較しました。本機は低域が控えめで、明るくすっきりした傾向であることが確認できます。
+          </p>
+        </div>
         <div class="pd-shots">
           <figure class="pd-shot">
-            <img src="../assets/FJ.jpg" alt="比較用：Fender Japan ストラトのスペクトル" width="1280" height="720" loading="lazy" decoding="async">
+            <img src="../assets/FJ.jpg" alt="比較用：Fender Japan ストラトのスペクトル" width="1280" height="688" loading="lazy" decoding="async">
             <figcaption>比較：Fender Japan ストラトキャスター</figcaption>
           </figure>
           <figure class="pd-shot">
-            <img src="../assets/MySt.jpg" alt="本ギターのスペクトル" width="1280" height="720" loading="lazy" decoding="async">
+            <img src="../assets/MySt.jpg" alt="本ギターのスペクトル" width="1280" height="688" loading="lazy" decoding="async">
             <figcaption>本機：低域が控えめで明るい傾向</figcaption>
           </figure>
         </div>
@@ -264,12 +327,22 @@
   <script src="../scripts/project-detail.js" type="module"></script>
 
   <!-- Three.js（同一バージョンで揃える） -->
-  <script src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
-  <script src="https://unpkg.com/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
-  <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/STLLoader.js"></script>
-  <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://unpkg.com/three@0.147.0/build/three.min.js"
+          integrity="sha384-vV17nr/rMaJqmeZkFUzXLpHdQ+ME5QHKdydaqqN+3Ga39RJlNrTatJxHwGV4ml2C"
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/three@0.147.0/examples/js/controls/OrbitControls.js"
+          integrity="sha384-I0DMsfimAPIqWT8lF+oA997gRgdUi3jhidoTq3fN0zmn35smXZukD01FLnsPRU9i"
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/STLLoader.js"
+          integrity="sha384-z6Lbfx7Kh5dVdhEISsKE58gMRQj53xGx7jmDq6OgcXZ0UPVWLe1y46AZhp7DsiL1"
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/three@0.147.0/examples/js/loaders/GLTFLoader.js"
+          integrity="sha384-FassWWYNEPQsuRQm+59KIMcDetEc30bNyE9yfx16Ok8lvoowyH81LtrPmLWltJMh"
+          crossorigin="anonymous"></script>
 
   <!-- 共通 3D 初期化 -->
   <script src="../scripts/project-3d-viewer.js" type="module"></script>
+  <script src="../scripts/site-chrome.js" type="module"></script>
+  <script src="../scripts/site-theatre.js" type="module"></script>
 </body>
 </html>

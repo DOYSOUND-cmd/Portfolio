@@ -4,18 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Web CAE App — Product Detail</title>
+
+  <!-- OGP / Twitter Card（SNSやチャットでの共有プレビュー用） -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DOYSOUND — Portfolio" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="Web CAEアプリ | DOYSOUND" />
+  <meta property="og:description" content="NASA Space Apps Challenge 2025提出作品" />
+  <meta property="og:url" content="https://doysound-cmd.github.io/Portfolio/projects/web-cae-app.html" />
+  <link rel="canonical" href="https://doysound-cmd.github.io/Portfolio/projects/web-cae-app.html" />
+  <meta property="og:image" content="https://doysound-cmd.github.io/Portfolio/assets/work_web_cae.jpg" />
+  <meta property="og:image:alt" content="Web CAEアプリ | DOYSOUND" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Web CAEアプリ | DOYSOUND" />
+  <meta name="twitter:description" content="NASA Space Apps Challenge 2025提出作品" />
+  <meta name="twitter:image" content="https://doysound-cmd.github.io/Portfolio/assets/work_web_cae.jpg" />
   <meta name="description" content="NASAオープンデータを用いた素材評価の可視化デモ。Three.jsで熱・変位などをブラウザ上で視覚化するWeb CAEアプリの紹介。" />
+  <link rel="stylesheet" href="../styles/liftkitvars.css" />
   <link rel="stylesheet" href="../styles/site-core.css" />
   <link rel="stylesheet" href="../styles/project-detail.css" />
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  gtag('config', 'G-Y39NSDYY9J');
-</script>
+    gtag('config', 'G-Y39NSDYY9J');
+  </script>
+
+  <!-- Site chrome: theme / 共通ナビ（site-chrome.js とペア） -->
+  <link rel="icon" href="data:," />
+  <meta name="theme-color" content="#f4f4f4" />
+  <link rel="stylesheet" href="../styles/site-chrome.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;family=Zen+Kaku+Gothic+New:wght@500;700;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/site-theatre.css" />
+  <script src="../scripts/theme-init.js"></script>
 </head>
 <body>
 
@@ -27,7 +53,7 @@
       <p class="pd-hero__lede">
         NASAのオープンデータを使って、材料ごとの熱挙動や変位を可視化するWebアプリです。<br>
         Three.jsベースのUIで、計算結果と3Dモデルをブラウザ上からそのまま確認できます。<br>
-        本ツールは<strong>NASA Space Apps Challenge 2025</strong>提出作品として作成しました。
+        本ツールは<strong>NASA Space Apps Challenge 2025</strong>の提出作品として制作しました。
       </p>
       <ul class="pd-badges pd-badges--icons" aria-label="使用技術">
         <li class="badge">
@@ -83,7 +109,7 @@
         <div class="pd-shots pd-shots--single" data-gallery>
           <figure class="pd-shot">
             <a class="pd-shot__link" href="https://DOYSOUND-cmd.github.io/NASA_Space_App_Challeng2025-/" target="_blank" rel="noopener" aria-label="Web CAEアプリのデモを開く">
-              <img src="../assets/work_web_cae.jpg" alt="Web CAEアプリ：3D結果の可視化UI（温度分布・指標パネル）" width="1080" height="1440" loading="lazy" decoding="async">
+              <img src="../assets/work_web_cae.jpg" alt="Web CAEアプリ：3D結果の可視化UI（温度分布・指標パネル）" width="1080" height="580" loading="lazy" decoding="async">
             </a>
             <figcaption>Webアプリのスクリーンショット</figcaption>
           </figure>
@@ -96,7 +122,7 @@
         <h2 id="leo-challenge-title" class="pd-section__title">開発テーマ：Commercializing Low Earth Orbit (LEO)</h2>
         <div class="pd-summary">
           <p>
-            　Commercializing Low Earth Orbit(LEO)は、地球低軌道（LEO）をこれまでの研究・実験中心の場から一歩進めて、
+            　Commercializing Low Earth Orbit（LEO）は、地球低軌道（LEO）をこれまでの研究・実験中心の場から一歩進めて、
             民間企業が活用できる「持続可能な商業空間」として発展させるには何が必要かを問うチャレンジです。
             インフラ、サービス、運用、製造といった観点から、LEOの価値を高める新しいアイデアやツールを提示することが求められました。
           </p>
@@ -110,7 +136,7 @@
         <div class="pd-summary">
           <p>
             　今回のチャレンジでは、LEO（低軌道）特有の熱環境が
-            CubeSat(小型人工衛星)の外壁にどのような影響を与えるかを
+            CubeSat（小型人工衛星）の外壁にどのような影響を与えるかを、
             誰でもブラウザで確認できる形に落とし込むことを目標にしました。
           </p>
           <p>
@@ -120,8 +146,8 @@
           </p>
           <p>
             　熱流束や物性を境界条件としてPrePoMaxでパネルの
-            熱応力解析を行い、得られた温度分布・変位をglTF/JSONに変換。
-            Webビュアーを実装し、ブラウザ上で材料・厚み・日照条件を切り替えて解析結果を可視化できる仕組みを作りました。
+            熱応力解析を行い、得られた温度分布・変位をglTF/JSONに変換しました。
+            さらにWebビューアを実装し、ブラウザ上で材料・厚み・日照条件を切り替えて解析結果を可視化できる仕組みを作りました。
           </p>
         </div>
       </div>
@@ -132,22 +158,22 @@
         <h2 id="tech-title" class="pd-section__title">実装アプローチ</h2>
         <figure class="pd-shot">
           <a class="pd-shot__link" href="https://github.com/DOYSOUND-cmd/NASA_Space_App_Challeng2025-" target="_blank" rel="noopener" aria-label="githubリポジトリを開く">
-            <img src="../assets/WebCAE_system.jpg" alt="実装方法" width="1080" height="1440" loading="lazy" decoding="async">
+            <img src="../assets/WebCAE_system.jpg" alt="実装方法" width="1080" height="602" loading="lazy" decoding="async">
           </a>
           <figcaption>実装方法</figcaption>
         </figure>
         <div class="pd-summary">
           <p>
-            　まずPrePoMax(オープンソースのCAEソフトウェア)を使い、材料物性の入力、日照下/日影下の境界条件の設定を行い、
-            各ケースの温度分布・変位量・Tmax/Tminを計算し、得られた結果をglTF/JSONへ書き出し、ブラウザから直接読み込めるように加工しました。
+            　まずPrePoMax（オープンソースのCAEソフトウェア）で材料物性の入力と日照下/日影下の境界条件の設定を行い、
+            各ケースの温度分布・変位量・Tmax/Tminを計算しました。得られた結果はglTF/JSONへ書き出し、ブラウザから直接読み込める形に加工しています。
           </p>
           <p>
-            　WebビュワーアプリはThree.jsをベースに作成し、境界条件、外壁パネルの厚さ、素材の切り替えを行うと、それらに対応したglTFと質量、温度、変位の値の表示を実装しています。
+            　WebビューアアプリはThree.jsをベースに作成し、境界条件・外壁パネルの厚さ・素材を切り替えると、対応するglTFモデルと質量・温度・変位の値が表示されるようにしています。
           </p>
           <p>
             　また、背景に配置した太陽と地球の3Dモデルは、
             LEOの日照条件を視覚的に理解できるように調整しており、
-            解析結果と環境情報を同時に確認できるビュアーとしてまとめています。
+            解析結果と環境情報を同時に確認できるビューアとしてまとめています。
           </p>
         </div>
       </div>
@@ -187,5 +213,7 @@
   </main>
 
   <script src="../scripts/project-detail.js" type="module"></script>
+  <script src="../scripts/site-chrome.js" type="module"></script>
+  <script src="../scripts/site-theatre.js" type="module"></script>
 </body>
 </html>

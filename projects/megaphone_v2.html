@@ -4,21 +4,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>ライブ用メガホン Ver.2 | Product Detail</title>
+
+  <!-- OGP / Twitter Card（SNSやチャットでの共有プレビュー用） -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DOYSOUND — Portfolio" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:title" content="ライブ用メガホン Ver.2 | DOYSOUND" />
+  <meta property="og:description" content="ESP32でデジタル音声処理するライブ用メガホン" />
+  <meta property="og:url" content="https://doysound-cmd.github.io/Portfolio/projects/megaphone_v2.html" />
+  <link rel="canonical" href="https://doysound-cmd.github.io/Portfolio/projects/megaphone_v2.html" />
+  <meta property="og:image" content="https://doysound-cmd.github.io/Portfolio/assets/VocalEffector_exterior.jpg" />
+  <meta property="og:image:alt" content="ライブ用メガホン Ver.2 | DOYSOUND" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ライブ用メガホン Ver.2 | DOYSOUND" />
+  <meta name="twitter:description" content="ESP32でデジタル音声処理するライブ用メガホン" />
+  <meta name="twitter:image" content="https://doysound-cmd.github.io/Portfolio/assets/VocalEffector_exterior.jpg" />
   <meta
     name="description"
     content="ESP32 を用いたデジタル音声処理メガホン。Ver.1 からデジタル化し、ライブでの扱いやすさと音作りの自由度を高めたバージョンです。"
   />
+  <link rel="stylesheet" href="../styles/liftkitvars.css" />
   <link rel="stylesheet" href="../styles/site-core.css" />
   <link rel="stylesheet" href="../styles/project-detail.css" />
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y39NSDYY9J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  gtag('config', 'G-Y39NSDYY9J');
-</script>
+    gtag('config', 'G-Y39NSDYY9J');
+  </script>
+
+  <!-- Site chrome: theme / 共通ナビ（site-chrome.js とペア） -->
+  <link rel="icon" href="data:," />
+  <meta name="theme-color" content="#f4f4f4" />
+  <link rel="stylesheet" href="../styles/site-chrome.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;family=Zen+Kaku+Gothic+New:wght@500;700;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/site-theatre.css" />
+  <script src="../scripts/theme-init.js"></script>
 </head>
 <body>
 
@@ -26,7 +52,7 @@
   <header class="pd-hero">
     <div class="container">
       <div class="pd-hero__eyebrow">Product Detail</div>
-      <h1 class="pd-hero__title">ライブ用メガホンVer.2</h1>
+      <h1 class="pd-hero__title">ライブ用メガホン Ver.2</h1>
       <p class="pd-hero__lede">
         メガホン型のボーカルエフェクターVer.2です。<br>
         Ver.1がアナログ回路で構成されているのに対して、本機はESP32を用いたデジタル処理でエフェクトを実現し、ライブでの扱いやすさと音作りの柔軟さを高めました。
@@ -56,7 +82,7 @@
         <div class="pd-summary">
           <p>
             　小型のダイナミックマイクからの音声をA/D変換し、ESP32上でエフェクト処理を行ったのち、内蔵DACから出力する構成のメガホンです。
-            エフェクトのパラメーターはスマートフォンとWi‑Fi接続して、スマートフォン上のGUIからリアルタイムに変更できます。
+            エフェクトのパラメータは、Wi‑Fi接続したスマートフォンのGUIからリアルタイムに変更できます。
           </p>
         </div>
       </div>
@@ -66,12 +92,17 @@
     <section class="pd-section" aria-labelledby="shots-title">
       <div class="container">
         <h2 id="shots-title" class="pd-section__title">外観</h2>
+        <div class="pd-summary">
+          <p>
+            　メガホン型の筐体にマイク・ESP32・出力回路を一体で組み込んでいます。ケーブル1本でPAへ直結できるため、ステージ上での取り回しが簡単です。
+          </p>
+        </div>
         <div class="pd-shots pd-shots--single" data-gallery>
           <figure class="pd-shot">
             <img
               src="../assets/VocalEffector_exterior.jpg"
               alt="ライブ用メガホン Ver.2 の外観"
-              width="1280"
+              width="959"
               height="720"
               loading="lazy"
               decoding="async"
@@ -86,6 +117,11 @@
     <section class="pd-section" aria-labelledby="system-title">
       <div class="container">
         <h2 id="system-title" class="pd-section__title">システム構成</h2>
+        <div class="pd-summary">
+          <p>
+            　小型ダイナミックマイクの音声をESP32でA/D変換し、内部でエフェクト処理を行ったのちライン出力する流れです。アナログ回路で構成していたVer.1に対し、本機は処理系をすべてデジタル化しています。
+          </p>
+        </div>
         <div class="pd-shots pd-shots--single" data-gallery>
           <figure class="pd-shot">
             <img
@@ -106,6 +142,11 @@
     <section class="pd-section" aria-labelledby="gui-title">
       <div class="container">
         <h2 id="gui-title" class="pd-section__title">GUI</h2>
+        <div class="pd-summary">
+          <p>
+            　エフェクトのパラメータは、Wi-Fi接続したスマートフォンのGUIから変更します。エフェクターのペダルを模した画面で、ライブ中でも直感的にツマミを操作できます。下のリンクから実際のGUIを試せます。
+          </p>
+        </div>
         <div class="pd-shots pd-shots--single" data-gallery>
           <figure class="pd-shot">
             <a
@@ -119,12 +160,12 @@
                 src="../assets/GUI.jpg"
                 alt="メガホン Ver.2 の GUI 画面"
                 width="1280"
-                height="720"
+                height="639"
                 loading="lazy"
                 decoding="async"
               >
             </a>
-            <figcaption>スマートフォン上からエフェクトパラメーターを操作できるGUI</figcaption>
+            <figcaption>スマートフォンからエフェクトのパラメータを操作できるGUI</figcaption>
           </figure>
         </div>
       </div>
@@ -145,5 +186,7 @@
   </main>
 
   <script src="../scripts/project-detail.js" type="module"></script>
+  <script src="../scripts/site-chrome.js" type="module"></script>
+  <script src="../scripts/site-theatre.js" type="module"></script>
 </body>
 </html>
